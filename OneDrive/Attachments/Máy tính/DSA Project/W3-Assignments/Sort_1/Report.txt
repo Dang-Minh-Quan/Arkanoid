@@ -1,3 +1,0 @@
-Kích thước |	File dữ liệu test | Đã sắp xếp Xuôi |	Toàn Bằng nhau |	Ngẫu nhiên |	Sắp xếp Ngược
-1.000 (1K)	     15 ms               1 ms	               1 ms	            15 ms	       30 ms
-4.000 (4K)	     30 ms               4 ms	               4 ms	            30 ms	       64 ms
