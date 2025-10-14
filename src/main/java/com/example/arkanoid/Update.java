@@ -24,10 +24,24 @@ public class Update {
                 Level.set(0);
                 //WIN
             }
-        } else {
-            numBrick--;
         }
-    }
+
+        // bổ sung hàm ballHits
+        if (ballHits(ball, b)) {
+            boolean broken = b.hit();
+
+            if (broken) {
+                render.addExplosion(b.x, b.y);
+                numBrick--;
+            } else if (b.isCracked()) {
+                render.addCrack(b.x, b.y);
+            }
+        }
+}
+
+
+
+
 
     private void builderLevel(Brick[][] brick, AtomicInteger Level) {
         Map map = new Map();
