@@ -1,16 +1,34 @@
 package com.example.arkanoid;
 
 
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
 
 import static com.example.arkanoid.Specifications.*;
 
 public class Brick extends Baseclass {
     public Brick(int i,int j) {
-        super(null, i*(WIDTH/COL), j*(HEIGHT/ROW), WIDTH/COL,HEIGHT/ROW);
+        super( j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
+    }
+
+    public void UpdateBrick(Ball ball, ArrayList<PowerUp> powerUps) {
+        if (ball.type == 0) {
+            if (type > 0) {
+                type = type - 1;
+                numBrick = numBrick - 1;
+                if((int)(Math.random()*probability)%probability==0) {
+                    PowerUp newPU = new PowerUp(x, y);
+                    powerUps.add(newPU);
+                }
+            }
+            if (type == -1) {
+                type = -1;
+            }
+        }
+        Update();
     }
 
     public void Update() {
@@ -28,7 +46,7 @@ public class Brick extends Baseclass {
     }
 
     public Rectangle builderBrick(int i, int j) {
-        Rectangle brick = new Rectangle(60 * j, 30 * i, 60, 30);
+        Rectangle brick = new Rectangle(x, y, width, height);
         if (type == 0) {
             brick.setFill(Color.TRANSPARENT);
             brick.setStroke(Color.TRANSPARENT);

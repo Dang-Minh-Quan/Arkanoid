@@ -3,7 +3,7 @@ package com.example.arkanoid;
 
 import javafx.scene.image.Image;
 
-public abstract class Baseclass {
+public class Baseclass {
     public Image image;
     public int type;
     public int x;
@@ -21,16 +21,24 @@ public abstract class Baseclass {
         this(image, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public Baseclass(final Image image, final int x, final int y) {
+    public Baseclass( final int x, final int y) {
         this(null, 0, x, y, 0, 0, 0, 0);
     }
 
-    public Baseclass(final Image image, final int x, final int y, final int width,final int height) {
+    public Baseclass( final int x, final int y, final int width,final int height) {
+        this(null, 0, x, y,0, 0, width, height);
+    }
+
+    public Baseclass(Image image ,final int x, final int y, final int width,final int height) {
         this(image, 0, x, y,0, 0, width, height);
     }
 
-    public Baseclass(final Image image, final int x, final int y, int vx,final int width,final int height) {
-        this(image, 0, x, y, vx, 0, width, height);
+    public Baseclass( final int x, final int y, int vx,final int width,final int height) {
+        this(null, 0, x, y, vx, 0, width, height);
+    }
+
+    public Baseclass( final int x, final int y, int vx, int vy,final int width,final int height) {
+        this(null, 0, x, y, vx, vy, width, height);
     }
 
     public Baseclass(final Image image, final int type, final int x, int y, int vx, int vy, int width, int height) {
@@ -44,7 +52,7 @@ public abstract class Baseclass {
         this.height = height;
     }
 
-    public abstract void Update();
+    public void Update(){}
 
     protected void init() {
     }
