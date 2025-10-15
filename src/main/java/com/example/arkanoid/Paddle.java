@@ -12,7 +12,7 @@ public class Paddle extends BaseClass {
     private boolean moveRight;
 
     public Paddle() {
-        super(null, 0, 550, 600, spvxOriginal, 0, 100, 30);
+        super(null, 0, (WIDTH - 100) / 2, HEIGHT - 50, 7, 0, paddleWidthOriginal, paddleHeightOriginal);
         paddle = new Rectangle(x, y, width, height);
         moveLeft = false;
         moveRight = false;
