@@ -11,5 +11,12 @@ public class Specifications {
     public static Boolean checkPlay = true;
     public static int numBrick = 0;
     public static int HEIGHT = 600;
-    public static int WIDTH = 1200;
+    public static int WIDTH = 900;
+    public static int HEIGHTBrick = 30;
+    public static int WIDTHBrick = WIDTH/COL;
+    public static int speedPU = 2;
+    public static int HEIGHTPU = HEIGHTBrick;
+    public static int  WIDTHPU = WIDTHBrick;
+    public static int  PU =3;
+    public static final int probability = 1;
 }
