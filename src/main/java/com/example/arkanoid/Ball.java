@@ -7,9 +7,10 @@ import static com.example.arkanoid.Specifications.*;
 
 public class Ball extends BaseClass {
     private Circle ball;
+    private boolean collidedWithPaddle = false;
 
     public Ball(){
-        super(null, 0, 500, 400, 5, 5, 10, 10);
+        super(null, 0, 500, 400, spvxOriginal, spvxOriginal, 10, 10);
         ball = new Circle(x, y, width, Color.BLUE);
     }
     public void setBall(double dx, double dy) {
@@ -29,8 +30,11 @@ public class Ball extends BaseClass {
     }
 
     public int checkWallCollision() {
+        if (y >= HEIGHT - height) {
+            return -1;
+        }
         boolean check1 = x <= width || x >= WIDTH - width;
-        boolean check2 = y <= height || y >= HEIGHT - height;
+        boolean check2 = y <= height;
         if (check1 && check2) {
             return 1;
         } else if (check1) {
@@ -62,5 +66,16 @@ public class Ball extends BaseClass {
             return 3;
         }
         return 1;
+    }
+
+    public boolean isReadyForPaddleCollision(int collisionState) {
+        if (collisionState != -1 && !collidedWithPaddle) {
+            collidedWithPaddle = true;
+            return true;
+        }
+        if (collisionState == -1) {
+            collidedWithPaddle = false;
+        }
+        return false;
     }
 }
