@@ -7,6 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.example.arkanoid.Specifications.*;
@@ -22,9 +24,12 @@ public class Main extends Application {
         Pane pane = new Pane();
 
         AtomicInteger Level = new AtomicInteger(0);
+        Ball ball = new Ball();
         Paddle paddle= new Paddle();
-        Brick[][] brick = new Brick[ROW][COL];
+        Brick[][] brick = new Brick[(int)ROW][(int)COL];
         MainImage IMAGE = new MainImage();
+        ArrayList<PowerUp>powerUps=new ArrayList<>();
+        ArrayList<Ball>balls=new ArrayList<>();
         IMAGE.LoadImage();
 
         Update update = new Update();
@@ -35,9 +40,9 @@ public class Main extends Application {
 
             @Override
             public void handle(long now) {
-                if (now - LastUpdate >= 16_666_666) {
-                    update.updateGame(paddle, brick, Level);
-                    render.renderGame(paddle, brick, pane);
+                if (now - LastUpdate >= 16_000_000) {
+                    update.updateGame(balls,ball,paddle, brick, Level,powerUps);
+                    render.renderGame(balls,ball,paddle, brick, pane,powerUps);
                     LastUpdate = now;
                 }
             }
