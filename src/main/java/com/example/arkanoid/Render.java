@@ -23,11 +23,7 @@ public class Render {
 
     private void renderPowerUp(ArrayList<PowerUp> powerUps, Pane pane) {
         for (int i=0;i<powerUps.size();i++) {
-            Rectangle powerUpImage = new Rectangle(powerUps.get(i).x, powerUps.get(i).y,
-                    powerUps.get(i).width, powerUps.get(i).height);
-            powerUpImage.setFill(Color.BLACK);
-            powerUpImage.setStroke(Color.BLUE);
-            pane.getChildren().add(powerUpImage);
+            pane.getChildren().add(powerUps.get(i).getHitBoxPowerUp());
         }
     }
 
@@ -52,11 +48,13 @@ public class Render {
     }
 
     private void renderBall(Ball ball, Pane pane){
+        ball.RenderTail(pane);
         pane.getChildren().addAll(ball.getBall());
     }
 
     private void renderBalls(ArrayList<Ball>balls, Pane pane) {
         for (int i = 0; i < balls.size(); i++) {
+            balls.get(i).RenderTail(pane);
             pane.getChildren().addAll(balls.get(i).getBall());
         }
     }
