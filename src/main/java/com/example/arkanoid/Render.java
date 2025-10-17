@@ -11,14 +11,15 @@ import java.util.ArrayList;
 import static com.example.arkanoid.Specifications.*;
 
 public class Render {
-    public void renderGame(ArrayList<Ball>balls,Ball ball, Paddle paddle, Brick[][] brick, Pane pane, ArrayList<PowerUp> powerUps) {
+    public void renderGame(MainImage image,ArrayList<Ball>balls,Ball ball, Paddle paddle, Brick[][] brick, Pane pane, ArrayList<PowerUp> powerUps) {
         pane.getChildren().clear();
-        renderBackGround(pane);
+        renderBackGround(pane,image);
         renderBrick(brick, pane);
         renderPaddle(paddle, pane);
         renderBall(ball,pane);
         renderBalls(balls,pane);
         renderPowerUp(powerUps,pane);
+        renderBackBar(pane,image);
     }
 
     private void renderPowerUp(ArrayList<PowerUp> powerUps, Pane pane) {
@@ -27,11 +28,16 @@ public class Render {
         }
     }
 
-    private void renderBackGround(Pane pane) {
+    private void renderBackGround(Pane pane,MainImage image) {
         Rectangle backGround = new Rectangle(0, 0, WIDTH, HEIGHT);
-        MainImage image = new MainImage();
         backGround.setFill(new ImagePattern(image.getBackgroud1()));
         pane.getChildren().add(backGround);
+    }
+
+    private void renderBackBar(Pane pane,MainImage image) {
+        Rectangle bar = new Rectangle(0, HEIGHT, WIDTH, HEIGHTBar);
+        bar.setFill(new ImagePattern(image.getBar()));
+        pane.getChildren().add(bar);
     }
 
     private void renderBrick(Brick[][] brick, Pane pane) {

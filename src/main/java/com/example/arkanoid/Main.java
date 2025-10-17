@@ -40,14 +40,14 @@ public class Main extends Application {
 
             @Override
             public void handle(long now) {
-                if (now - LastUpdate >= 16_000_000) {
+                if (now - LastUpdate >= 160_000_000) {
                     update.updateGame(balls,ball,paddle, brick, Level,powerUps);
-                    render.renderGame(balls,ball,paddle, brick, pane,powerUps);
+                    render.renderGame(IMAGE,balls,ball,paddle, brick, pane,powerUps);
                     LastUpdate = now;
                 }
             }
         };
-        Scene scene = new Scene(pane, WIDTH, HEIGHT);
+        Scene scene = new Scene(pane, WIDTH, HEIGHT+HEIGHTBar);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.setResizable(false);
