@@ -1,9 +1,6 @@
 package Interface;
 
 
-import static LogicGamePlay.Specifications.COL;
-import static LogicGamePlay.Specifications.ROW;
-
 import LogicGamePlay.Ball;
 import LogicGamePlay.Brick;
 import LogicGamePlay.MainImage;
@@ -24,7 +21,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
+import static LogicGamePlay.Specifications.*;
+import static LogicGamePlay.Specifications.HEIGHT;
 
 public class GamePlayController {
 
@@ -57,7 +58,12 @@ public class GamePlayController {
     GamePlay.getChildren().clear();
     gameLayer = new Pane();
     GamePlay.getChildren().addAll(gameLayer, ButtonBack);
-    //ButtonBack.toFront();
+    ButtonBack.toFront();
+
+    Canvas canvas = new Canvas(WIDTH, HEIGHT+ HEIGHTBar);
+    GamePlay.getChildren().add(canvas);
+    //canvas.toFront();
+    GraphicsContext gc = canvas.getGraphicsContext2D();
 
     Level = new AtomicInteger(0);
     ball = new Ball();
@@ -77,9 +83,10 @@ public class GamePlayController {
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-          update.updateGame(ball,paddle, brick, Level,gameRestarted);
+          update.updateGame(ball,paddle, brick, Level,gameRestarted,render);
           gameLayer.getChildren().clear();
-          render.renderGame(IMAGE,ball,paddle, brick, gameLayer);
+          render.renderGame(gc, ball, paddle, brick);
+         // render.renderGame(IMAGE,ball,paddle, brick, gameLayer);
           LastUpdate = now;
         }
       }
