@@ -20,4 +20,5 @@ public class Specifications {
     public static final int probability = 10;
     public static final int TailLength = 20;
     public static final int HEIGHTBar = 150;
+    public static final int TimePowerUp = 10*60;
 }

@@ -19,12 +19,14 @@ public class Render {
         renderBall(ball,pane);
         renderBalls(balls,pane);
         renderPowerUp(powerUps,pane);
-        renderBackBar(pane,image);
+        renderBar(pane,image);
     }
 
     private void renderPowerUp(ArrayList<PowerUp> powerUps, Pane pane) {
         for (int i=0;i<powerUps.size();i++) {
-            pane.getChildren().add(powerUps.get(i).getHitBoxPowerUp());
+            if(powerUps.get(i).checkActivate==false) {
+                pane.getChildren().add(powerUps.get(i).getHitBoxPowerUp());
+            }
         }
     }
 
@@ -34,7 +36,7 @@ public class Render {
         pane.getChildren().add(backGround);
     }
 
-    private void renderBackBar(Pane pane,MainImage image) {
+    private void renderBar(Pane pane,MainImage image) {
         Rectangle bar = new Rectangle(0, HEIGHT, WIDTH, HEIGHTBar);
         bar.setFill(new ImagePattern(image.getBar()));
         pane.getChildren().add(bar);

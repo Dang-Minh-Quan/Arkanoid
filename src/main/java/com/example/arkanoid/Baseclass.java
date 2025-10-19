@@ -53,12 +53,6 @@ public class Baseclass {
     }
 
     public void Update(){}
-
-    protected void init() {
-    }
-
-    public void respawn() {
-    }
 }
 
 

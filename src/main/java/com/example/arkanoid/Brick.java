@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 
 import static com.example.arkanoid.Specifications.*;
@@ -14,7 +15,7 @@ public class Brick extends Baseclass {
         super( j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
     }
 
-    public void UpdateBrick(Ball ball, ArrayList<PowerUp> powerUps) {
+    public void UpdateBrick(MainMedia media,Ball ball, ArrayList<PowerUp> powerUps) {
         if (ball.type == 0) {
             if (type > 0) {
                 type = type - 1;
@@ -23,6 +24,7 @@ public class Brick extends Baseclass {
                     PowerUp newPU = new PowerUp(x, y);
                     powerUps.add(newPU);
                 }
+                media.playDestroyBrick();
             }
             if (type == -1) {
                 type = -1;
@@ -57,5 +59,4 @@ public class Brick extends Baseclass {
         }
         return brick;
     }
-
 }

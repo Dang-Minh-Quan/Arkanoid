@@ -8,7 +8,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.example.arkanoid.Specifications.*;
@@ -28,9 +31,16 @@ public class Main extends Application {
         Paddle paddle= new Paddle();
         Brick[][] brick = new Brick[(int)ROW][(int)COL];
         MainImage IMAGE = new MainImage();
+        MainMedia media = new MainMedia();
         ArrayList<PowerUp>powerUps=new ArrayList<>();
         ArrayList<Ball>balls=new ArrayList<>();
         IMAGE.LoadImage();
+        media.LoadMedia();
+
+        ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
+        gameThread.schedule(()-> {
+            media.playMusic();
+        },1, TimeUnit.SECONDS);
 
         Update update = new Update();
         Render render = new Render();
@@ -40,8 +50,8 @@ public class Main extends Application {
 
             @Override
             public void handle(long now) {
-                if (now - LastUpdate >= 160_000_000) {
-                    update.updateGame(balls,ball,paddle, brick, Level,powerUps);
+                if (now - LastUpdate >= 16_000_000) {
+                    update.updateGame(media,balls,ball,paddle, brick, Level,powerUps);
                     render.renderGame(IMAGE,balls,ball,paddle, brick, pane,powerUps);
                     LastUpdate = now;
                 }

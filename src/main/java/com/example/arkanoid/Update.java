@@ -1,5 +1,6 @@
 package com.example.arkanoid;
 
+import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -7,18 +8,33 @@ import static com.example.arkanoid.Specifications.*;
 
 public class Update {
 
-    public void updateGame(ArrayList<Ball>balls,Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, ArrayList<PowerUp> powerUps) {
+    public void updateGame(MainMedia media, ArrayList<Ball>balls, Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, ArrayList<PowerUp> powerUps) {
         updatePowerUp(balls,ball,paddle,powerUps);
-        updateBall(ball,brick,paddle,powerUps);
-        updateBalls(balls,brick,paddle,powerUps);
+        updateBall(media,ball,brick,paddle,powerUps);
+        updateBalls(media,balls,brick,paddle,powerUps);
         updateBrick(balls,ball,paddle,Level, brick);
         updatePaddle(paddle);
     }
 
     private void updatePowerUp(ArrayList<Ball>balls,Ball ball, Paddle paddle, ArrayList<PowerUp> powerUps){
         for(int i=0;i<powerUps.size();i++){
-            if(powerUps.get(i).UpdatePU(balls,paddle,ball)){
-                powerUps.remove(i);
+            if(powerUps.get(i).checkActivate==true){
+                if (powerUps.get(i).checkTimePowerUp==-1){
+                    powerUps.remove(i);
+                }
+                else {
+                    powerUps.get(i).checkStopPowerUp(balls, paddle, ball);
+                }
+            }
+            else {
+                switch (powerUps.get(i).UpdatePU(balls, paddle, ball)) {
+                    case 1:
+                        powerUps.get(i).checkActivate = true;
+                        break;
+                    case 2:
+                        powerUps.remove(i);
+                        break;
+                }
             }
         }
     }
@@ -61,13 +77,13 @@ public class Update {
     }
 
     private void resert(Ball ball,Paddle paddle,ArrayList<Ball>balls){
-        ball.x=500;
-        ball.y=400;
+        ball.x=WIDTH/2;
+        ball.y=HEIGHT-70;
         paddle.width=paddleWidthOriginal;
         balls.clear();
     }
 
-    private static void updateBall(Ball ball,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps){
+    private static void updateBall(MainMedia media,Ball ball,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps){
         ball.setBall(ball.x + ball.vx, ball.y + ball.vy);
         switch(ball.checkWallCollision()) {
             case 1:
@@ -94,7 +110,7 @@ public class Update {
                 break;
         }
 
-        switch (ball.checkBrickCollision(brick,powerUps)){
+        switch (ball.checkBrickCollision(media,brick,powerUps)){
             case 1:
                 ball.vx = -ball.vx;
                 break;
@@ -105,7 +121,7 @@ public class Update {
     }
 
 
-    private static void updateBalls(ArrayList<Ball>balls,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps) {
+    private static void updateBalls(MainMedia media,ArrayList<Ball>balls,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps) {
         for (int i = 0; i < balls.size(); i++) {
             balls.get(i).setBall(balls.get(i).x + balls.get(i).vx, balls.get(i).y + balls.get(i).vy);
             switch (balls.get(i).checkWallCollision()) {
@@ -133,7 +149,7 @@ public class Update {
                     break;
             }
 
-            switch (balls.get(i).checkBrickCollision(brick, powerUps)) {
+            switch (balls.get(i).checkBrickCollision(media,brick, powerUps)) {
                 case 1:
                     balls.get(i).vx = -balls.get(i).vx;
                     break;
