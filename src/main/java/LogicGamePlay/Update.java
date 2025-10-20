@@ -17,9 +17,9 @@ public class Update {
         this.controller = controller;
     }
 
-    public void updateGame(Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, Render render) {
+    public void updateGame(Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, AtomicBoolean gameIsRunning, Render render) {
         updateBrick(ball, Level, brick);
-        updatePaddle(paddle, brick, ball, gameRestarted, render);
+        updatePaddle(paddle, brick, ball, gameRestarted, gameIsRunning, render);
     }
 
     private void updateBrick(Ball ball, AtomicInteger Level, Brick[][] brick) {
@@ -63,25 +63,27 @@ public class Update {
         }
     }
 
-    private static void updatePaddle(Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted, Render render) {
-        //paddle.Update();
+    private static void updatePaddle(Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted, AtomicBoolean gameIsRunning,  Render render) {
+        if (!gameIsRunning.get()) {
+            return;
+        }
+
+        if (heartCount.get() == 0) {
+            ball.setBall(paddle.x + paddle.width / 2, HEIGHT - 60);
+            return;
+        }
+
         if (gameRestarted.get()) {
             double nextPaddleX = paddle.getPaddle().getX();
-            double nextBallX = ball.getBall().getCenterX();
             if (paddle.isMoveLeft()) {
                 nextPaddleX -= paddle.vx;
-                nextBallX -= paddle.vx;
             }
             if (paddle.isMoveRight()) {
                 nextPaddleX += paddle.vx;
-                nextBallX += paddle.vx;
             }
             nextPaddleX = paddle.ClampPosition(nextPaddleX);
-            if (nextPaddleX != paddle.getPaddle().getX()) {
-                ball.setBall(nextBallX, HEIGHT - 60);
-            }
+            ball.setBall(paddle.x + paddle.width / 2, HEIGHT - 70);
             paddle.setPaddle(nextPaddleX);
-
             return;
         }
 
@@ -106,9 +108,10 @@ public class Update {
         ball.setBall(nextBallX, nextBallY);
         switch (ball.checkWallCollision(paddle, gameRestarted)) {
             case -1:
-                ball.setBall(WIDTH / 2, HEIGHT - 60);
-                paddle.setPaddle((WIDTH - paddle.width) / 2);
+                ball.vx = 0;
+                ball.vy = spvxOriginal;
                 gameRestarted.set(true);
+                heartCount.set(heartCount.get() - 1);
                 break;
             case 1:
                 ball.vx = -ball.vx;
@@ -125,10 +128,17 @@ public class Update {
         if (ball.isReadyForPaddleCollision(collisionState)) {
             switch (collisionState) {
                 case 1:
-                    ball.vy = -ball.vy;
+                    double paddleCenter = paddle.getPaddle().getX() + paddle.getPaddle().getWidth() / 2.0;
+                    double offset = Math.abs(paddleCenter - ball.x) / (paddleCenter - paddle.x);
+                    double baseAngle = Math.toRadians(45) * offset;
+                    if (ball.vx >= 0) {
+                        ball.vx = spvxOriginal * Math.sin(baseAngle);
+                    } else {
+                        ball.vx = -spvxOriginal * Math.sin(baseAngle);
+                    }
+                    ball.vy = -Math.abs(spvxOriginal * Math.cos(baseAngle));
                     break;
-                case 2:
-                case 3:
+                case 2: case 3:
                     ball.vx = -ball.vx;
                     break;
             }
