@@ -76,7 +76,7 @@ public class Ball extends BaseClass {
             return -1;
         }
         boolean check1 = x <= width || x >= WIDTH - width;
-        boolean check2 = y <= height || y >= HEIGHT - height;
+        boolean check2 = y <= height;
         if (check1 && check2) {
             return 1;
         } else if (check1) {
@@ -91,8 +91,8 @@ public class Ball extends BaseClass {
         double ballX = x;
         double ballY = y;
         double radius = width;
-        double paddleLeft = paddle.x;
-        double paddleRight = paddleLeft + paddle.width;
+        double paddleLeft = Math.min(paddle.x, paddle.x + paddle.vx);
+        double paddleRight = Math.max(paddleLeft + paddle.width, paddleLeft + paddle.width + paddle.vx);
         double paddleTop = paddle.y;
         double paddleBottom = paddleTop + paddle.height;
 
@@ -102,9 +102,9 @@ public class Ball extends BaseClass {
         if (!collisionX || !collisionY) {
             return -1;
         }
-        if (ballX <= paddleLeft) {
+        if (ballX <= paddleLeft && !collisionY) {
             return 2;
-        } else if (ballX >= paddleRight) {
+        } else if (ballX >= paddleRight && !collisionY) {
             return 3;
         }
         return 1;
