@@ -98,7 +98,7 @@ public class GamePlayController {
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-          update.updateGame(ball,paddle, brick, Level,gameRestarted,gameIsRunning,render);
+          update.updateGame(ball,paddle, brick, Level,gameRestarted,render);
           //gameLayer.getChildren().clear();
           render.renderGame(gc, ball, paddle, brick);
           // render.renderGame(IMAGE,ball,paddle, brick, gameLayer);
