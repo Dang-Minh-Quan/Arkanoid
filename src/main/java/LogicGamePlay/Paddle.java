@@ -59,19 +59,28 @@ public class Paddle extends BaseClass {
 
     }
 
-    public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {
+    public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted, AtomicBoolean gameIsRunning) {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case LEFT -> setMoveLeft(true);
+                case A -> setMoveLeft(true);
                 case RIGHT -> setMoveRight(true);
-                case SPACE -> gameRestarted.set(!gameRestarted.get());
+                case D -> setMoveRight(true);
+                case SPACE -> {
+                    if (gameRestarted.get()) {
+                        gameRestarted.set(false);
+                    }
+                }
+                case K -> gameIsRunning.set(!gameIsRunning.get());
             }
         });
 
         scene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
                 case LEFT -> setMoveLeft(false);
+                case A -> setMoveLeft(false);
                 case RIGHT -> setMoveRight(false);
+                case D -> setMoveRight(false);
             }
         });
     }
