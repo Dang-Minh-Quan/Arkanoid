@@ -1,13 +1,13 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-import java.awt.*;
+
 import java.util.ArrayList;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class PowerUp extends Baseclass{
     private Circle HitBoxPowerUp;

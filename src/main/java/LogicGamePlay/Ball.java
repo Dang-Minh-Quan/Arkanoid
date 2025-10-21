@@ -1,4 +1,4 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -6,7 +6,7 @@ import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class Ball extends Baseclass {
     private Circle ball;
@@ -92,7 +92,7 @@ public class Ball extends Baseclass {
         return 1;
     }
 
-    public int checkBrickCollision(Brick[][] brick, ArrayList<PowerUp> powerUps) {
+    public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
         int brickCol = (int)x/(int) WIDTHBrick ;
         int brickRow = (int)y/(int) HEIGHTBrick ;
 
@@ -113,31 +113,31 @@ public class Ball extends Baseclass {
 
         if(above == true){
             if(brick[brickRow - 1][brickCol].type!=0) {
-                brick[brickRow - 1][brickCol].UpdateBrick(this,powerUps);
+                brick[brickRow - 1][brickCol].UpdateBrick(media,this,powerUps);
                 return 2;
             }
         }
         if(below == true){
             if(brick[brickRow + 1][brickCol].type!=0) {
-                brick[brickRow + 1][brickCol].UpdateBrick(this,powerUps);
+                brick[brickRow + 1][brickCol].UpdateBrick(media,this,powerUps);
                 return 2;
             }
         }
         if(left == true){
             if(brick[brickRow][brickCol - 1].type!=0) {
-                brick[brickRow][brickCol - 1].UpdateBrick(this,powerUps);
+                brick[brickRow][brickCol - 1].UpdateBrick(media,this,powerUps);
                 return 1;
             }
         }
         if(right == true){
             if(brick[brickRow][brickCol + 1].type!=0) {
-                brick[brickRow][brickCol + 1].UpdateBrick(this,powerUps);
+                brick[brickRow][brickCol + 1].UpdateBrick(media,this,powerUps);
                 return 1;
             }
         }
         if(above==true&&left==true) {
             if(brick[brickRow - 1][brickCol - 1].type!=0) {
-                brick[brickRow - 1][brickCol - 1].UpdateBrick(this,powerUps);
+                brick[brickRow - 1][brickCol - 1].UpdateBrick(media,this,powerUps);
                 if(Math.abs((brickRow)*HEIGHTBrick-(int)y)>Math.abs((brickCol)*WIDTHBrick-(int)x)){
                     return 2;
                 }else {
@@ -147,7 +147,7 @@ public class Ball extends Baseclass {
         }
         if(below==true&&left==true) {
             if(brick[brickRow + 1][brickCol - 1].type!=0) {
-                brick[brickRow + 1][brickCol - 1].UpdateBrick(this,powerUps);
+                brick[brickRow + 1][brickCol - 1].UpdateBrick(media,this,powerUps);
                 if(Math.abs((brickRow+1)*HEIGHTBrick-(int)y)>Math.abs((brickCol)*WIDTHBrick-(int)x)){
                     return 2;
                 }else {
@@ -157,7 +157,7 @@ public class Ball extends Baseclass {
         }
         if(above==true&&right==true) {
             if(brick[brickRow - 1][brickCol + 1].type!=0) {
-                brick[brickRow - 1][brickCol + 1].UpdateBrick(this,powerUps);
+                brick[brickRow - 1][brickCol + 1].UpdateBrick(media,this,powerUps);
                 if(Math.abs((brickRow)*HEIGHTBrick-(int)y)>Math.abs((brickCol+1)*WIDTHBrick-(int)x)){
                     return 2;
                 }else {
@@ -167,7 +167,7 @@ public class Ball extends Baseclass {
         }
         if(below==true&&right==true) {
             if(brick[brickRow + 1][brickCol + 1].type!=0) {
-                brick[brickRow + 1][brickCol + 1].UpdateBrick(this,powerUps);
+                brick[brickRow + 1][brickCol + 1].UpdateBrick(media,this,powerUps);
                 if(Math.abs((brickRow+1)*HEIGHTBrick-(int)y)>Math.abs((brickCol+1)*WIDTHBrick-(int)x)){
                     return 2;
                 }else {

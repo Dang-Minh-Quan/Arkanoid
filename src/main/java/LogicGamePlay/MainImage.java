@@ -1,8 +1,8 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import javafx.scene.image.Image;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class MainImage {
     private static Image brick1;

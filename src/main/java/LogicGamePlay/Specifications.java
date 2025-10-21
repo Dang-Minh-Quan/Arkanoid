@@ -1,4 +1,4 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 public class Specifications {
     public static final int COL = 10;

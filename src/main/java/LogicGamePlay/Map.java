@@ -1,9 +1,9 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import java.io.*;
 import java.util.Scanner;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class Map {
     public int[][] builderMap(int Level) {

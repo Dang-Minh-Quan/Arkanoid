@@ -1,4 +1,4 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -8,13 +8,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class Main extends Application {
 

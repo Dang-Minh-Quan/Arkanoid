@@ -1,14 +1,13 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class Brick extends Baseclass {
     public Brick(int i,int j) {

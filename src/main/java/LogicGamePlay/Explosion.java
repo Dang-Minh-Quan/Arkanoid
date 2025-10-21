@@ -1,6 +1,4 @@
-package com.example.arkanoid;
-
-import javafx.scene.image.Image;
+package LogicGamePlay;
 
 public class Explosion extends AnimationClass {
     public Explosion(int x, int y) {

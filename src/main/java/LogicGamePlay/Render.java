@@ -1,14 +1,13 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class Render {
     public void renderGame(MainImage image,ArrayList<Ball>balls,Ball ball, Paddle paddle, Brick[][] brick, Pane pane, ArrayList<PowerUp> powerUps) {

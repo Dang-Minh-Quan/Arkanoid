@@ -1,10 +1,10 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class Paddle extends Baseclass {
     private int spvx ;
