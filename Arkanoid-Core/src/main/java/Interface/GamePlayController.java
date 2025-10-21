@@ -69,17 +69,10 @@ public class GamePlayController {
     }
     PauseMenu.setVisible(false);
 
-    //gameLayer = new Pane();
-    //GamePlay.getChildren().add(gameLayer);
-    gameLayer.toBack(); // gameLayer nằm dưới các nút UI
-
-    //PauseMenu.toFront();
-    ButtonPause.toFront(); // đảm bảo nút Pause nằm trên
+    gameLayer.toBack();
+    ButtonPause.toFront();
     PauseMenu.toFront();
-//    GamePlay.getChildren().clear();
-//    gameLayer = new Pane();
-//    GamePlay.getChildren().addAll(gameLayer, ButtonPause);
-//    ButtonBack.toFront();
+
 
     Canvas canvas = new Canvas(WIDTH, HEIGHT+ HEIGHTBar);
     gameLayer.getChildren().add(canvas);
