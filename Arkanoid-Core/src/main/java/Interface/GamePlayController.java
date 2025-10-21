@@ -38,6 +38,19 @@ public class GamePlayController {
   @FXML
   private Pane WinGame;
 
+  @FXML
+  private Button ButtonPause;
+
+  @FXML
+  private Pane PauseMenu;
+
+  @FXML
+  private Button ButtonResume;
+
+  @FXML
+  private Button ButtonBack;
+
+
   private AnimationTimer mainGame;
 
   private Ball ball;
@@ -54,15 +67,23 @@ public class GamePlayController {
       mainGame.stop();
       mainGame = null;
     }
+    PauseMenu.setVisible(false);
 
-    GamePlay.getChildren().clear();
-    gameLayer = new Pane();
-    GamePlay.getChildren().addAll(gameLayer, ButtonBack);
-    ButtonBack.toFront();
+    //gameLayer = new Pane();
+    //GamePlay.getChildren().add(gameLayer);
+    gameLayer.toBack(); // gameLayer nằm dưới các nút UI
+
+    //PauseMenu.toFront();
+    ButtonPause.toFront(); // đảm bảo nút Pause nằm trên
+    PauseMenu.toFront();
+//    GamePlay.getChildren().clear();
+//    gameLayer = new Pane();
+//    GamePlay.getChildren().addAll(gameLayer, ButtonPause);
+//    ButtonBack.toFront();
 
     Canvas canvas = new Canvas(WIDTH, HEIGHT+ HEIGHTBar);
-    GamePlay.getChildren().add(canvas);
-    //canvas.toFront();
+    gameLayer.getChildren().add(canvas);
+    // canvas.toFront();
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
     Level = new AtomicInteger(0);
@@ -76,6 +97,7 @@ public class GamePlayController {
     render = new Render();
     update.initializeLevel(ball, brick, Level);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
+    AtomicBoolean gameIsRunning = new AtomicBoolean(true);
 
     mainGame = new AnimationTimer() {
       long LastUpdate = 0;
@@ -83,10 +105,10 @@ public class GamePlayController {
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-          update.updateGame(ball,paddle, brick, Level,gameRestarted,render);
-          gameLayer.getChildren().clear();
+          update.updateGame(ball,paddle, brick, Level,gameRestarted,gameIsRunning,render);
+          //gameLayer.getChildren().clear();
           render.renderGame(gc, ball, paddle, brick);
-         // render.renderGame(IMAGE,ball,paddle, brick, gameLayer);
+          // render.renderGame(IMAGE,ball,paddle, brick, gameLayer);
           LastUpdate = now;
         }
       }
@@ -95,13 +117,32 @@ public class GamePlayController {
     Platform.runLater(() -> {
       paddle.controllerPaddle(GamePlay.getScene(),gameRestarted);
       GamePlay.requestFocus();
-      ButtonBack.toFront();
+      ButtonPause.toFront();
       mainGame.start();
     });
   }
 
   @FXML
-  private Button ButtonBack;
+  protected void Pause(ActionEvent event) {
+    if (mainGame != null) {
+      mainGame.stop(); // tạm dừng game
+    }
+    PauseMenu.setVisible(true);// hiện menu pause
+    ButtonPause.setVisible(false);
+    System.out.println("Game Paused");
+  }
+
+  @FXML
+  protected void Resume(ActionEvent event) {
+    if (mainGame != null) {
+      mainGame.start(); // tiếp tục game
+    }
+    PauseMenu.setVisible(false); // ẩn menu pause
+    ButtonPause.setVisible(true);
+
+    GamePlay.requestFocus();
+    System.out.println("Game Resumed");
+  }
 
   @FXML
   protected void Back(ActionEvent event) throws IOException {
