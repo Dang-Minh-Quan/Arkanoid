@@ -6,6 +6,7 @@ import LogicGamePlay.Brick;
 import LogicGamePlay.MainImage;
 import LogicGamePlay.Paddle;
 import LogicGamePlay.Render;
+import LogicGamePlay.Specifications;
 import LogicGamePlay.Update;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -62,11 +63,11 @@ public class GamePlayController {
   private MainImage IMAGE;
 
   public void start(Stage stage) throws IOException {
-
     if (mainGame != null) {
       mainGame.stop();
       mainGame = null;
     }
+    Specifications.reset();
     PauseMenu.setVisible(false);
 
     gameLayer.toBack();
@@ -97,11 +98,12 @@ public class GamePlayController {
 
       @Override
       public void handle(long now) {
-        if (now - LastUpdate >= 16_000_000) {
+        if (now - LastUpdate >= 12_000_000) {
+          //System.out.println(ball.vx+" "+ball.vy);
+          //System.out.println(numBrick);
           update.updateGame(ball,paddle, brick, Level,gameRestarted,render);
           //gameLayer.getChildren().clear();
           render.renderGame(gc, ball, paddle, brick);
-          // render.renderGame(IMAGE,ball,paddle, brick, gameLayer);
           LastUpdate = now;
         }
       }
@@ -118,9 +120,9 @@ public class GamePlayController {
   @FXML
   protected void Pause(ActionEvent event) {
     if (mainGame != null) {
-      mainGame.stop(); // tạm dừng game
+      mainGame.stop();
     }
-    PauseMenu.setVisible(true);// hiện menu pause
+    PauseMenu.setVisible(true );
     ButtonPause.setVisible(false);
     System.out.println("Game Paused");
   }
@@ -128,9 +130,9 @@ public class GamePlayController {
   @FXML
   protected void Resume(ActionEvent event) {
     if (mainGame != null) {
-      mainGame.start(); // tiếp tục game
+      mainGame.start();
     }
-    PauseMenu.setVisible(false); // ẩn menu pause
+    PauseMenu.setVisible(false);
     ButtonPause.setVisible(true);
 
     GamePlay.requestFocus();
@@ -156,6 +158,27 @@ public class GamePlayController {
     System.out.println("Clicked Back");
   }
 
+  boolean GameOverCheck = false;
+
+  public void GameOver() {
+    try {
+      if (heartCount.get()>0 || GameOverCheck) return;
+      GameOverCheck = true;
+
+      Stage stage = (Stage) GamePlay.getScene().getWindow();
+      Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.centerOnScreen();
+      stage.show();
+
+      System.out.println("You Lose!");
+    } catch (IOException e) {
+      e.printStackTrace();
+      GameOverCheck  =false;
+    }
+  }
+
   boolean WinCheck = false;
 
   public void Win() {
@@ -163,8 +186,13 @@ public class GamePlayController {
       if (WinCheck) return;
       WinCheck = true;
 
+      if (mainGame != null) {
+        mainGame.stop();
+        mainGame = null;
+      }
+
       Stage stage = (Stage) GamePlay.getScene().getWindow();
-      Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinGame.fxml"));
+      Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
       Scene scene = new Scene(root);
       stage.setScene(scene);
       stage.centerOnScreen();
