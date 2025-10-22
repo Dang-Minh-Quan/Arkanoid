@@ -4,7 +4,10 @@ import static LogicGamePlay.Specifications.HEIGHT;
 import static LogicGamePlay.Specifications.HEIGHTBar;
 import static LogicGamePlay.Specifications.WIDTH;
 
+import LogicGamePlay.Specifications;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import static LogicGamePlay.Specifications.*;
 
 public class MainMenuController {
   @FXML
@@ -23,9 +27,12 @@ public class MainMenuController {
   private Button ButtonExit;
   @FXML
   private Button BackToMenu;
+  @FXML
+  private Button ButtonNextLevel;
 
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
+    Specifications.reset();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
@@ -73,6 +80,29 @@ public class MainMenuController {
     stage.show();
 
     System.out.println("Clicked Menu");
+  }
+
+
+  public void loadNextLevel(Stage stage) throws IOException {
+    Level.incrementAndGet();
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
+    Parent root = loader.load();
+
+    GamePlayController gameController = loader.getController();
+
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
+
+    gameController.start(stage);
+  }
+
+  @FXML
+  protected void NextLevel(ActionEvent event) throws IOException {
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    loadNextLevel(stage);
   }
 
 }

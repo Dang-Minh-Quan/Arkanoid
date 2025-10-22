@@ -67,31 +67,30 @@ public class GamePlayController {
       mainGame.stop();
       mainGame = null;
     }
-    Specifications.reset();
+    //Specifications.reset();
     PauseMenu.setVisible(false);
 
     gameLayer.toBack();
     ButtonPause.toFront();
     PauseMenu.toFront();
 
-
     Canvas canvas = new Canvas(WIDTH, HEIGHT+ HEIGHTBar);
     gameLayer.getChildren().add(canvas);
     // canvas.toFront();
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    Level = new AtomicInteger(0);
+    //Level = new AtomicInteger(0);
     ball = new Ball();
     paddle = new Paddle();
     brick = new Brick[(int)ROW][(int)COL];
     IMAGE = new MainImage();
     IMAGE.LoadImage();
 
+    //Level = new AtomicInteger(Specifications.Level.get());
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(ball, brick, Level);
+    update.initializeLevel(ball, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
-    AtomicBoolean gameIsRunning = new AtomicBoolean(true);
 
     mainGame = new AnimationTimer() {
       long LastUpdate = 0;
