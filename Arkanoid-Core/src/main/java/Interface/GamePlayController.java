@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import org.w3c.dom.ls.LSOutput;
 
 import static LogicGamePlay.Specifications.*;
 import static LogicGamePlay.Specifications.HEIGHT;
@@ -61,11 +62,11 @@ public class GamePlayController {
   private Update update;
   private Render render;
   private MainImage IMAGE;
-
   public void start(Stage stage) throws IOException {
     if (mainGame != null) {
       mainGame.stop();
       mainGame = null;
+      System.out.println(Specifications.Level.get());
     }
     //Specifications.reset();
     PauseMenu.setVisible(false);
@@ -76,21 +77,19 @@ public class GamePlayController {
 
     Canvas canvas = new Canvas(WIDTH, HEIGHT+ HEIGHTBar);
     gameLayer.getChildren().add(canvas);
-    // canvas.toFront();
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    //Level = new AtomicInteger(0);
     ball = new Ball();
     paddle = new Paddle();
     brick = new Brick[(int)ROW][(int)COL];
     IMAGE = new MainImage();
     IMAGE.LoadImage();
 
-    //Level = new AtomicInteger(Specifications.Level.get());
     update = new Update(this);
     render = new Render();
     update.initializeLevel(ball, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
+    System.out.println(numBrick);
 
     mainGame = new AnimationTimer() {
       long LastUpdate = 0;
@@ -99,7 +98,7 @@ public class GamePlayController {
       public void handle(long now) {
         if (now - LastUpdate >= 12_000_000) {
           //System.out.println(ball.vx+" "+ball.vy);
-          //System.out.println(numBrick);
+          System.out.println(numBrick);
           update.updateGame(ball,paddle, brick, Level,gameRestarted,render);
           //gameLayer.getChildren().clear();
           render.renderGame(gc, ball, paddle, brick);
@@ -157,12 +156,18 @@ public class GamePlayController {
     System.out.println("Clicked Back");
   }
 
-  boolean GameOverCheck = false;
+  public static boolean GameOverCheck = false;
 
   public void GameOver() {
     try {
       if (heartCount.get()>0 || GameOverCheck) return;
       GameOverCheck = true;
+
+      if (mainGame != null) {
+        mainGame.stop();
+        mainGame = null;
+      }
+      Specifications.reset();
 
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
@@ -171,6 +176,7 @@ public class GamePlayController {
       stage.centerOnScreen();
       stage.show();
 
+      GameOverCheck = false;
       System.out.println("You Lose!");
     } catch (IOException e) {
       e.printStackTrace();

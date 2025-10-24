@@ -29,6 +29,8 @@ public class MainMenuController {
   private Button BackToMenu;
   @FXML
   private Button ButtonNextLevel;
+  @FXML
+  private Button ButtonPlayAgain;
 
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
@@ -103,6 +105,28 @@ public class MainMenuController {
   protected void NextLevel(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     loadNextLevel(stage);
+  }
+
+  public void loadCurrentLevel(Stage stage) throws IOException {
+
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
+    Parent root = loader.load();
+
+    GamePlayController gameController = loader.getController();
+
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
+
+    gameController.start(stage);
+    System.out.println("Reloading Level " + Specifications.Level.get());
+  }
+
+  @FXML
+  protected void PlayAgain(ActionEvent event) throws IOException {
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    loadCurrentLevel(stage);
   }
 
 }
