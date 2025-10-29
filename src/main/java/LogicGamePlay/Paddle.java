@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 import static LogicGamePlay.Specifications.*;
 
-public class Paddle extends Baseclass {
+public class Paddle extends BaseClass {
     private int spvx ;
     private int stvx ;
     private Rectangle HitBoxPaddle;
