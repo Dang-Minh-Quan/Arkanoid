@@ -7,7 +7,7 @@ import javafx.scene.shape.Shape;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
 public class PowerUp extends Baseclass{
     private Circle HitBoxPowerUp;
