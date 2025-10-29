@@ -21,7 +21,7 @@ public class Specifications {
     public static int  RADIUSPU = HEIGHTBrick/2;
     public static int  PU =3;
     public static final int probability = 10;
-    public static final int TailLength = 20;
+    public static final int TailLength = 40;
     public static final int HEIGHTBar = 150;
     public static final int ballRadiusOriginal=10;
     public static AtomicInteger heartCount= new AtomicInteger(3);

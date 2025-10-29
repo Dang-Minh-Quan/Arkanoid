@@ -3,7 +3,7 @@ package com.example.arkanoid;
 
 import javafx.scene.image.Image;
 
-public class Baseclass {
+public class BaseClass {
     public Image image;
     public int type;
     public int x;
@@ -13,35 +13,35 @@ public class Baseclass {
     public int width;
     public int height;
 
-    public Baseclass() {
+    public BaseClass() {
         this(null, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public Baseclass(final Image image) {
+    public BaseClass(final Image image) {
         this(image, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public Baseclass( final int x, final int y) {
+    public BaseClass(final int x, final int y) {
         this(null, 0, x, y, 0, 0, 0, 0);
     }
 
-    public Baseclass( final int x, final int y, final int width,final int height) {
+    public BaseClass(final int x, final int y, final int width, final int height) {
         this(null, 0, x, y,0, 0, width, height);
     }
 
-    public Baseclass(Image image ,final int x, final int y, final int width,final int height) {
+    public BaseClass(Image image , final int x, final int y, final int width, final int height) {
         this(image, 0, x, y,0, 0, width, height);
     }
 
-    public Baseclass( final int x, final int y, int vx,final int width,final int height) {
+    public BaseClass(final int x, final int y, int vx, final int width, final int height) {
         this(null, 0, x, y, vx, 0, width, height);
     }
 
-    public Baseclass( final int x, final int y, int vx, int vy,final int width,final int height) {
+    public BaseClass(final int x, final int y, int vx, int vy, final int width, final int height) {
         this(null, 0, x, y, vx, vy, width, height);
     }
 
-    public Baseclass(final Image image, final int type, final int x, int y, int vx, int vy, int width, int height) {
+    public BaseClass(final Image image, final int type, final int x, int y, int vx, int vy, int width, int height) {
         this.image = image;
         this.type = type;
         this.x = x;

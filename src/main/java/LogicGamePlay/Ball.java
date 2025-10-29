@@ -17,27 +17,47 @@ public class Ball extends BaseClass {
     private boolean collidedWithPaddle = false;
 
     public Ball(){
+        super( 500, 400,5,5, 10,10);
         ball = new Circle(x, y, width, Color.BLUE);
         for (int i=0;i<TailLength;i++){
-            double density=Math.max(0,1-0.5-(double)i/(double)TailLength/2);
+            TailX[i]=x;
+            TailY[i]=y;
+            double density=Math.max(0,1-0.5-(double)i/(((double)TailLength)*2));
             Color ColorTail = new Color(1, 1, 1,density );
-            Tail[i] = new Circle(x, y, width-i/2,ColorTail);
+            Tail[i] = new Circle(x, y, width-i/4,ColorTail);
         }
     }
-        UpdateTail();
+    public void setBall(int dx, int dy) {
         x=dx;
         y=dy;
         ball.setCenterX(x);
         ball.setCenterY(y);
+        UpdateTail();
     }
 
     public void UpdateTail() {
+        int TailX0=TailX[0];
+        int TailY0=TailY[0];
+        int SPTailX=(x-TailX0)/2;
+        int SPTailY=(y-TailY0)/2;
+        int i = 0;
+        while (i<2) {
+            TailX0 = TailX0+SPTailX;
+            TailY0 = TailY0+SPTailY;
+            UpdateNodeTail(TailX0,TailY0);
+            i++;
+        }
+    }
+
+    public void UpdateNodeTail(int TailX0,int TailY0){
         for (int i = TailLength - 1 ;i>0;i--){
             TailX[i]=TailX[i-1];
             TailY[i]=TailY[i-1];
             Tail[i].setCenterX(TailX[i]);
             Tail[i].setCenterY(TailY[i]);
         }
+        TailX[0]=x;
+        TailY[0]=y;
         Tail[0].setCenterX(TailX[0]);
         Tail[0].setCenterY(TailY[0]);
     }
@@ -53,17 +73,13 @@ public class Ball extends BaseClass {
         }
     }
 
-
-    @Override
-    public void Update() {
-
-    }
-
     public Circle getBall() {
         return ball;
     }
 
+    public int checkWallCollision() {
         boolean check1 = x <= width || x >= WIDTH - width;
+        boolean check2 = y <= width || y >= HEIGHT - width;
         if (check1 && check2) {
             return 1;
         } else if (check1) {
@@ -78,6 +94,8 @@ public class Ball extends BaseClass {
         double ballX = x;
         double ballY = y;
         double radius = width;
+        double paddleLeft = paddle.x;
+        double paddleRight = paddleLeft + paddle.width;
         double paddleTop = paddle.y;
         double paddleBottom = paddleTop + paddle.height;
 
@@ -87,7 +105,9 @@ public class Ball extends BaseClass {
         if (!collisionX || !collisionY) {
             return -1;
         }
+        if (ballX <= paddleLeft) {
             return 2;
+        } else if (ballX >= paddleRight) {
             return 3;
         }
         return 1;
@@ -107,16 +127,19 @@ public class Ball extends BaseClass {
     public int checkBrickCollision(Brick[][] brick, Render render) {
         int brickCol = (int) x / (int) WIDTHBrick;
         int brickRow = (int) y / (int) HEIGHTBrick;
+    public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
+        int brickCol = x/ WIDTHBrick ;
+        int brickRow = y/ HEIGHTBrick ;
 
         boolean above = false,below = false,left = false,right = false;
 
-        if(vy<0&&brickRow>0&&brickRow<ROW &&(brickRow)*HEIGHTBrick+width>=y){
+        if(vy<0&&brickRow>0&&brickRow<=ROW&&brickCol<COL &&(brickRow)*HEIGHTBrick+width>=y){
             above = true;
         }
-        if(vy>0&&brickRow<ROW-1 &&(brickRow+1)*HEIGHTBrick-width<=y){
+        if(vy>0&&brickRow<ROW-1 &&brickCol<COL&&(brickRow+1)*HEIGHTBrick-width<=y){
             below =true;
         }
-        if(vx<0&&brickCol>0&&brickRow<ROW &&(brickCol)*WIDTHBrick+width>=x){
+        if(vx<0&&brickCol>0&&brickRow<ROW &&brickCol<COL&&(brickCol)*WIDTHBrick+width>=x){
             left = true;
         }
         if(vx>0&&brickCol<COL-1&&brickRow<ROW &&(brickCol+1)*WIDTHBrick-width<=x){
@@ -149,6 +172,7 @@ public class Ball extends BaseClass {
         }
         if(above==true&&left==true) {
             if(brick[brickRow - 1][brickCol - 1].type!=0) {
+                brick[brickRow - 1][brickCol - 1].UpdateBrick(media,this,powerUps);
                 if(Math.abs((brickRow)*HEIGHTBrick-(int)y)>Math.abs((brickCol)*WIDTHBrick-(int)x)){
                     return 2;
                 }else {
