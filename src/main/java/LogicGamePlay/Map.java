@@ -11,10 +11,10 @@ public class Map {
         String path = new String();
         switch (Level) {
             case 1:
-                path="Level1.txt";
+                path="/Interface/Level1.txt";
                 break;
             case 2:
-                path="Level2.txt";
+                path="/Interface/Level2.txt";
                 break;
         }
         InputStream input = getClass().getResourceAsStream(path);
