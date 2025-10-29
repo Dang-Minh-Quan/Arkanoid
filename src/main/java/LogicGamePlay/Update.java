@@ -17,36 +17,41 @@ public class Update {
         this.controller = controller;
     }
 
-    public void updateGame(Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, AtomicBoolean gameIsRunning, Render render) {
-        updateBrick(ball, Level, brick);
-        updatePaddle(paddle, brick, ball, gameRestarted, gameIsRunning, render);
+    public void updateGame(Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, Render render) {
+        updateBrick(ball, brick);
+        updatePaddle(paddle, brick, ball, gameRestarted, render);
     }
 
-    private void updateBrick(Ball ball, AtomicInteger Level, Brick[][] brick) {
+    private void updateBrick(Ball ball, Brick[][] brick) {
         if (numBrick <= 0) {
-            Level.getAndIncrement();
             if (Level.get() <= LevelMax) {
-                builderLevel(ball, brick, Level);
+//                System.out.println(winLevel + " " + Level);
+                if (winLevel == false) {
+                    builderLevel(ball, brick, Level);
+                    winLevel = true;
+                } else {
+                    winLevel = false;
+                    Platform.runLater(() -> controller.Win());
+                }
             } else {
-                //Level.set(0);
                 Platform.runLater(() -> controller.Win());
-                //WIN
             }
         } else {
             //numBrick--;
         }
     }
 
-    public void initializeLevel(Ball ball, Brick[][] brick, AtomicInteger Level) {
+    public void initializeLevel(Ball ball, Brick[][] brick) {
+//        System.out.println(Level);
+        heartCount.set(3);
         numBrick = 0;
-        Level.set(0);
-        updateBrick(ball, Level, brick);
+        // Level.set(0);
+        updateBrick(ball, brick);
     }
 
     private void builderLevel(Ball ball, Brick[][] brick, AtomicInteger Level) {
         Map map = new Map();
         if (Level.get() > LevelMax) {
-            checkPlay = false;
         } else {
             //ball.resert();
             int[][] a = map.builderMap(Level.get());
@@ -55,7 +60,7 @@ public class Update {
                     brick[i][j] = new Brick(i, j);
                     brick[i][j].type = a[i][j];
                     if (brick[i][j].type > 0) {
-                        numBrick = numBrick + brick[i][j].type;
+                        numBrick = numBrick + 1;
                     }
                     brick[i][j].Update();
                 }
@@ -63,13 +68,11 @@ public class Update {
         }
     }
 
-    private static void updatePaddle(Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted, AtomicBoolean gameIsRunning,  Render render) {
-        if (!gameIsRunning.get()) {
-            return;
-        }
+    private void updatePaddle(Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted, Render render) {
 
         if (heartCount.get() == 0) {
             ball.setBall(paddle.x + paddle.width / 2, HEIGHT - 60);
+            Platform.runLater(() -> controller.GameOver());
             return;
         }
 
@@ -130,7 +133,7 @@ public class Update {
                 case 1:
                     double paddleCenter = paddle.getPaddle().getX() + paddle.getPaddle().getWidth() / 2.0;
                     double offset = Math.abs(paddleCenter - ball.x) / (paddleCenter - paddle.x);
-                    double baseAngle = Math.toRadians(45) * offset;
+                    double baseAngle = Math.toRadians(45) * offset + Math.toRadians(5);
                     if (ball.vx >= 0) {
                         ball.vx = spvxOriginal * Math.sin(baseAngle);
                     } else {

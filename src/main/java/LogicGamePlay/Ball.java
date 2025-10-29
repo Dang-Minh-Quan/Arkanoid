@@ -17,7 +17,7 @@ public class Ball extends BaseClass {
     private boolean collidedWithPaddle = false;
 
     public Ball() {
-        super(null, 0, WIDTH / 2, HEIGHT - 60, spvxOriginal, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        super(null, 0, WIDTH / 2, HEIGHT - 60, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
         for (int i = 0; i < TailLength; i++) {
             TailX[i] = (int) x;
