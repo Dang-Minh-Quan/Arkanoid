@@ -1,0 +1,82 @@
+package LogicGamePlay;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Rectangle;
+
+import static LogicGamePlay.Specifications.*;
+
+public class Paddle extends BaseClass {
+  private Rectangle paddle;
+  private boolean moveLeft;
+  private boolean moveRight;
+  private Rectangle HitBoxPaddle;
+
+  public Paddle() {
+    super(null, 0, WIDTH/2-paddleWidthOriginal/2,HEIGHT - 20 , vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
+    paddle = new Rectangle(x, y, width, height);
+    moveLeft = false;
+    moveRight = false;
+  }
+
+    public Rectangle getHitBoxPaddle() {
+        return HitBoxPaddle;
+    }
+
+    public Rectangle getPaddle() {
+    return paddle;
+  }
+
+  public void setPaddle(double dx) {
+    x = dx;
+    paddle.setX(dx);
+  }
+
+  public boolean isMoveLeft() {
+    return moveLeft;
+  }
+
+  public void setMoveLeft(boolean moveLeft) {
+    this.moveLeft = moveLeft;
+  }
+
+  public boolean isMoveRight() {
+    return moveRight;
+  }
+
+  public void setMoveRight(boolean moveRight) {
+    this.moveRight = moveRight;
+  }
+
+  public double ClampPosition(double next) {
+    if (next < 0) {
+      return 0;
+    } else if (next + paddle.getWidth() > WIDTH) {
+      return WIDTH - paddle.getWidth();
+    }
+    return next;
+  }
+
+  @Override
+  public void Update() {
+
+  }
+
+  public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted){
+    scene.setOnKeyPressed(event -> {
+      switch (event.getCode()) {
+        case LEFT -> setMoveLeft(true);
+        case RIGHT -> setMoveRight(true);
+        case SPACE -> gameRestarted.set(!gameRestarted.get());
+      }
+    });
+
+    scene.setOnKeyReleased(event -> {
+      switch (event.getCode()) {
+        case LEFT -> setMoveLeft(false);
+        case RIGHT -> setMoveRight(false);
+      }
+    });
+  }
+}

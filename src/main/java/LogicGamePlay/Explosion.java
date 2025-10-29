@@ -15,8 +15,8 @@ public class Explosion {
     private int currentFrame = 0;
     public boolean toBeRemoved = false;
 
-    private static final Image explosionImage =
-            new Image(Explosion.class.getResourceAsStream("/Interface/Image1/explosion.png"),256, 256, true, false);
+    private static final Image explosionImage = new MainImage().getExplosion();
+
 
     public Explosion(double x, double y) {
         this.x = x;

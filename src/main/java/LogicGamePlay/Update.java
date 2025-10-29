@@ -1,11 +1,14 @@
 package LogicGamePlay;
 
 import Interface.GamePlayController;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javafx.application.Platform;
 
 import static LogicGamePlay.Specifications.*;
+
 
 public class Update {
 
@@ -16,36 +19,48 @@ public class Update {
     }
 
     public void updateGame(Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, Render render) {
-        updateBrick(ball, Level, brick);
+        updateBrick(ball,brick);
         updatePaddle(paddle, brick, ball, gameRestarted, render);
     }
 
-    private void updateBrick(Ball ball, AtomicInteger Level, Brick[][] brick) {
-        //System.out.println(numBrick);
+    private void updateBrick(Ball ball, Brick[][] brick) {
         if (numBrick <= 0) {
-            Level.getAndIncrement();
             if (Level.get() <= LevelMax) {
-                builderLevel(ball, brick, Level);
+                System.out.println(winLevel+" "+Level);
+                if(winLevel==false) {
+                    builderLevel(ball, brick, Level);
+                    winLevel =true;
+                }
+                else {
+                    winLevel = false;
+                    Platform.runLater(() -> controller.Win());
+                }
             } else {
-                //Level.set(0);
                 Platform.runLater(() -> controller.Win());
-                //WIN
             }
         } else {
             //numBrick--;
         }
     }
 
-    public void initializeLevel(Ball ball, Brick[][] brick, AtomicInteger Level) {
+    public void initializeLevel(Ball ball, Brick[][] brick) {
+        System.out.println(Level);
+        heartCount.set(3);
         numBrick = 0;
-        Level.set(0);
-        updateBrick(ball, Level, brick);
+        // Level.set(0);
+        updateBrick(ball, brick);
     }
+
+//  public void nextLevel(Ball ball, Brick[][] brick, AtomicInteger Level) {
+//    heartCount.set(3);
+//    numBrick = 0;
+//    Level.set(Level.get()+1);
+//    updateBrick(ball, Level, brick);
+//  }
 
     private void builderLevel(Ball ball, Brick[][] brick, AtomicInteger Level) {
         Map map = new Map();
         if (Level.get() > LevelMax) {
-            checkPlay = false;
         } else {
             //ball.resert();
             int[][] a = map.builderMap(Level.get());
@@ -54,7 +69,7 @@ public class Update {
                     brick[i][j] = new Brick(i, j);
                     brick[i][j].type = a[i][j];
                     if (brick[i][j].type > 0) {
-                        numBrick = numBrick + brick[i][j].type;
+                        numBrick = numBrick + 1;
                     }
                     brick[i][j].Update();
                 }
@@ -62,25 +77,25 @@ public class Update {
         }
     }
 
-    private static void updatePaddle(Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted, Render render) {
-        //paddle.Update();
+    private void updatePaddle(Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted,  Render render) {
+
+        if (heartCount.get() == 0) {
+            ball.setBall(paddle.x + paddle.width / 2, HEIGHT - 60);
+            Platform.runLater(() -> controller.GameOver());
+            return;
+        }
+
         if (gameRestarted.get()) {
             double nextPaddleX = paddle.getPaddle().getX();
-            double nextBallX = ball.getBall().getCenterX();
             if (paddle.isMoveLeft()) {
                 nextPaddleX -= paddle.vx;
-                nextBallX -= paddle.vx;
             }
             if (paddle.isMoveRight()) {
                 nextPaddleX += paddle.vx;
-                nextBallX += paddle.vx;
             }
             nextPaddleX = paddle.ClampPosition(nextPaddleX);
-            if (nextPaddleX != paddle.getPaddle().getX()) {
-                ball.setBall(nextBallX, HEIGHT - 60);
-            }
+            ball.setBall(paddle.x + paddle.width / 2, HEIGHT - 70);
             paddle.setPaddle(nextPaddleX);
-
             return;
         }
 
@@ -105,9 +120,10 @@ public class Update {
         ball.setBall(nextBallX, nextBallY);
         switch (ball.checkWallCollision(paddle, gameRestarted)) {
             case -1:
-                ball.setBall(WIDTH / 2, HEIGHT - 60);
-                paddle.setPaddle((WIDTH - paddle.width) / 2);
+                ball.vx = 0;
+                ball.vy = spvxOriginal;
                 gameRestarted.set(true);
+                heartCount.set(heartCount.get() - 1);
                 break;
             case 1:
                 ball.vx = -ball.vx;
@@ -124,22 +140,31 @@ public class Update {
         if (ball.isReadyForPaddleCollision(collisionState)) {
             switch (collisionState) {
                 case 1:
-                    ball.vy = -ball.vy;
+                    double paddleCenter = paddle.getPaddle().getX() + paddle.getPaddle().getWidth() / 2.0;
+                    double offset = Math.abs(paddleCenter - ball.x) / (paddleCenter - paddle.x);
+                    double baseAngle = Math.toRadians(45) * offset + Math.toRadians(5);
+                    if (ball.vx >= 0) {
+                        ball.vx = spvxOriginal * Math.sin(baseAngle);
+                    } else {
+                        ball.vx = -spvxOriginal * Math.sin(baseAngle);
+                    }
+                    ball.vy = -Math.abs(spvxOriginal * Math.cos(baseAngle));
                     break;
-                case 2:
-                case 3:
+                case 2: case 3:
                     ball.vx = -ball.vx;
                     break;
             }
         }
-        int conllisionResult = ball.checkBrickCollision(brick, render);
-        if (conllisionResult != 0) {
-            if (conllisionResult == 1) {
+        int collisionResult = ball.checkBrickCollision(brick, render);
+        if (collisionResult != 0) {
+            if (collisionResult == 1) {
                 ball.vx = -ball.vx;
-            }
-            else if (conllisionResult == 2) {
+            } else if (collisionResult == 2) {
                 ball.vy = -ball.vy;
             }
+            //Brick b = ball.getLastHitBrick();
+            // if (b != null) b.BallHit(ball, render);
         }
+
     }
 }

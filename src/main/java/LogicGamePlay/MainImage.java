@@ -45,6 +45,7 @@ public class MainImage {
     public Image getBar() {
         return bar;
     }
+
     public Image getPaddle() {
         return paddle;
     }
@@ -62,17 +63,24 @@ public class MainImage {
     }
 
     public void LoadImage() {
-        background = new Image(getClass().getResourceAsStream(
-                "/Interface/Image/background.png"));
-        brick1 = new Image(getClass().getResourceAsStream("/Interface/Image/brick1.png"), 60, 30, false, false);
-        brick2 = new Image(getClass().getResourceAsStream("/Interface/Image/brick2.png"), 60, 30, false, false);
-        brick3 = new Image(getClass().getResourceAsStream("/Interface/Image/brick3.png"), 60, 30, false, false);
+        background = new Image(getClass().getResourceAsStream("/Interface/Image/background.png"));
+        brick1 = new Image(getClass().getResourceAsStream("/Interface/Image/brick1.png"),
+                60, 30, false, false);
+        brick2 = new Image(getClass().getResourceAsStream("/Interface/Image/brick2.png"),
+                60, 30, false, false);
+        brick3 = new Image(getClass().getResourceAsStream("/Interface/Image/brick3.png"),
+                60, 30, false, false);
         brickBroken = new Image(getClass().getResourceAsStream("/Interface/Image/brickBroken.png"),
                 60, 30, false, false);
-        paddle = new Image(getClass().getResourceAsStream("/Interface/Image/paddle.png"), 100, 30, false, false);
-        ball = new Image(getClass().getResourceAsStream("/Interface/Image/ball.png"), 30, 30, false, false);
-        explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"), 256, 256, true, false);
-        powerUp = new Image(getClass().getResourceAsStream("/Interface/Image/PowerUp.png"), 128, 128, true, false);
-        bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"), WIDTH, HEIGHTBar, false,false);
+        paddle = new Image(getClass().getResourceAsStream("/Interface/Image/paddle.png"),
+                100, 30, false, false);
+        ball = new Image(getClass().getResourceAsStream("/Interface/Image/ball.png"),
+                30, 30, false, false);
+        explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"),
+                256, 256, true, false);
+        powerUp = new Image(getClass().getResourceAsStream("/Interface/Image/PowerUp.png"),
+                128, 128, true, false);
+        bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"),
+                WIDTH, HEIGHTBar, false, false);
     }
 }
