@@ -47,14 +47,16 @@ public class Brick extends BaseClass {
         type = 0;
         numBrick--;
         explosion(render);
+        if (Math.random() < 0.9) { // xác suất rơi 40%
+            render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15);
+        }
+
     }
 
     public void explosion(Render render) {
         int explosionX = (int) (x + width / 2 - 32);
         int explosionY = (int) (y + height / 2 - 32);
         render.addExplosion(explosionX, explosionY);
-        System.out.println("Explosion added at: " + explosionX + ", " + explosionY);
-
     }
 
     public void UpdateBrick(Ball ball) {
@@ -82,7 +84,7 @@ public class Brick extends BaseClass {
             image = newImage.getBrick3();
         }
         if (type == 3) {
-            image = newImage.getBrick4();
+            image = newImage.getBrickBroken();
         }
         if (type == -1) {
             image = newImage.getBrick2();

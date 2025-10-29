@@ -15,24 +15,38 @@ import static LogicGamePlay.Specifications.*;
 public class Render {
     private long lastTime = 0;
     private final ArrayList<Explosion> explosions = new ArrayList<>();
+    private final ArrayList<PowerUp> powerUps = new ArrayList<>();
     private final MainImage image = new MainImage();
 
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
     }
 
+public void addPowerUp(double x, double y) {
+    powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
+}
+
+    private void renderPowerUp(GraphicsContext gc) {
+        for (PowerUp p : powerUps) {
+            p.update();
+            p.render(gc);
+        }
+        powerUps.removeIf(p -> !p.isActive());
+    }
+
     public void renderGame(GraphicsContext gc, Ball ball, Paddle paddle, Brick[][] brick) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
         renderBackGround(gc);
         renderBrick(gc,brick);
-        ball.RenderTail(gc);
         renderExplosions(gc);
+        ball.RenderTail(gc);
         renderBall(gc, ball);
+        renderPowerUp(gc);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
     }
     private void renderBackGround(GraphicsContext gc) {
-        Image background = image.getBackground1();
+        Image background = image.getBackground();
         gc.drawImage(background, 0, 0, WIDTH, HEIGHT);
     }
 
@@ -69,7 +83,7 @@ public class Render {
         gc.drawImage(ballImange, ball.x - ball.width, ball.y-ball.width,ball.width * 2, ball.width * 2);
     }
 
-    private void renderExplosions(GraphicsContext gc) {
+  private void renderExplosions(GraphicsContext gc) {
         long currentTime = System.nanoTime();
         if (lastTime == 0) lastTime = currentTime;
         double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;

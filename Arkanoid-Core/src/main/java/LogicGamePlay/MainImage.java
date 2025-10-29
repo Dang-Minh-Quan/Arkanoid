@@ -9,17 +9,14 @@ public class MainImage {
     private static Image brick1;
     private static Image brick2;
     private static Image brick3;
-    private static Image brick4;
+    private static Image brickBroken;
     private static Image paddle;
     private static Image ball;
-    private static Image background1;
+    private static Image background;
     private static Image explosion;
     private static Image bar;
+    private static Image powerUp;
 
-    public Image getBrick1() {
-
-        return brick1;
-    }
 
     public Image getBrick2() {
 
@@ -31,19 +28,21 @@ public class MainImage {
         return brick3;
     }
 
-    public Image getBrick4() {
+    public Image getBrick1() {
 
-        return brick4;
+        return brick1;
     }
 
-    public Image getBackground1() {
-
-        return background1;
+    public static Image getBrickBroken() {
+        return brickBroken;
     }
 
+    public Image getBackground() {
+
+        return background;
+    }
 
     public Image getBar() {
-
         return bar;
     }
     public Image getPaddle() {
@@ -58,23 +57,22 @@ public class MainImage {
         return explosion;
     }
 
+    public static Image getPowerup() {
+        return powerUp;
+    }
+
     public void LoadImage() {
-        brick1 = new Image(getClass().getResourceAsStream("/Interface/Image1/brick1.png"),
+        background = new Image(getClass().getResourceAsStream(
+                "/Interface/Image/background.png"));
+        brick1 = new Image(getClass().getResourceAsStream("/Interface/Image/brick1.png"), 60, 30, false, false);
+        brick2 = new Image(getClass().getResourceAsStream("/Interface/Image/brick2.png"), 60, 30, false, false);
+        brick3 = new Image(getClass().getResourceAsStream("/Interface/Image/brick3.png"), 60, 30, false, false);
+        brickBroken = new Image(getClass().getResourceAsStream("/Interface/Image/brickBroken.png"),
                 60, 30, false, false);
-        brick2 = new Image(getClass().getResourceAsStream("/Interface/Image1/brick2.png"),
-                60, 30, false, false);
-        brick3 = new Image(getClass().getResourceAsStream("/Interface/Image1/brick3.png"),
-                60, 30, false, false);
-        brick4 = new Image(getClass().getResourceAsStream("/Interface/Image1/brick4.png"),
-                60, 30, false, false);
-        background1 = new Image(getClass().getResourceAsStream("/Interface/Image1/background1.png"));
-        paddle = new Image(getClass().getResourceAsStream("/Interface/Image1/paddle.png"),
-                100, 30, false, false);
-        ball = new Image(getClass().getResourceAsStream("/Interface/Image1/ball.png"),
-                30, 30, false, false);
-        explosion = new Image(getClass().getResourceAsStream("/Interface/Image1/explosion.png"),
-                256, 256, true, false);
-        bar = new Image(getClass().getResourceAsStream("/Interface/Image1/bar1.png"),
-                WIDTH, HEIGHTBar, false,false);
+        paddle = new Image(getClass().getResourceAsStream("/Interface/Image/paddle.png"), 100, 30, false, false);
+        ball = new Image(getClass().getResourceAsStream("/Interface/Image/ball.png"), 30, 30, false, false);
+        explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"), 256, 256, true, false);
+        powerUp = new Image(getClass().getResourceAsStream("/Interface/Image/PowerUp.png"), 128, 128, true, false);
+        bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"), WIDTH, HEIGHTBar, false,false);
     }
 }
