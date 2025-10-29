@@ -17,7 +17,7 @@ public class Ball extends BaseClass {
     private boolean collidedWithPaddle = false;
 
     public Ball(){
-        super( 500, 400,5,5, 10,10);
+        super( 200, 500,2,5, 10,10);
         ball = new Circle(x, y, width, Color.BLUE);
         for (int i=0;i<TailLength;i++){
             TailX[i]=x;
@@ -56,8 +56,8 @@ public class Ball extends BaseClass {
             Tail[i].setCenterX(TailX[i]);
             Tail[i].setCenterY(TailY[i]);
         }
-        TailX[0]=x;
-        TailY[0]=y;
+        TailX[0]=TailX0;
+        TailY[0]=TailY0;
         Tail[0].setCenterX(TailX[0]);
         Tail[0].setCenterY(TailY[0]);
     }
@@ -127,6 +127,9 @@ public class Ball extends BaseClass {
     public int checkBrickCollision(Brick[][] brick, Render render) {
         int brickCol = (int) x / (int) WIDTHBrick;
         int brickRow = (int) y / (int) HEIGHTBrick;
+    public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
+        int brickCol = x/ WIDTHBrick ;
+        int brickRow = y/ HEIGHTBrick ;
     public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
         int brickCol = x/ WIDTHBrick ;
         int brickRow = y/ HEIGHTBrick ;
