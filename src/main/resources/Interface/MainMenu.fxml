@@ -4,6 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" style="-fx-background-image: url(&quot;Interface/background1.png&quot;); -fx-background-repeat: no-repeat; -fx-background-size: cover; -fx-background-position: center;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainMenuController">
@@ -28,5 +29,16 @@
             <Font size="10.0" />
          </font>
       </Button>
+      <Pane fx:id="SelectionMenu" layoutX="93.0" layoutY="276.0" prefHeight="252.0" prefWidth="318.0" visible="false">
+         <children>
+            <ImageView fitHeight="700.0" fitWidth="506.0" layoutX="-98.0" layoutY="-275.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/BlurBackground.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="ButtonContinueGame" layoutX="108.0" layoutY="61.0" mnemonicParsing="false" onAction="#ContinueGame" prefHeight="46.0" prefWidth="103.0" text="Contine" />
+            <Button fx:id="ButtonNewGame" layoutX="108.0" layoutY="155.0" mnemonicParsing="false" onAction="#NewGame" prefHeight="46.0" prefWidth="103.0" text="New Game" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

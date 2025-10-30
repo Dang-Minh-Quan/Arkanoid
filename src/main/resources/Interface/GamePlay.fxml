@@ -13,7 +13,7 @@
             <Button fx:id="ButtonPause" cancelButton="true" layoutX="418.0" layoutY="594.0" mnemonicParsing="false" onAction="#Pause" opacity="0.0" prefHeight="42.0" prefWidth="48.0" text="Pause" />
          </children>
       </Pane>
-      <Pane fx:id="PauseMenu" layoutX="112.0" layoutY="281.0" prefHeight="138.0" prefWidth="276.0">
+      <Pane fx:id="PauseMenu" layoutX="112.0" layoutY="281.0" prefHeight="138.0" prefWidth="276.0" visible="false">
          <children>
             <ImageView fitHeight="700.0" fitWidth="500.0" layoutX="-112.0" layoutY="-281.0" pickOnBounds="true">
                <image>

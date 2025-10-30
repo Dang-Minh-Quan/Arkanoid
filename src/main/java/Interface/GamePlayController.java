@@ -69,8 +69,6 @@ public class GamePlayController {
       mainGame = null;
       System.out.println(Specifications.Level.get());
     }
-    //Specifications.reset();
-    PauseMenu.setVisible(false);
 
     gameLayer.toBack();
     ButtonPause.toFront();
