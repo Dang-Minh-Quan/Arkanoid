@@ -4,6 +4,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static LogicGamePlay.Specifications.*;
 
 public class Paddle extends BaseClass {
@@ -39,7 +41,7 @@ public class Paddle extends BaseClass {
         }
     }
 
-    public void controllerPaddle(Scene scene) {
+    public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {
         scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.LEFT) {
                 if (stvx - vx > -vx * 2) {

@@ -1,18 +1,38 @@
 package LogicGamePlay;
 
+import Interface.GamePlayController;
+import javafx.application.Platform;
+
 import javax.print.attribute.standard.Media;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static LogicGamePlay.Specifications.*;
+import static LogicGamePlay.Specifications.Level;
 
 public class Update {
+    private GamePlayController controller;
 
-    public void updateGame(MainMedia media, ArrayList<Ball>balls, Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, ArrayList<PowerUp> powerUps) {
+    public Update(GamePlayController controller) {
+        this.controller = controller;
+    }
+
+    public void initializeLevel(ArrayList<Ball>balls,Ball ball, Brick[][] brick, Paddle paddle) {
+        System.out.println(Level);
+        heartCount.set(3);
+        numBrick = 0;
+        updateBrick(balls,ball,paddle, brick,Level);
+    }
+
+
+    public void updateGame(MainMedia media, ArrayList<Ball>balls, Ball ball, Paddle paddle,
+                           Brick[][] brick, AtomicInteger Level, ArrayList<PowerUp> powerUps,
+                           AtomicBoolean gameRestarted, Render render) {
         updatePowerUp(balls,ball,paddle,powerUps);
-        updateBall(media,ball,brick,paddle,powerUps);
-        updateBalls(media,balls,brick,paddle,powerUps);
-        updateBrick(balls,ball,paddle,Level, brick);
+        updateBall(media,render,ball,brick,paddle,powerUps);
+        updateBalls(media,render,balls,brick,paddle,powerUps);
+        updateBrick(balls,ball,paddle, brick,Level);
         updatePaddle(paddle);
     }
 
@@ -39,14 +59,20 @@ public class Update {
         }
     }
 
-    private void updateBrick(ArrayList<Ball>balls,Ball ball,Paddle paddle,AtomicInteger Level, Brick[][] brick) {
+    private void updateBrick(ArrayList<Ball>balls,Ball ball,Paddle paddle, Brick[][] brick,AtomicInteger Level) {
         if (numBrick <= 0) {
-            Level.getAndIncrement();
             if (Level.get() <= LevelMax) {
-                builderLevel(balls,ball,brick,paddle, Level);
+                System.out.println(winLevel+" "+Level);
+                if(winLevel==false) {
+                    builderLevel(balls,ball, brick,paddle, Level);
+                    winLevel =true;
+                }
+                else {
+                    winLevel = false;
+                    Platform.runLater(() -> controller.Win());
+                }
             } else {
-                Level.set(0);
-                //WIN
+                Platform.runLater(() -> controller.Win());
             }
         } else {
             //numBrick--;
@@ -56,7 +82,7 @@ public class Update {
     private void builderLevel(ArrayList<Ball>balls,Ball ball ,Brick[][] brick, Paddle paddle,AtomicInteger Level) {
         Map map = new Map();
         if (Level.get() > LevelMax) {
-            checkPlay = false;
+            //checkPlay = false;
         } else {
             resert(ball,paddle,balls);
             int[][] a = map.builderMap(Level.get());
@@ -83,7 +109,8 @@ public class Update {
         balls.clear();
     }
 
-    private static void updateBall(MainMedia media,Ball ball,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps){
+    private static void updateBall(MainMedia media,Render render,
+                                   Ball ball,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps){
         ball.setBall(ball.x + ball.vx, ball.y + ball.vy);
         switch(ball.checkWallCollision()) {
             case 1:
@@ -110,7 +137,7 @@ public class Update {
                 break;
         }
 
-        switch (ball.checkBrickCollision(media,brick,powerUps)){
+        switch (ball.checkBrickCollision(brick,render,media,powerUps)){
             case 1:
                 ball.vx = -ball.vx;
                 break;
@@ -121,7 +148,7 @@ public class Update {
     }
 
 
-    private static void updateBalls(MainMedia media,ArrayList<Ball>balls,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps) {
+    private static void updateBalls(MainMedia media,Render render,ArrayList<Ball>balls,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps) {
         for (int i = 0; i < balls.size(); i++) {
             balls.get(i).setBall(balls.get(i).x + balls.get(i).vx, balls.get(i).y + balls.get(i).vy);
             switch (balls.get(i).checkWallCollision()) {
@@ -149,7 +176,7 @@ public class Update {
                     break;
             }
 
-            switch (balls.get(i).checkBrickCollision(media,brick, powerUps)) {
+            switch (balls.get(i).checkBrickCollision(brick,render,media, powerUps)) {
                 case 1:
                     balls.get(i).vx = -balls.get(i).vx;
                     break;

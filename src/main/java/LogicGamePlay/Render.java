@@ -17,7 +17,7 @@ public class Render {
         explosions.add(new Explosion(x, y));
     }
 
-public void addPowerUp(double x, double y) {
+public void addPowerUp(int x, int y) {
     powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
 }
 

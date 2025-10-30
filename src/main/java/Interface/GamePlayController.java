@@ -1,13 +1,12 @@
 package Interface;
 
 
-import LogicGamePlay.Ball;
-import LogicGamePlay.Brick;
-import LogicGamePlay.MainImage;
-import LogicGamePlay.Paddle;
-import LogicGamePlay.Render;
-import LogicGamePlay.Specifications;
-import LogicGamePlay.Update;
+import LogicGamePlay.*;
+
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.AnimationTimer;
@@ -61,6 +60,9 @@ public class GamePlayController {
   private Update update;
   private Render render;
   private MainImage IMAGE;
+  private MainMedia media;
+  private ArrayList<PowerUp>powerUps;
+   private ArrayList<Ball>balls;
   public void start(Stage stage) throws IOException {
     if (mainGame != null) {
       mainGame.stop();
@@ -83,22 +85,30 @@ public class GamePlayController {
     brick = new Brick[(int)ROW][(int)COL];
     IMAGE = new MainImage();
     IMAGE.LoadImage();
+    media = new MainMedia();
+    balls=new ArrayList<>();
+    powerUps=new ArrayList<>();
 
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(ball, brick);
+    update.initializeLevel(balls,ball, brick,paddle);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
     System.out.println(numBrick);
+
+    ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
+    gameThread.schedule(()-> {
+        media.playMusic();
+        },1, TimeUnit.SECONDS);
 
     mainGame = new AnimationTimer() {
       long LastUpdate = 0;
 
       @Override
       public void handle(long now) {
-        if (now - LastUpdate >= 12_000_000) {
+        if (now - LastUpdate >= 6) {
           //System.out.println(ball.vx+" "+ball.vy);
           //System.out.println(numBrick);
-          update.updateGame(ball,paddle, brick, Level,gameRestarted,render);
+          update.updateGame(media,balls,ball,paddle, brick, Level,powerUps,gameRestarted,render);
           //gameLayer.getChildren().clear();
           render.renderGame(gc, ball, paddle, brick);
           LastUpdate = now;

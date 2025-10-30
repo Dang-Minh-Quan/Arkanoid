@@ -2,11 +2,14 @@ package LogicGamePlay;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 
-public class PowerUp {
-    private double x, y;
-    private double width = 32, height = 32;
-    private double vy = 2;
+import java.util.ArrayList;
+
+import static LogicGamePlay.Specifications.*;
+
+public class PowerUp extends BaseClass {
     private boolean active = true;
 
     private Image image;
@@ -16,11 +19,20 @@ public class PowerUp {
     private int currentFrame = 0;
     private int frameDelay = 5;  // tốc độ xoay
     private int delayCounter = 0;
+    private Circle HitBoxPowerUp;
+    int checkTimePowerUp=TimePowerUp;
+    boolean checkActivate=false;
 
-    public PowerUp(Image spriteSheet, double x, double y) {
+    public PowerUp(Image spriteSheet, int x, int y) {
         this.image = spriteSheet;
         this.x = x;
         this.y = y;
+        type = (int)(Math.random()*PU)%PU;
+        if(type==3){checkTimePowerUp=0;}
+    }
+
+    public Circle getHitBoxPowerUp() {
+        return HitBoxPowerUp;
     }
 
     public void update() {
@@ -34,6 +46,49 @@ public class PowerUp {
         if (delayCounter >= frameDelay) {
             delayCounter = 0;
             currentFrame = (currentFrame + 1) % totalFrames;
+        }
+    }
+
+    public void checkStopPowerUp(ArrayList<Ball> balls, Paddle paddle, Ball ball) {
+        if(checkTimePowerUp==0) {
+            switch (type) {
+                case 0:
+                    break;
+                case 1:
+                    paddle.width = paddleWidthOriginal;
+                    break;
+            }
+        }
+        checkTimePowerUp--;
+    }
+
+    public int UpdatePU(ArrayList<Ball>balls, Paddle paddle, Ball ball) {
+        y=y+vy;
+        HitBoxPowerUp.setCenterY(y);
+        if(checkActivate==false) {
+            if (Shape.intersect(HitBoxPowerUp, paddle.getHitBoxPaddle()).getBoundsInLocal().getWidth() > 0) {
+                Activate(balls, paddle, ball);
+                return 1;
+            }
+            if (y == HEIGHT + RADIUSPU) {
+                return 2;
+            }
+        }
+        return 0;
+    }
+
+    public void Activate(ArrayList<Ball>balls,Paddle paddle,Ball ball){
+        switch (type){
+            case 0:
+                break;
+            case 1:
+                paddle.width=300;
+                break;
+            case 2:
+                Ball newBall=new Ball();
+                balls.add(newBall);
+                checkTimePowerUp=-1;
+                break;
         }
     }
 

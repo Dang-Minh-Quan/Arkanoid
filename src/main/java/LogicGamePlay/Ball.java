@@ -1,5 +1,6 @@
 package LogicGamePlay;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.layout.Pane;
@@ -124,13 +125,7 @@ public class Ball extends BaseClass {
         return false;
     }
 
-    public int checkBrickCollision(Brick[][] brick, Render render) {
-        int brickCol = (int) x / (int) WIDTHBrick;
-        int brickRow = (int) y / (int) HEIGHTBrick;
-    public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
-        int brickCol = x/ WIDTHBrick ;
-        int brickRow = y/ HEIGHTBrick ;
-    public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
+    public int checkBrickCollision(Brick[][] brick, Render render,MainMedia media, ArrayList<PowerUp> powerUps) {
         int brickCol = x/ WIDTHBrick ;
         int brickRow = y/ HEIGHTBrick ;
 
@@ -151,31 +146,31 @@ public class Ball extends BaseClass {
 
         if (above == true) {
             if (brick[brickRow - 1][brickCol].type != 0) {
-                brick[brickRow - 1][brickCol].BallHit(this, render);
+                brick[brickRow - 1][brickCol].BallHit(this, render,media);
                 return 2;
             }
         }
         if (below == true) {
             if (brick[brickRow + 1][brickCol].type != 0) {
-                brick[brickRow + 1][brickCol].BallHit(this, render);
+                brick[brickRow + 1][brickCol].BallHit(this, render,media);
                 return 2;
             }
         }
         if (left == true) {
             if (brick[brickRow][brickCol - 1].type != 0) {
-                brick[brickRow][brickCol - 1].BallHit(this, render);
+                brick[brickRow][brickCol - 1].BallHit(this, render,media);
                 return 1;
             }
         }
         if (right == true) {
             if (brick[brickRow][brickCol + 1].type != 0) {
-                brick[brickRow][brickCol + 1].BallHit(this, render);
+                brick[brickRow][brickCol + 1].BallHit(this, render,media);
                 return 1;
             }
         }
         if(above==true&&left==true) {
             if(brick[brickRow - 1][brickCol - 1].type!=0) {
-                brick[brickRow - 1][brickCol - 1].UpdateBrick(media,this,powerUps);
+                brick[brickRow - 1][brickCol - 1].BallHit(this, render,media);
                 if(Math.abs((brickRow)*HEIGHTBrick-(int)y)>Math.abs((brickCol)*WIDTHBrick-(int)x)){
                     return 2;
                 }else {
@@ -185,7 +180,7 @@ public class Ball extends BaseClass {
         }
         if (below == true && left == true) {
             if (brick[brickRow + 1][brickCol - 1].type != 0) {
-                brick[brickRow + 1][brickCol - 1].BallHit(this, render);
+                brick[brickRow + 1][brickCol - 1].BallHit(this, render,media);
                 if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs((brickCol) * WIDTHBrick - (int) x)) {
                     return 2;
                 }else {
@@ -195,7 +190,7 @@ public class Ball extends BaseClass {
         }
         if (above == true && right == true) {
             if (brick[brickRow - 1][brickCol + 1].type != 0) {
-                brick[brickRow - 1][brickCol + 1].BallHit(this, render);
+                brick[brickRow - 1][brickCol + 1].BallHit(this, render,media);
                 if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs((brickCol + 1) * WIDTHBrick - (int) x)) {
                     return 2;
                 }else {
@@ -205,7 +200,7 @@ public class Ball extends BaseClass {
         }
         if (below == true && right == true) {
             if (brick[brickRow + 1][brickCol + 1].type != 0) {
-                brick[brickRow + 1][brickCol + 1].BallHit(this, render);
+                brick[brickRow + 1][brickCol + 1].BallHit(this, render,media);
                 if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs((brickCol + 1) * WIDTHBrick - (int) x)) {
                     return 2;
                 }else {

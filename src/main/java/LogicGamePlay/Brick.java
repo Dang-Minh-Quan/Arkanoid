@@ -19,7 +19,7 @@ public class Brick extends BaseClass {
         super(null, j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
     }
 
-    public void BallHit(Ball ball,  Render render) {
+    public void BallHit(Ball ball,  Render render,MainMedia media) {
 
         if(type == 0 ||  destroyed) {
             return;
@@ -29,20 +29,19 @@ public class Brick extends BaseClass {
                 cracked = true;
                 type = 3;
                 Update();
-                return;
             } else {
-                destroyBrick(render);
+                destroyBrick(render,media);
             }
         }
         else if (type == 1) {
-            destroyBrick(render);
+            destroyBrick(render,media);
         }
         else if(type == 3) {
-            destroyBrick(render);
+            destroyBrick(render,media);
         }
     }
 
-    public void destroyBrick(Render render) {
+    public void destroyBrick(Render render,MainMedia media) {
         if (exploded) return;
         exploded = true;
         destroyed = true;
@@ -50,9 +49,11 @@ public class Brick extends BaseClass {
         numBrick--;
         explosion(render);
         if (Math.random() < 0.9) { // xác suất rơi 40%
+        }
+        if((int)(Math.random()*probability)%probability==0) {
             render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15);
         }
-
+        media.playDestroyBrick();
     }
 
     public void explosion(Render render) {
@@ -61,23 +62,6 @@ public class Brick extends BaseClass {
         render.addExplosion(explosionX, explosionY);
     }
 
-    public void UpdateBrick(Ball ball) {
-        if (ball.type == 0) {
-            if (type > 0) {
-                type = type - 1;
-                numBrick = numBrick - 1;
-                if((int)(Math.random()*probability)%probability==0) {
-                    PowerUp newPU = new PowerUp(x, y);
-                    powerUps.add(newPU);
-                }
-                media.playDestroyBrick();
-            }
-            if (type == -1) {
-                type = -1;
-            }
-        }
-        Update();
-    }
 
     public void Update() {
         MainImage newImage = new MainImage();
