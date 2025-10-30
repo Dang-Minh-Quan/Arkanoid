@@ -57,7 +57,6 @@ public class GamePlayController {
   private Ball ball;
   private Paddle paddle;
   private Brick[][] brick;
-  private AtomicInteger Level;
   private Update update;
   private Render render;
   private MainImage IMAGE;
