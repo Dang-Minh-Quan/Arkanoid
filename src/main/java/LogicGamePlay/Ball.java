@@ -1,18 +1,20 @@
 package LogicGamePlay;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
-import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
 
 import static LogicGamePlay.Specifications.*;
 
 public class Ball extends BaseClass {
     private Circle ball;
     private Circle[] Tail = new Circle[TailLength];
-    private int[] TailX=new int[TailLength];
-    private int[] TailY=new int[TailLength];
+    private int[] TailX = new int[TailLength];
+    private int[] TailY = new int[TailLength];
+    private boolean collidedWithPaddle = false;
 
     public Ball(){
         super( 200, 500,2,5, 10,10);
@@ -60,11 +62,14 @@ public class Ball extends BaseClass {
         Tail[0].setCenterY(TailY[0]);
     }
 
-    public void RenderTail(Pane pane){
-        for (int i=0;i<TailLength;i++) {
-            if(i>0) {
-                pane.getChildren().addAll(Tail[i]);
-            }
+    public void RenderTail(GraphicsContext gc) {
+        for (int i = 0; i < TailLength; i++) {
+            Color c = (Color) Tail[i].getFill();
+            gc.setFill(c);
+            gc.fillOval(TailX[i] - Tail[i].getRadius(),
+                    TailY[i] - Tail[i].getRadius(),
+                    Tail[i].getRadius() * 3,
+                    Tail[i].getRadius() * 3);
         }
     }
 
@@ -108,6 +113,23 @@ public class Ball extends BaseClass {
         return 1;
     }
 
+    public boolean isReadyForPaddleCollision(int collisionState) {
+        if (collisionState != -1 && !collidedWithPaddle) {
+            collidedWithPaddle = true;
+            return true;
+        }
+        if (collisionState == -1) {
+            collidedWithPaddle = false;
+        }
+        return false;
+    }
+
+    public int checkBrickCollision(Brick[][] brick, Render render) {
+        int brickCol = (int) x / (int) WIDTHBrick;
+        int brickRow = (int) y / (int) HEIGHTBrick;
+    public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
+        int brickCol = x/ WIDTHBrick ;
+        int brickRow = y/ HEIGHTBrick ;
     public int checkBrickCollision(MainMedia media,Brick[][] brick, ArrayList<PowerUp> powerUps) {
         int brickCol = x/ WIDTHBrick ;
         int brickRow = y/ HEIGHTBrick ;
@@ -127,27 +149,27 @@ public class Ball extends BaseClass {
             right = true;
         }
 
-        if(above == true){
-            if(brick[brickRow - 1][brickCol].type!=0) {
-                brick[brickRow - 1][brickCol].UpdateBrick(media,this,powerUps);
+        if (above == true) {
+            if (brick[brickRow - 1][brickCol].type != 0) {
+                brick[brickRow - 1][brickCol].BallHit(this, render);
                 return 2;
             }
         }
-        if(below == true){
-            if(brick[brickRow + 1][brickCol].type!=0) {
-                brick[brickRow + 1][brickCol].UpdateBrick(media,this,powerUps);
+        if (below == true) {
+            if (brick[brickRow + 1][brickCol].type != 0) {
+                brick[brickRow + 1][brickCol].BallHit(this, render);
                 return 2;
             }
         }
-        if(left == true){
-            if(brick[brickRow][brickCol - 1].type!=0) {
-                brick[brickRow][brickCol - 1].UpdateBrick(media,this,powerUps);
+        if (left == true) {
+            if (brick[brickRow][brickCol - 1].type != 0) {
+                brick[brickRow][brickCol - 1].BallHit(this, render);
                 return 1;
             }
         }
-        if(right == true){
-            if(brick[brickRow][brickCol + 1].type!=0) {
-                brick[brickRow][brickCol + 1].UpdateBrick(media,this,powerUps);
+        if (right == true) {
+            if (brick[brickRow][brickCol + 1].type != 0) {
+                brick[brickRow][brickCol + 1].BallHit(this, render);
                 return 1;
             }
         }
@@ -161,30 +183,30 @@ public class Ball extends BaseClass {
                 }
             }
         }
-        if(below==true&&left==true) {
-            if(brick[brickRow + 1][brickCol - 1].type!=0) {
-                brick[brickRow + 1][brickCol - 1].UpdateBrick(media,this,powerUps);
-                if(Math.abs((brickRow+1)*HEIGHTBrick-(int)y)>Math.abs((brickCol)*WIDTHBrick-(int)x)){
+        if (below == true && left == true) {
+            if (brick[brickRow + 1][brickCol - 1].type != 0) {
+                brick[brickRow + 1][brickCol - 1].BallHit(this, render);
+                if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs((brickCol) * WIDTHBrick - (int) x)) {
                     return 2;
                 }else {
                     return 1;
                 }
             }
         }
-        if(above==true&&right==true) {
-            if(brick[brickRow - 1][brickCol + 1].type!=0) {
-                brick[brickRow - 1][brickCol + 1].UpdateBrick(media,this,powerUps);
-                if(Math.abs((brickRow)*HEIGHTBrick-(int)y)>Math.abs((brickCol+1)*WIDTHBrick-(int)x)){
+        if (above == true && right == true) {
+            if (brick[brickRow - 1][brickCol + 1].type != 0) {
+                brick[brickRow - 1][brickCol + 1].BallHit(this, render);
+                if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs((brickCol + 1) * WIDTHBrick - (int) x)) {
                     return 2;
                 }else {
                     return 1;
                 }
             }
         }
-        if(below==true&&right==true) {
-            if(brick[brickRow + 1][brickCol + 1].type!=0) {
-                brick[brickRow + 1][brickCol + 1].UpdateBrick(media,this,powerUps);
-                if(Math.abs((brickRow+1)*HEIGHTBrick-(int)y)>Math.abs((brickCol+1)*WIDTHBrick-(int)x)){
+        if (below == true && right == true) {
+            if (brick[brickRow + 1][brickCol + 1].type != 0) {
+                brick[brickRow + 1][brickCol + 1].BallHit(this, render);
+                if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs((brickCol + 1) * WIDTHBrick - (int) x)) {
                     return 2;
                 }else {
                     return 1;

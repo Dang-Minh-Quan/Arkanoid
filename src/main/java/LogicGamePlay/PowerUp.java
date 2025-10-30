@@ -1,71 +1,60 @@
 package LogicGamePlay;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
+public class PowerUp {
+    private double x, y;
+    private double width = 32, height = 32;
+    private double vy = 2;
+    private boolean active = true;
 
-import java.util.ArrayList;
+    private Image image;
+    private int frameCols = 4;
+    private int frameRows = 4;
+    private int totalFrames = frameCols * frameRows;
+    private int currentFrame = 0;
+    private int frameDelay = 5;  // tốc độ xoay
+    private int delayCounter = 0;
 
-import static LogicGamePlay.Specifications.*;
-
-public class PowerUp extends BaseClass {
-    private Circle HitBoxPowerUp;
-    int checkTimePowerUp=TimePowerUp;
-    boolean checkActivate=false;
-
-    public PowerUp(int i,int j){
-        super( i+WIDTHBrick/2, j+HEIGHTBrick/2,0,speedPU, RADIUSPU,RADIUSPU);
-        type = (int)(Math.random()*PU)%PU;
-        if(type==3){checkTimePowerUp=0;}
-        HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
+    public PowerUp(Image spriteSheet, double x, double y) {
+        this.image = spriteSheet;
+        this.x = x;
+        this.y = y;
     }
 
-    public Circle getHitBoxPowerUp() {
-        return HitBoxPowerUp;
-    }
+    public void update() {
+        if (!active) return;
 
-    public void checkStopPowerUp(ArrayList<Ball>balls,Paddle paddle,Ball ball) {
-        if(checkTimePowerUp==0) {
-            switch (type) {
-                case 0:
-                    break;
-                case 1:
-                    paddle.width = paddleWidthOriginal;
-                    break;
-            }
+        // Cập nhật vị trí rơi
+        y += vy;
+        if (y > 720) active = false;
+
+            delayCounter++;
+        if (delayCounter >= frameDelay) {
+            delayCounter = 0;
+            currentFrame = (currentFrame + 1) % totalFrames;
         }
-        checkTimePowerUp--;
     }
 
-    public int UpdatePU(ArrayList<Ball>balls, Paddle paddle, Ball ball) {
-        y=y+vy;
-        HitBoxPowerUp.setCenterY(y);
-        if(checkActivate==false) {
-            if (Shape.intersect(HitBoxPowerUp, paddle.getHitBoxPaddle()).getBoundsInLocal().getWidth() > 0) {
-                Activate(balls, paddle, ball);
-                return 1;
-            }
-            if (y == HEIGHT + RADIUSPU) {
-                return 2;
-            }
-        }
-        return 0;
+    public void render(GraphicsContext gc) {
+        if (!active || image == null) return;
+
+        int frameWidth = (int) image.getWidth() / frameCols;
+        int frameHeight = (int) image.getHeight() / frameRows;
+
+        int col = currentFrame % frameCols;
+        int row = currentFrame / frameCols;
+
+        gc.drawImage(
+                image,
+                col * frameWidth, row * frameHeight, frameWidth, frameHeight,
+                x, y, width, height
+        );
     }
 
-    public void Activate(ArrayList<Ball>balls,Paddle paddle,Ball ball){
-        switch (type){
-            case 0:
-                break;
-            case 1:
-                paddle.width=300;
-                break;
-            case 2:
-                Ball newBall=new Ball();
-                balls.add(newBall);
-                checkTimePowerUp=-1;
-                break;
-        }
+    public boolean isActive() {
+        return active;
     }
 }
 
