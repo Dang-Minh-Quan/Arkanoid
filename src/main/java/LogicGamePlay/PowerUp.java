@@ -1,5 +1,6 @@
 package LogicGamePlay;
 
+import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
@@ -24,9 +25,8 @@ public class PowerUp extends BaseClass {
     boolean checkActivate=false;
 
     public PowerUp(Image spriteSheet, int x, int y) {
+        super( x, y,0,speedPU, RADIUSPU,RADIUSPU);
         this.image = spriteSheet;
-        this.x = x;
-        this.y = y;
         type = (int)(Math.random()*PU)%PU;
         if(type==3){checkTimePowerUp=0;}
     }
@@ -37,8 +37,6 @@ public class PowerUp extends BaseClass {
 
     public void update() {
         if (!active) return;
-
-        // Cập nhật vị trí rơi
         y += vy;
         if (y > 720) active = false;
 
@@ -49,7 +47,7 @@ public class PowerUp extends BaseClass {
         }
     }
 
-    public void checkStopPowerUp(ArrayList<Ball> balls, Paddle paddle, Ball ball) {
+    public void checkStopPowerUp(List<Ball> balls, Paddle paddle, Ball ball) {
         if(checkTimePowerUp==0) {
             switch (type) {
                 case 0:
@@ -62,7 +60,7 @@ public class PowerUp extends BaseClass {
         checkTimePowerUp--;
     }
 
-    public int UpdatePU(ArrayList<Ball>balls, Paddle paddle, Ball ball) {
+    public int UpdatePU(List<Ball>balls, Paddle paddle, Ball ball) {
         y=y+vy;
         HitBoxPowerUp.setCenterY(y);
         if(checkActivate==false) {
@@ -77,7 +75,7 @@ public class PowerUp extends BaseClass {
         return 0;
     }
 
-    public void Activate(ArrayList<Ball>balls,Paddle paddle,Ball ball){
+    public void Activate(List<Ball>balls,Paddle paddle,Ball ball){
         switch (type){
             case 0:
                 break;
@@ -104,7 +102,7 @@ public class PowerUp extends BaseClass {
         gc.drawImage(
                 image,
                 col * frameWidth, row * frameHeight, frameWidth, frameHeight,
-                x, y, width, height
+                x, y, width*4, height*4
         );
     }
 

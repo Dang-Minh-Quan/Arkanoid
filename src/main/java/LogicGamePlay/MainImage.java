@@ -79,7 +79,7 @@ public class MainImage {
         explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"),
                 256, 256, true, false);
         powerUp = new Image(getClass().getResourceAsStream("/Interface/Image/PowerUp.png"),
-                128, 128, true, false);
+                128*8, 128*8, true, false);
         bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"),
                 WIDTH, HEIGHTBar, false, false);
     }

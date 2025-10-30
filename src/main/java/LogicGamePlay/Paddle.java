@@ -54,11 +54,11 @@ public class Paddle extends BaseClass {
         this.moveRight = moveRight;
     }
 
-    public double ClampPosition(double next) {
+    public int ClampPosition(int next) {
         if (next < 0) {
             return 0;
         } else if (next + paddle.getWidth() > WIDTH) {
-            return WIDTH - paddle.getWidth();
+            return WIDTH - (int)paddle.getWidth();
         }
         return next;
     }

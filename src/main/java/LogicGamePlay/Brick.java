@@ -19,7 +19,7 @@ public class Brick extends BaseClass {
         super(null, j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
     }
 
-    public void BallHit(Ball ball,  Render render,MainMedia media) {
+    public void BallHit(Ball ball, Render render, MainMedia media) {
 
         if(type == 0 ||  destroyed) {
             return;
@@ -48,8 +48,6 @@ public class Brick extends BaseClass {
         type = 0;
         numBrick--;
         explosion(render);
-        if (Math.random() < 0.9) { // xác suất rơi 40%
-        }
         if((int)(Math.random()*probability)%probability==0) {
             render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15);
         }

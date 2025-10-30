@@ -75,7 +75,7 @@ public void addPowerUp(int x, int y) {
 
     private void renderBall(GraphicsContext gc, Ball ball){
         Image ballImange = image.getBall();
-        gc.drawImage(ballImange, ball.x - ball.width, ball.y-ball.width,ball.width * 2, ball.width * 2);
+        gc.drawImage(ballImange, ball.x - ball.width *3/2, ball.y-ball.width*3/2,ball.width * 4, ball.width * 4);
     }
 
   private void renderExplosions(GraphicsContext gc) {
