@@ -63,7 +63,13 @@ public class Ball extends BaseClass {
         return ball;
     }
 
+    public int checkWallCollision(Paddle paddle, AtomicBoolean gameRestarted) {
+        if (y >= HEIGHT - height) {
+            gameRestarted.set(true);
+            return -1;
+        }
         boolean check1 = x <= width || x >= WIDTH - width;
+        boolean check2 = y <= height;
         if (check1 && check2) {
             return 1;
         } else if (check1) {
@@ -78,6 +84,8 @@ public class Ball extends BaseClass {
         double ballX = x;
         double ballY = y;
         double radius = width;
+        double paddleLeft = Math.min(paddle.x, paddle.x + paddle.vx);
+        double paddleRight = Math.max(paddleLeft + paddle.width, paddleLeft + paddle.width + paddle.vx);
         double paddleTop = paddle.y;
         double paddleBottom = paddleTop + paddle.height;
 
@@ -87,7 +95,9 @@ public class Ball extends BaseClass {
         if (!collisionX || !collisionY) {
             return -1;
         }
+        if (ballX <= paddleLeft && !collisionY) {
             return 2;
+        } else if (ballX >= paddleRight && !collisionY) {
             return 3;
         }
         return 1;
@@ -108,18 +118,18 @@ public class Ball extends BaseClass {
         int brickCol = (int) x / (int) WIDTHBrick;
         int brickRow = (int) y / (int) HEIGHTBrick;
 
-        boolean above = false,below = false,left = false,right = false;
+        boolean above = false, below = false, left = false, right = false;
 
-        if(vy<0&&brickRow>0&&brickRow<ROW &&(brickRow)*HEIGHTBrick+width>=y){
+        if (vy < 0 && brickRow > 0 && brickRow < ROW && (brickRow) * HEIGHTBrick + width >= y) {
             above = true;
         }
-        if(vy>0&&brickRow<ROW-1 &&(brickRow+1)*HEIGHTBrick-width<=y){
-            below =true;
+        if (vy > 0 && brickRow < ROW - 1 && (brickRow + 1) * HEIGHTBrick - width <= y) {
+            below = true;
         }
-        if(vx<0&&brickCol>0&&brickRow<ROW &&(brickCol)*WIDTHBrick+width>=x){
+        if (vx < 0 && brickCol > 0 && brickRow < ROW && (brickCol) * WIDTHBrick + width >= x) {
             left = true;
         }
-        if(vx>0&&brickCol<COL-1&&brickRow<ROW &&(brickCol+1)*WIDTHBrick-width<=x){
+        if (vx > 0 && brickCol < COL - 1 && brickRow < ROW && (brickCol + 1) * WIDTHBrick - width <= x) {
             right = true;
         }
 
@@ -147,11 +157,12 @@ public class Ball extends BaseClass {
                 return 1;
             }
         }
-        if(above==true&&left==true) {
-            if(brick[brickRow - 1][brickCol - 1].type!=0) {
-                if(Math.abs((brickRow)*HEIGHTBrick-(int)y)>Math.abs((brickCol)*WIDTHBrick-(int)x)){
+        if (above == true && left == true) {
+            if (brick[brickRow - 1][brickCol - 1].type != 0) {
+                brick[brickRow - 1][brickCol - 1].BallHit(this, render);
+                if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs((brickCol) * WIDTHBrick - (int) x)) {
                     return 2;
-                }else {
+                } else {
                     return 1;
                 }
             }
@@ -161,7 +172,7 @@ public class Ball extends BaseClass {
                 brick[brickRow + 1][brickCol - 1].BallHit(this, render);
                 if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs((brickCol) * WIDTHBrick - (int) x)) {
                     return 2;
-                }else {
+                } else {
                     return 1;
                 }
             }
@@ -171,7 +182,7 @@ public class Ball extends BaseClass {
                 brick[brickRow - 1][brickCol + 1].BallHit(this, render);
                 if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs((brickCol + 1) * WIDTHBrick - (int) x)) {
                     return 2;
-                }else {
+                } else {
                     return 1;
                 }
             }
@@ -181,7 +192,7 @@ public class Ball extends BaseClass {
                 brick[brickRow + 1][brickCol + 1].BallHit(this, render);
                 if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs((brickCol + 1) * WIDTHBrick - (int) x)) {
                     return 2;
-                }else {
+                } else {
                     return 1;
                 }
             }

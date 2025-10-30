@@ -1,61 +1,85 @@
-package com.example.arkanoid;
+package LogicGamePlay;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
-import static com.example.arkanoid.Specifications.*;
+import static LogicGamePlay.Specifications.*;
 
-public class Paddle extends Baseclass {
-    private int spvx ;
-    private int stvx ;
-    private Rectangle HitBoxPaddle;
+public class Paddle extends BaseClass {
+    private Rectangle paddle;
+    private boolean moveLeft;
+    private boolean moveRight;
 
     public Paddle() {
-        super( WIDTH / 2 , HEIGHT - 40, vxOriginal,paddleWidthOriginal,paddleHeightOriginal);
-        HitBoxPaddle = new Rectangle(x,y,width,height);
-        spvx=spvxOriginal;
-        stvx=0;
+        super(null, 0, WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
+        paddle = new Rectangle(x, y, width, height);
+        moveLeft = false;
+        moveRight = false;
     }
 
-    public Rectangle getHitBoxPaddle() {
-        return HitBoxPaddle;
+    public Rectangle getPaddle() {
+        return paddle;
     }
 
+    public void setPaddle(double dx) {
+        x = dx;
+        paddle.setX(dx);
+    }
+
+    public boolean isMoveLeft() {
+        return moveLeft;
+    }
+
+    public void setMoveLeft(boolean moveLeft) {
+        this.moveLeft = moveLeft;
+    }
+
+    public boolean isMoveRight() {
+        return moveRight;
+    }
+
+    public void setMoveRight(boolean moveRight) {
+        this.moveRight = moveRight;
+    }
+
+    public double ClampPosition(double next) {
+        if (next < 0) {
+            return 0;
+        } else if (next + paddle.getWidth() > WIDTH) {
+            return WIDTH - paddle.getWidth();
+        }
+        return next;
+    }
+
+    @Override
     public void Update() {
-        if (stvx > 0) {
-            if (x < WIDTH -width) {
-                x = x + spvx;
-                HitBoxPaddle.setX(x);
-                stvx = stvx - spvx;
-            }
-        }
-        if (stvx < 0) {
-            if (x > 0) {
-                x = x - spvx;
-                HitBoxPaddle.setX(x);
-                stvx = stvx + spvx;
-            }
-        }
+
     }
 
-    public void controllerPaddle(Scene scene) {
-        scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.LEFT) {
-                if (stvx - vx > -vx * 2) {
-                    if (stvx > 0) {
-                        stvx = 0;
+    public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case LEFT -> setMoveLeft(true);
+                case A -> setMoveLeft(true);
+                case RIGHT -> setMoveRight(true);
+                case D -> setMoveRight(true);
+                case SPACE -> {
+                    if (gameRestarted.get()) {
+                        gameRestarted.set(false);
                     }
-                    stvx = stvx - vx;
                 }
             }
-            if (e.getCode() == KeyCode.RIGHT) {
-                if (stvx + vx < vx * 2) {
-                    if (stvx < 0) {
-                        stvx = 0;
-                    }
-                    stvx = stvx + vx;
-                }
+        });
+
+        scene.setOnKeyReleased(event -> {
+            switch (event.getCode()) {
+                case LEFT -> setMoveLeft(false);
+                case A -> setMoveLeft(false);
+                case RIGHT -> setMoveRight(false);
+                case D -> setMoveRight(false);
             }
         });
     }
