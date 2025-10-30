@@ -1,4 +1,4 @@
-package com.example.arkanoid;
+package LogicGamePlay;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
@@ -39,11 +39,11 @@ public class MainMedia {
     public void LoadMedia() {
         soundThread.execute(()-> {
             try {
-                music = new Media(getClass().getResource("beach.mp3").toExternalForm());
+                music = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
                 musicPlay = new MediaPlayer((music));
                 musicPlay.setVolume(0.5);
                 musicPlay.setCycleCount(MediaPlayer.INDEFINITE);
-                destroyBrick = new AudioClip(getClass().getResource("destroyBrick.mp3").toExternalForm());
+                destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
                 destroyBrick.setVolume(1);
                 checkLoad = true;
             }

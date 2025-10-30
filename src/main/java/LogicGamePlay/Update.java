@@ -88,7 +88,7 @@ public class Update {
                     brick[i][j] = new Brick(i, j);
                     brick[i][j].type = a[i][j];
                     if (brick[i][j].type > 0) {
-                        numBrick = numBrick + 1;
+                        numBrick = numBrick + brick[i][j].type;
                     }
                     brick[i][j].Update();
                 }
