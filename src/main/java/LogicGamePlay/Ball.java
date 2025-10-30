@@ -1,5 +1,7 @@
 package LogicGamePlay;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.layout.Pane;
@@ -16,19 +18,20 @@ public class Ball extends BaseClass {
     private int[] TailY = new int[TailLength];
     private boolean collidedWithPaddle = false;
 
-    public Ball(){
+    public Ball() {
         ball = new Circle(x, y, width, Color.BLUE);
-        for (int i=0;i<TailLength;i++){
-            TailX[i]=x;
-            TailY[i]=y;
-            double density=Math.max(0,1-0.5-(double)i/(((double)TailLength)*2));
-            Color ColorTail = new Color(1, 1, 1,density );
-            Tail[i] = new Circle(x, y, width-i/4,ColorTail);
+        for (int i = 0; i < TailLength; i++) {
+            TailX[i] = x;
+            TailY[i] = y;
+            double density = Math.max(0, 1 - 0.5 - (double) i / (((double) TailLength) * 2));
+            Color ColorTail = new Color(1, 1, 1, density);
+            Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
         }
     }
+
     public void setBall(int dx, int dy) {
-        x=dx;
-        y=dy;
+        x = dx;
+        y = dy;
         ball.setCenterX(x);
         ball.setCenterY(y);
         UpdateTail();
@@ -39,28 +42,29 @@ public class Ball extends BaseClass {
     }
 
     public void UpdateTail() {
-        int TailX0=TailX[0];
-        int TailY0=TailY[0];
-        int SPTailX=(x-TailX0)/2;
-        int SPTailY=(y-TailY0)/2;
+        int TailX0 = TailX[0];
+        int TailY0 = TailY[0];
+        int SPTailX = (x - TailX0) / 2;
+        int SPTailY = (y - TailY0) / 2;
         int i = 0;
-        while (i<2) {
-            TailX0 = TailX0+SPTailX;
-            TailY0 = TailY0+SPTailY;
-            UpdateNodeTail(TailX0,TailY0);
+        while (i < 2) {
+            TailX0 = TailX0 + SPTailX;
+            TailY0 = TailY0 + SPTailY;
+            UpdateNodeTail(TailX0, TailY0);
             i++;
         }
     }
 
-    public void UpdateNodeTail(int TailX0,int TailY0){
-        for (int i = TailLength - 1 ;i>0;i--){
-            TailX[i]=TailX[i-1];
-            TailY[i]=TailY[i-1];
+    public void UpdateNodeTail(int TailX0, int TailY0) {
+        for (int i = TailLength - 1; i > 0; i--) {
+            TailX[i] = TailX[i - 1];
+            TailY[i] = TailY[i - 1];
             Tail[i].setCenterX(TailX[i]);
             Tail[i].setCenterY(TailY[i]);
         }
-        TailX[0]=TailX0;
-        TailY[0]=TailY0;
+        TailX[0] = TailX0;
+        TailY[0] = TailY0;
+        Tail[0].setCenterX(TailX[0]);
         Tail[0].setCenterX(TailX[0]);
         Tail[0].setCenterY(TailY[0]);
     }
@@ -82,9 +86,13 @@ public class Ball extends BaseClass {
 
     }
 
-    public int checkWallCollision() {
+    public int checkWallCollision(Paddle paddle, AtomicBoolean gameRestarted) {
+        if (y >= HEIGHT - height) {
+            gameRestarted.set(true);
+            return -1;
+        }
         boolean check1 = x <= width || x >= WIDTH - width;
-        boolean check2 = y <= width || y >= HEIGHT - width;
+        boolean check2 = y <= height;
         if (check1 && check2) {
             return 1;
         } else if (check1) {
@@ -99,6 +107,8 @@ public class Ball extends BaseClass {
         double ballX = x;
         double ballY = y;
         double radius = width;
+        double paddleLeft = Math.min(paddle.x, paddle.x + paddle.vx);
+        double paddleRight = Math.max(paddleLeft + paddle.width, paddleLeft + paddle.width + paddle.vx);
         double paddleTop = paddle.y;
         double paddleBottom = paddleTop + paddle.height;
 
@@ -127,7 +137,7 @@ public class Ball extends BaseClass {
         return false;
     }
 
-    public int checkBrickCollision(Brick[][] brick, Render render) {
+    public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render, List<PowerUp> powerUps) {
         int brickCol = (int) x / (int) WIDTHBrick;
         int brickRow = (int) y / (int) HEIGHTBrick;
 
