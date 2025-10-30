@@ -1,6 +1,5 @@
 package LogicGamePlay;
 
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.layout.Pane;
@@ -42,18 +41,18 @@ public class Ball extends BaseClass {
         int SPTailX=(x-TailX0)/2;
         int SPTailY=(y-TailY0)/2;
         int i = 0;
-        while (i<2) {
-            TailX0 = TailX0+SPTailX;
-            TailY0 = TailY0+SPTailY;
-            UpdateNodeTail(TailX0,TailY0);
+        while (i < 2) {
+            TailX0 = TailX0 + SPTailX;
+            TailY0 = TailY0 + SPTailY;
+            UpdateNodeTail(TailX0, TailY0);
             i++;
         }
     }
 
-    public void UpdateNodeTail(int TailX0,int TailY0){
-        for (int i = TailLength - 1 ;i>0;i--){
-            TailX[i]=TailX[i-1];
-            TailY[i]=TailY[i-1];
+    public void UpdateNodeTail(int TailX0, int TailY0) {
+        for (int i = TailLength - 1; i > 0; i--) {
+            TailX[i] = TailX[i - 1];
+            TailY[i] = TailY[i - 1];
             Tail[i].setCenterX(TailX[i]);
             Tail[i].setCenterY(TailY[i]);
         }
@@ -78,9 +77,13 @@ public class Ball extends BaseClass {
         return ball;
     }
 
-    public int checkWallCollision() {
+    public int checkWallCollision(Paddle paddle, AtomicBoolean gameRestarted) {
+        if (y >= HEIGHT - height) {
+            gameRestarted.set(true);
+            return -1;
+        }
         boolean check1 = x <= width || x >= WIDTH - width;
-        boolean check2 = y <= width || y >= HEIGHT - width;
+        boolean check2 = y <= height;
         if (check1 && check2) {
             return 1;
         } else if (check1) {
@@ -95,8 +98,8 @@ public class Ball extends BaseClass {
         double ballX = x;
         double ballY = y;
         double radius = width;
-        double paddleLeft = paddle.x;
-        double paddleRight = paddleLeft + paddle.width;
+        double paddleLeft = Math.min(paddle.x, paddle.x + paddle.vx);
+        double paddleRight = Math.max(paddleLeft + paddle.width, paddleLeft + paddle.width + paddle.vx);
         double paddleTop = paddle.y;
         double paddleBottom = paddleTop + paddle.height;
 
@@ -106,9 +109,9 @@ public class Ball extends BaseClass {
         if (!collisionX || !collisionY) {
             return -1;
         }
-        if (ballX <= paddleLeft) {
+        if (ballX <= paddleLeft && !collisionY) {
             return 2;
-        } else if (ballX >= paddleRight) {
+        } else if (ballX >= paddleRight && !collisionY) {
             return 3;
         }
         return 1;
@@ -125,22 +128,22 @@ public class Ball extends BaseClass {
         return false;
     }
 
-    public int checkBrickCollision(Brick[][] brick, Render render,MainMedia media, ArrayList<PowerUp> powerUps) {
-        int brickCol = x/ WIDTHBrick ;
-        int brickRow = y/ HEIGHTBrick ;
+    public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render, List<PowerUp> powerUps) {
+        int brickCol = (int) x / (int) WIDTHBrick;
+        int brickRow = (int) y / (int) HEIGHTBrick;
 
-        boolean above = false,below = false,left = false,right = false;
+        boolean above = false, below = false, left = false, right = false;
 
-        if(vy<0&&brickRow>0&&brickRow<=ROW&&brickCol<COL &&(brickRow)*HEIGHTBrick+width>=y){
+        if (vy < 0 && brickRow > 0 && brickRow < ROW && (brickRow) * HEIGHTBrick + width >= y) {
             above = true;
         }
-        if(vy>0&&brickRow<ROW-1 &&brickCol<COL&&(brickRow+1)*HEIGHTBrick-width<=y){
-            below =true;
+        if (vy > 0 && brickRow < ROW - 1 && (brickRow + 1) * HEIGHTBrick - width <= y) {
+            below = true;
         }
-        if(vx<0&&brickCol>0&&brickRow<ROW &&brickCol<COL&&(brickCol)*WIDTHBrick+width>=x){
+        if (vx < 0 && brickCol > 0 && brickRow < ROW && (brickCol) * WIDTHBrick + width >= x) {
             left = true;
         }
-        if(vx>0&&brickCol<COL-1&&brickRow<ROW &&(brickCol+1)*WIDTHBrick-width<=x){
+        if (vx > 0 && brickCol < COL - 1 && brickRow < ROW && (brickCol + 1) * WIDTHBrick - width <= x) {
             right = true;
         }
 

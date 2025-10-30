@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import LogicGamePlay.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.AnimationTimer;
@@ -61,8 +65,8 @@ public class GamePlayController {
   private Render render;
   private MainImage IMAGE;
   private MainMedia media;
-  private ArrayList<PowerUp>powerUps;
-   private ArrayList<Ball>balls;
+  private List<PowerUp>powerUps;
+   private List<Ball>balls;
   public void start(Stage stage) throws IOException {
     if (mainGame != null) {
       mainGame.stop();
