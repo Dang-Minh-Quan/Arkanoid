@@ -3,6 +3,7 @@ package LogicGamePlay;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -29,17 +30,13 @@ public class PowerUp extends BaseClass {
         this.image = spriteSheet;
         type = (int)(Math.random()*PU)%PU;
         if(type==3){checkTimePowerUp=0;}
-    }
-
-    public Circle getHitBoxPowerUp() {
-        return HitBoxPowerUp;
+        HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
     }
 
     public void update() {
         if (!active) return;
         y += vy;
         if (y > 720) active = false;
-
             delayCounter++;
         if (delayCounter >= frameDelay) {
             delayCounter = 0;
@@ -64,7 +61,7 @@ public class PowerUp extends BaseClass {
         y=y+vy;
         HitBoxPowerUp.setCenterY(y);
         if(checkActivate==false) {
-            if (Shape.intersect(HitBoxPowerUp, paddle.getHitBoxPaddle()).getBoundsInLocal().getWidth() > 0) {
+            if (Shape.intersect(HitBoxPowerUp, paddle.getPaddle()).getBoundsInLocal().getWidth() > 0) {
                 Activate(balls, paddle, ball);
                 return 1;
             }

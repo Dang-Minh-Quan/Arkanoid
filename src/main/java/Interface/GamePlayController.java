@@ -5,6 +5,9 @@ import LogicGamePlay.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -89,12 +92,19 @@ public class GamePlayController {
     IMAGE = new MainImage();
     media = new MainMedia();
     IMAGE.LoadImage();
+    media.LoadMedia();;
+
 
     update = new Update(this);
     render = new Render();
     update.initializeLevel(ball, paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
     System.out.println(numBrick);
+
+    ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
+    gameThread.schedule(()-> {
+        media.playMusic();
+        },1, TimeUnit.SECONDS);
 
     mainGame = new AnimationTimer() {
       long LastUpdate = 0;
@@ -106,7 +116,7 @@ public class GamePlayController {
           //System.out.println(numBrick);
           update.updateGame(media, balls, ball, paddle, brick, Level, gameRestarted, powerUps, render);
           //gameLayer.getChildren().clear();
-          render.renderGame(gc, ball, paddle, brick);
+          render.renderGame(gc, balls, ball, paddle, brick,powerUps);
           LastUpdate = now;
         }
       }

@@ -6,6 +6,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static LogicGamePlay.Specifications.*;
 
@@ -19,7 +20,7 @@ public class Brick extends BaseClass {
         super(null, j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
     }
 
-    public void BallHit(Ball ball, Render render, MainMedia media) {
+    public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps) {
 
         if(type == 0 ||  destroyed) {
             return;
@@ -30,18 +31,18 @@ public class Brick extends BaseClass {
                 type = 3;
                 Update();
             } else {
-                destroyBrick(render,media);
+                destroyBrick(render,media,powerUps);
             }
         }
         else if (type == 1) {
-            destroyBrick(render,media);
+            destroyBrick(render,media,powerUps);
         }
         else if(type == 3) {
-            destroyBrick(render,media);
+            destroyBrick(render,media,powerUps);
         }
     }
 
-    public void destroyBrick(Render render,MainMedia media) {
+    public void destroyBrick(Render render,MainMedia media, List<PowerUp> powerUps) {
         if (exploded) return;
         exploded = true;
         destroyed = true;
@@ -49,7 +50,7 @@ public class Brick extends BaseClass {
         numBrick--;
         explosion(render);
         if((int)(Math.random()*probability)%probability==0) {
-            render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15);
+            render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15,powerUps);
         }
         media.playDestroyBrick();
     }

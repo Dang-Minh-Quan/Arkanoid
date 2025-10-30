@@ -28,7 +28,7 @@ public class Update {
   }
 
   private void updatePowerUp(List<Ball> balls, Ball ball, Paddle paddle, List<PowerUp> powerUps) {
-    for (int i = 0; i < powerUps.size(); i++) {
+      for (int i = 0; i < powerUps.size(); i++) {
       if (powerUps.get(i).checkActivate == true) {
         if (powerUps.get(i).checkTimePowerUp == -1) {
           powerUps.remove(i);

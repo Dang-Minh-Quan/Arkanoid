@@ -4,39 +4,39 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static LogicGamePlay.Specifications.*;
 
 public class Render {
     private long lastTime = 0;
     private final ArrayList<Explosion> explosions = new ArrayList<>();
-    private final ArrayList<PowerUp> powerUps = new ArrayList<>();
     private final MainImage image = new MainImage();
 
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
     }
-
-public void addPowerUp(int x, int y) {
+    public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
     powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
 }
 
-    private void renderPowerUp(GraphicsContext gc) {
+    private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {
         for (PowerUp p : powerUps) {
-            p.update();
-            p.render(gc);
+            if(!p.checkActivate) {
+                p.update();
+                p.render(gc);
+            }
         }
-        powerUps.removeIf(p -> !p.isActive());
     }
 
-    public void renderGame(GraphicsContext gc, Ball ball, Paddle paddle, Brick[][] brick) {
+    public void renderGame(GraphicsContext gc,List<Ball> balls,  Ball ball, Paddle paddle, Brick[][] brick,List<PowerUp>powerUps) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
         renderBackGround(gc);
         renderBrick(gc,brick);
         renderExplosions(gc);
-        ball.RenderTail(gc);
         renderBall(gc, ball);
-        renderPowerUp(gc);
+        renderBalls(gc, balls);
+        renderPowerUp(gc,powerUps);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
     }
@@ -73,8 +73,17 @@ public void addPowerUp(int x, int y) {
         gc.drawImage(paddleImage, paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
+    private void renderBalls(GraphicsContext gc,List<Ball> balls){
+        for (Ball b : balls) {
+            Image ballImange = image.getBall();
+            b.RenderTail(gc);
+            gc.drawImage(ballImange, b.x - b.width *3/2, b.y-b.width*3/2,b.width * 4, b.width * 4);
+        }
+    }
+
     private void renderBall(GraphicsContext gc, Ball ball){
         Image ballImange = image.getBall();
+        ball.RenderTail(gc);
         gc.drawImage(ballImange, ball.x - ball.width *3/2, ball.y-ball.width*3/2,ball.width * 4, ball.width * 4);
     }
 

@@ -14,9 +14,6 @@ public class Paddle extends BaseClass {
     private Rectangle paddle;
     private boolean moveLeft;
     private boolean moveRight;
-    private int spvx ;
-    private int stvx ;
-    private Rectangle HitBoxPaddle;
 
     public Paddle() {
         super(null, 0, WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
@@ -32,10 +29,6 @@ public class Paddle extends BaseClass {
     public void setPaddle(double dx) {
         x = (int)dx;
         paddle.setX(dx);
-    }
-
-    public Rectangle getHitBoxPaddle() {
-        return HitBoxPaddle;
     }
 
     public boolean isMoveLeft() {
@@ -63,23 +56,6 @@ public class Paddle extends BaseClass {
         return next;
     }
 
-    @Override
-    public void Update() {
-        if (stvx > 0) {
-            if (x < WIDTH -width) {
-                x = x + spvx;
-                HitBoxPaddle.setX(x);
-                stvx = stvx - spvx;
-            }
-        }
-        if (stvx < 0) {
-            if (x > 0) {
-                x = x - spvx;
-                HitBoxPaddle.setX(x);
-                stvx = stvx + spvx;
-            }
-        }
-    }
 
     public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {
         scene.setOnKeyPressed(event -> {
