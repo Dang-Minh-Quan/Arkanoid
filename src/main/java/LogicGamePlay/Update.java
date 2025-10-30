@@ -2,6 +2,8 @@ package LogicGamePlay;
 
 import Interface.GamePlayController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,25 +19,23 @@ public class Update {
         this.controller = controller;
     }
 
-    public void updateGame(MainMedia media, ArrayList<Ball>balls, Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, ArrayList<PowerUp> powerUps) {
-        updatePowerUp(balls,ball,paddle,powerUps);
-        updateBall(media,ball,brick,paddle,powerUps);
-        updateBalls(media,balls,brick,paddle,powerUps);
-        updateBrick(balls,ball,paddle,Level, brick);
-        updatePaddle(paddle, brick, ball, gameRestarted, render);
+    public void updateGame(MainMedia media, List<Ball> balls, Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
+        updatePowerUp(balls, ball, paddle, powerUps);
+        updateBall(media, ball, brick, paddle, gameRestarted, powerUps, render);
+        updateBalls(media, balls, brick, paddle, gameRestarted, powerUps, render);
+        updateBrick(balls, ball, paddle, Level, brick);
+        updatePaddle(media, paddle, brick, ball, gameRestarted, powerUps, render);
     }
 
-    private void updatePowerUp(ArrayList<Ball>balls,Ball ball, Paddle paddle, ArrayList<PowerUp> powerUps){
-        for(int i=0;i<powerUps.size();i++){
-            if(powerUps.get(i).checkActivate==true){
-                if (powerUps.get(i).checkTimePowerUp==-1){
+    private void updatePowerUp(List<Ball> balls, Ball ball, Paddle paddle, List<PowerUp> powerUps) {
+        for (int i = 0; i < powerUps.size(); i++) {
+            if (powerUps.get(i).checkActivate == true) {
+                if (powerUps.get(i).checkTimePowerUp == -1) {
                     powerUps.remove(i);
-                }
-                else {
+                } else {
                     powerUps.get(i).checkStopPowerUp(balls, paddle, ball);
                 }
-            }
-            else {
+            } else {
                 switch (powerUps.get(i).UpdatePU(balls, paddle, ball)) {
                     case 1:
                         powerUps.get(i).checkActivate = true;
@@ -48,13 +48,13 @@ public class Update {
         }
     }
 
-    private void updateBrick(ArrayList<Ball>balls,Ball ball,Paddle paddle,AtomicInteger Level, Brick[][] brick) {
+    private void updateBrick(List<Ball> balls, Ball ball, Paddle paddle, AtomicInteger Level, Brick[][] brick) {
         if (numBrick <= 0) {
             Level.getAndIncrement();
             if (Level.get() <= LevelMax) {
 //                System.out.println(winLevel + " " + Level);
                 if (winLevel == false) {
-                    builderLevel(balls,ball,brick,paddle, Level);
+                    builderLevel(balls, ball, brick, paddle, Level);
                     winLevel = true;
                 } else {
                     winLevel = false;
@@ -68,18 +68,18 @@ public class Update {
         }
     }
 
-    public void initializeLevel(Ball ball, Brick[][] brick) {
+    public void initializeLevel(Ball ball, Paddle paddle, List<Ball> balls, Brick[][] brick) {
 //        System.out.println(Level);
         heartCount.set(3);
         numBrick = 0;
         // Level.set(0);
-        updateBrick(balls,ball,paddle,Level, brick);
+        updateBrick(balls, ball, paddle, Level, brick);
     }
 
-    private void builderLevel(ArrayList<Ball>balls,Ball ball ,Brick[][] brick, Paddle paddle,AtomicInteger Level) {
+    private void builderLevel(List<Ball> balls, Ball ball, Brick[][] brick, Paddle paddle, AtomicInteger Level) {
         Map map = new Map();
         if (Level.get() > LevelMax) {
-            checkPlay = false;
+//            checkPlay = false;
         } else {
             //ball.resert();
             int[][] a = map.builderMap(Level.get());
@@ -96,7 +96,7 @@ public class Update {
         }
     }
 
-    private void updatePaddle(Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted, Render render) {
+    private void updatePaddle(MainMedia media, Paddle paddle, Brick[][] brick, Ball ball, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
 
         if (heartCount.get() == 0) {
             ball.setBall(paddle.x + paddle.width / 2, HEIGHT - 60);
@@ -105,7 +105,7 @@ public class Update {
         }
 
         if (gameRestarted.get()) {
-            double nextPaddleX = paddle.getPaddle().getX();
+            int nextPaddleX = (int)paddle.getPaddle().getX();
             if (paddle.isMoveLeft()) {
                 nextPaddleX -= paddle.vx;
             }
@@ -118,9 +118,9 @@ public class Update {
             return;
         }
 
-        updateBall(ball, brick, paddle, gameRestarted, render);
+        updateBall(media, ball, brick, paddle, gameRestarted, powerUps, render);
 
-        double nextPaddleX = paddle.getPaddle().getX();
+        int nextPaddleX = (int) paddle.getPaddle().getX();
         if (paddle.isMoveLeft()) {
             nextPaddleX -= paddle.vx;
         }
@@ -133,9 +133,9 @@ public class Update {
     }
 
 
-    private static void updateBall(MainMedia media,Ball ball,Brick[][] brick,Paddle paddle,ArrayList<PowerUp>powerUps) {
-        double nextBallX = ball.getBall().getCenterX() + ball.vx;
-        double nextBallY = ball.getBall().getCenterY() + ball.vy;
+    private static void updateBall(MainMedia media, Ball ball, Brick[][] brick, Paddle paddle, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
+        int nextBallX = (int) ball.getBall().getCenterX() + (int) ball.vx;
+        int nextBallY = (int) ball.getBall().getCenterY() + (int) ball.vy;
         ball.setBall(nextBallX, nextBallY);
         switch (ball.checkWallCollision(paddle, gameRestarted)) {
             case -1:
@@ -169,12 +169,13 @@ public class Update {
                     }
                     ball.vy = -Math.abs(spvxOriginal * Math.cos(baseAngle));
                     break;
-                case 2: case 3:
+                case 2:
+                case 3:
                     ball.vx = -ball.vx;
                     break;
             }
         }
-        int collisionResult = ball.checkBrickCollision(brick, render);
+        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps);
         if (collisionResult != 0) {
             if (collisionResult == 1) {
                 ball.vx = -ball.vx;
@@ -185,7 +186,37 @@ public class Update {
             // if (b != null) b.BallHit(ball, render);
         }
 
-            switch (balls.get(i).checkBrickCollision(media,brick, powerUps)) {
+    }
+
+    private static void updateBalls(MainMedia media, List<Ball> balls, Brick[][] brick, Paddle paddle, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
+        for (int i = 0; i < balls.size(); i++) {
+            balls.get(i).setBall(balls.get(i).x + (int) balls.get(i).vx, balls.get(i).y + (int) balls.get(i).vy);
+            switch (balls.get(i).checkWallCollision(paddle, gameRestarted)) {
+                case 1:
+                    balls.get(i).vx = -balls.get(i).vx;
+                    balls.get(i).vy = -balls.get(i).vy;
+                    break;
+                case 2:
+                    balls.get(i).vx = -balls.get(i).vx;
+                    break;
+                case 3:
+                    balls.get(i).vy = -balls.get(i).vy;
+                    break;
+            }
+
+            switch (balls.get(i).checkPaddleCollision(paddle)) {
+                case 1:
+                    balls.get(i).vy = -balls.get(i).vy;
+                    break;
+                case 2:
+                    balls.get(i).vx = -balls.get(i).vx;
+                    break;
+                case 3:
+                    balls.get(i).vx = -balls.get(i).vx;
+                    break;
+            }
+
+            switch (balls.get(i).checkBrickCollision(media, brick, render, powerUps)) {
                 case 1:
                     balls.get(i).vx = -balls.get(i).vx;
                     break;
@@ -197,3 +228,4 @@ public class Update {
     }
 
 }
+
