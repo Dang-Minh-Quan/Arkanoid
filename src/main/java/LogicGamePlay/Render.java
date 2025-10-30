@@ -2,6 +2,12 @@ package LogicGamePlay;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+import javafx.geometry.VPos;
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -12,14 +18,15 @@ public class Render {
     private final ArrayList<Explosion> explosions = new ArrayList<>();
     private final ArrayList<PowerUp> powerUps = new ArrayList<>();
     private final MainImage image = new MainImage();
+    private Font pixelFont;
 
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
     }
 
-public void addPowerUp(double x, double y) {
-    powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
-}
+    public void addPowerUp(double x, double y) {
+        powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
+    }
 
     private void renderPowerUp(GraphicsContext gc) {
         for (PowerUp p : powerUps) {
@@ -30,16 +37,18 @@ public void addPowerUp(double x, double y) {
     }
 
     public void renderGame(GraphicsContext gc, Ball ball, Paddle paddle, Brick[][] brick) {
-        gc.clearRect(0,0,WIDTH, HEIGHT);
+        gc.clearRect(0, 0, WIDTH, HEIGHT);
         renderBackGround(gc);
-        renderBrick(gc,brick);
+        renderBrick(gc, brick);
         renderExplosions(gc);
         ball.RenderTail(gc);
         renderBall(gc, ball);
         renderPowerUp(gc);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
+        renderHUD(gc);
     }
+
     private void renderBackGround(GraphicsContext gc) {
         Image background = image.getBackground();
         gc.drawImage(background, 0, 0, WIDTH, HEIGHT);
@@ -47,19 +56,19 @@ public void addPowerUp(double x, double y) {
 
     private void renderBackBar(GraphicsContext gc) {
         Image bar = image.getBar();
-        gc.drawImage(bar,0,HEIGHT, WIDTH, HEIGHTBar);
+        gc.drawImage(bar, 0, HEIGHT, WIDTH, HEIGHTBar);
     }
 
     private void renderBrick(GraphicsContext gc, Brick[][] brick) {
-        for(int i = 0; i < ROW; i++) {
-            for(int j = 0; j < COL; j++) {
+        for (int i = 0; i < ROW; i++) {
+            for (int j = 0; j < COL; j++) {
                 Brick b = brick[i][j];
-                if(b == null) {
+                if (b == null) {
                     continue;
                 }
 
-              //  b.Update();
-                if(b.type == 0 || b.image == null) {
+                //  b.Update();
+                if (b.type == 0 || b.image == null) {
                     continue;
                 }
 
@@ -73,12 +82,12 @@ public void addPowerUp(double x, double y) {
         gc.drawImage(paddleImage, paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
-    private void renderBall(GraphicsContext gc, Ball ball){
+    private void renderBall(GraphicsContext gc, Ball ball) {
         Image ballImange = image.getBall();
-        gc.drawImage(ballImange, ball.x - ball.width, ball.y-ball.width,ball.width * 2, ball.width * 2);
+        gc.drawImage(ballImange, ball.x - ball.width, ball.y - ball.width, ball.width * 2, ball.width * 2);
     }
 
-  private void renderExplosions(GraphicsContext gc) {
+    private void renderExplosions(GraphicsContext gc) {
         long currentTime = System.nanoTime();
         if (lastTime == 0) lastTime = currentTime;
         double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
@@ -94,5 +103,25 @@ public void addPowerUp(double x, double y) {
             }
             explosion.draw(gc);
         }
+    }
+
+    private void renderHUD(GraphicsContext gc) {
+        gc.setFill(Color.rgb(60, 30, 10, 0.9));
+        pixelFont = Font.loadFont(
+                getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
+                30
+        );
+        gc.setFont(pixelFont);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+
+        int scoreValue = score.get();
+        int livesValue = heartCount.get();
+        int levelValue = Level.get();
+
+        gc.fillText(String.valueOf(scoreValue), 90, HEIGHT + 85);
+        gc.fillText(String.valueOf(livesValue), 210, HEIGHT + 85);
+        gc.fillText(String.valueOf(levelValue), 330, HEIGHT + 85);
+
     }
 }
