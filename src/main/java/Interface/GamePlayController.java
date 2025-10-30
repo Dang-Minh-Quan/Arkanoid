@@ -1,15 +1,13 @@
 package Interface;
 
 
-import LogicGamePlay.Ball;
-import LogicGamePlay.Brick;
-import LogicGamePlay.MainImage;
-import LogicGamePlay.Paddle;
-import LogicGamePlay.Render;
-import LogicGamePlay.Specifications;
-import LogicGamePlay.Update;
+import LogicGamePlay.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,12 +19,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 import static LogicGamePlay.Specifications.*;
-import static LogicGamePlay.Specifications.HEIGHT;
 
 public class GamePlayController {
 
@@ -55,11 +54,15 @@ public class GamePlayController {
   private AnimationTimer mainGame;
 
   private Ball ball;
+  private List<Ball> balls;
   private Paddle paddle;
   private Brick[][] brick;
   private Update update;
   private Render render;
   private MainImage IMAGE;
+  private MainMedia media;
+  List<PowerUp> powerUps;
+
   public void start(Stage stage) throws IOException {
     if (mainGame != null) {
       mainGame.stop();
@@ -73,19 +76,22 @@ public class GamePlayController {
     ButtonPause.toFront();
     PauseMenu.toFront();
 
-    Canvas canvas = new Canvas(WIDTH, HEIGHT+ HEIGHTBar);
+    Canvas canvas = new Canvas(WIDTH, HEIGHT + HEIGHTBar);
     gameLayer.getChildren().add(canvas);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
     ball = new Ball();
+    balls = new ArrayList<>();
+    powerUps = new ArrayList<>();
     paddle = new Paddle();
-    brick = new Brick[(int)ROW][(int)COL];
+    brick = new Brick[ROW][COL];
     IMAGE = new MainImage();
+    media = new MainMedia();
     IMAGE.LoadImage();
 
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(ball, brick);
+    update.initializeLevel(ball, paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
     System.out.println(numBrick);
 
@@ -94,10 +100,10 @@ public class GamePlayController {
 
       @Override
       public void handle(long now) {
-        if (now - LastUpdate >= 12_000_000) {
+        if (now - LastUpdate >= 16_000_000) {
           //System.out.println(ball.vx+" "+ball.vy);
           //System.out.println(numBrick);
-          update.updateGame(ball,paddle, brick, Level,gameRestarted,render);
+          update.updateGame(media, balls, ball, paddle, brick, Level, gameRestarted, powerUps, render);
           //gameLayer.getChildren().clear();
           render.renderGame(gc, ball, paddle, brick);
           LastUpdate = now;
@@ -106,7 +112,7 @@ public class GamePlayController {
     };
 
     Platform.runLater(() -> {
-      paddle.controllerPaddle(GamePlay.getScene(),gameRestarted);
+      paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
       GamePlay.requestFocus();
       ButtonPause.toFront();
       mainGame.start();
@@ -118,7 +124,7 @@ public class GamePlayController {
     if (mainGame != null) {
       mainGame.stop();
     }
-    PauseMenu.setVisible(true );
+    PauseMenu.setVisible(true);
     ButtonPause.setVisible(false);
     System.out.println("Game Paused");
   }
@@ -157,7 +163,7 @@ public class GamePlayController {
 
   public void GameOver() {
     try {
-      if (heartCount.get()>0 || GameOverCheck) return;
+      if (heartCount.get() > 0 || GameOverCheck) return;
       GameOverCheck = true;
 
       if (mainGame != null) {
@@ -168,7 +174,7 @@ public class GamePlayController {
 
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
-      SwitchScene.fade(stage,root);
+      SwitchScene.fade(stage, root);
       Scene scene = new Scene(root);
       stage.setScene(scene);
       stage.centerOnScreen();
@@ -178,7 +184,7 @@ public class GamePlayController {
       System.out.println("You Lose!");
     } catch (IOException e) {
       e.printStackTrace();
-      GameOverCheck  =false;
+      GameOverCheck = false;
     }
   }
 
@@ -196,7 +202,7 @@ public class GamePlayController {
 
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
-      SwitchScene.fade(stage,root);
+      SwitchScene.fade(stage, root);
       Scene scene = new Scene(root);
       stage.setScene(scene);
       stage.centerOnScreen();
@@ -205,7 +211,7 @@ public class GamePlayController {
       System.out.println("Win!");
     } catch (IOException e) {
       e.printStackTrace();
-      WinCheck =false;
+      WinCheck = false;
     }
   }
 }

@@ -63,7 +63,7 @@ public class Update {
 //        System.out.println(Level);
     heartCount.set(3);
     numBrick = 0;
-    builderLevel(balls, ball, brick, paddle, Specifications.Level);
+    builderLevel(balls, ball, brick, paddle, Level);
   }
 
   private void builderLevel(List<Ball> balls, Ball ball, Brick[][] brick, Paddle paddle, AtomicInteger Level) {
