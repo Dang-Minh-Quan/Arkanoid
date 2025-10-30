@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static LogicGamePlay.Specifications.*;
 
-public class Ball extends Baseclass {
+public class Ball extends BaseClass {
     private Circle ball;
     private Circle[] Tail = new Circle[TailLength];
     private int[] TailX=new int[TailLength];

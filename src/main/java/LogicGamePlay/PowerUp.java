@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import static LogicGamePlay.Specifications.*;
 
-public class PowerUp extends Baseclass{
+public class PowerUp extends BaseClass {
     private Circle HitBoxPowerUp;
     int checkTimePowerUp=TimePowerUp;
     boolean checkActivate=false;

@@ -3,7 +3,7 @@ package LogicGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public abstract class AnimationClass extends Baseclass {
+public abstract class AnimationClass extends BaseClass {
     protected int frameCols;
     protected int frameRows;
     protected int frameWidth;

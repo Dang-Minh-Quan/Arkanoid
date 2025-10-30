@@ -25,9 +25,9 @@ public class MainImage {
     public Image getBar(){return bar;}
 
     public void LoadImage() {
-        brick1 = new Image(getClass().getResourceAsStream("brick1.png"), 60, 30, false, false);
-        brick2 = new Image(getClass().getResourceAsStream("brick2.png"), 60, 30, false, false);
-        backgroud1 = new Image(getClass().getResourceAsStream("background1.jpg"), WIDTH, HEIGHT, false,false);
-        bar = new Image(getClass().getResourceAsStream("bar.png"), WIDTH, HEIGHTBar, false,false);
+        brick1 = new Image(getClass().getResourceAsStream("/Interface/Image/brick1.png"), 60, 30, false, false);
+        brick2 = new Image(getClass().getResourceAsStream("/Interface/Image/brick2.png"), 60, 30, false, false);
+        backgroud1 = new Image(getClass().getResourceAsStream("/Interface/Image/background1.png"), WIDTH, HEIGHT, false,false);
+        bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"), WIDTH, HEIGHTBar, false,false);
     }
 }

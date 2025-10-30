@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import static LogicGamePlay.Specifications.*;
 
-public class Brick extends Baseclass {
+public class Brick extends BaseClass {
     public Brick(int i,int j) {
         super( j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
     }
