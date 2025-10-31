@@ -154,31 +154,31 @@ public class Ball extends BaseClass {
 
     if (above == true) {
       if (brick[brickRow - 1][brickCol].type != 0) {
-        brick[brickRow - 1][brickCol].BallHit(this, render, media);
+        brick[brickRow - 1][brickCol].BallHit(this, render, media,powerUps);
         return 2;
       }
     }
     if (below == true) {
       if (brick[brickRow + 1][brickCol].type != 0) {
-        brick[brickRow + 1][brickCol].BallHit(this, render, media);
+        brick[brickRow + 1][brickCol].BallHit(this, render, media,powerUps);
         return 2;
       }
     }
     if (left == true) {
       if (brick[brickRow][brickCol - 1].type != 0) {
-        brick[brickRow][brickCol - 1].BallHit(this, render, media);
+        brick[brickRow][brickCol - 1].BallHit(this, render, media,powerUps);
         return 1;
       }
     }
     if (right == true) {
       if (brick[brickRow][brickCol + 1].type != 0) {
-        brick[brickRow][brickCol + 1].BallHit(this, render, media);
+        brick[brickRow][brickCol + 1].BallHit(this, render, media,powerUps);
         return 1;
       }
     }
     if (above == true && left == true) {
       if (brick[brickRow - 1][brickCol - 1].type != 0) {
-        brick[brickRow - 1][brickCol - 1].BallHit(this, render, media);
+        brick[brickRow - 1][brickCol - 1].BallHit(this, render, media,powerUps);
         if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol) * WIDTHBrick - (int) x)) {
           return 2;
@@ -189,7 +189,7 @@ public class Ball extends BaseClass {
     }
     if (below == true && left == true) {
       if (brick[brickRow + 1][brickCol - 1].type != 0) {
-        brick[brickRow + 1][brickCol - 1].BallHit(this, render, media);
+        brick[brickRow + 1][brickCol - 1].BallHit(this, render, media,powerUps);
         if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol) * WIDTHBrick - (int) x)) {
           return 2;
@@ -200,7 +200,7 @@ public class Ball extends BaseClass {
     }
     if (above == true && right == true) {
       if (brick[brickRow - 1][brickCol + 1].type != 0) {
-        brick[brickRow - 1][brickCol + 1].BallHit(this, render, media);
+        brick[brickRow - 1][brickCol + 1].BallHit(this, render, media,powerUps);
         if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol + 1) * WIDTHBrick - (int) x)) {
           return 2;
@@ -211,7 +211,7 @@ public class Ball extends BaseClass {
     }
     if (below == true && right == true) {
       if (brick[brickRow + 1][brickCol + 1].type != 0) {
-        brick[brickRow + 1][brickCol + 1].BallHit(this, render, media);
+        brick[brickRow + 1][brickCol + 1].BallHit(this, render, media,powerUps);
         if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol + 1) * WIDTHBrick - (int) x)) {
           return 2;
