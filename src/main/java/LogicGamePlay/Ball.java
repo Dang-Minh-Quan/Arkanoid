@@ -24,16 +24,16 @@ public class Ball extends BaseClass {
             TailY[i] = (int) y;
             double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
             Color ColorTail = new Color(1, 1, 1, density);
-            Tail[i] = new Circle(x, y, width - i / 2, ColorTail);
+            Tail[i] = new Circle(x, y, width * 0.8 - i / 2, ColorTail);
         }
     }
 
     public void setBall(double dx, double dy) {
-        UpdateTail();
         x = dx;
         y = dy;
         ball.setCenterX(x);
         ball.setCenterY(y);
+        UpdateTail();
     }
 
     public void UpdateTail() {
@@ -55,8 +55,8 @@ public class Ball extends BaseClass {
             gc.setFill(c);
             gc.fillOval(TailX[i] - Tail[i].getRadius(),
                     TailY[i] - Tail[i].getRadius(),
-                    Tail[i].getRadius() * 3,
-                    Tail[i].getRadius() * 3);
+                    Tail[i].getRadius() * 2,
+                    Tail[i].getRadius() * 2 );
         }
     }
 
