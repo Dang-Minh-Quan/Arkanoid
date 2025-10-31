@@ -48,9 +48,10 @@ public class PowerUp extends BaseClass {
         if(checkTimePowerUp==0) {
             switch (type) {
                 case 0:
+                  ball.type=0;
                     break;
                 case 1:
-                    paddle.width = paddleWidthOriginal;
+                  paddle.width=paddle.width-50;
                     break;
             }
         }
@@ -75,9 +76,10 @@ public class PowerUp extends BaseClass {
     public void Activate(List<Ball>balls,Paddle paddle,Ball ball){
         switch (type){
             case 0:
+                ball.type=1;
                 break;
             case 1:
-                paddle.width=300;
+                paddle.width=paddle.width+50;
                 break;
             case 2:
                 Ball newBall=new Ball();

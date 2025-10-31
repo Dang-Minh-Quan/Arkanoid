@@ -21,7 +21,7 @@ public class Specifications {
   public static int WIDTHBrick = WIDTH / COL;
   public static int speedPU = 2;
   public static int RADIUSPU = HEIGHTBrick / 2;
-  public static int PU = 3;
+  public static int PU = 1;
   public static final int probability = 1;
   public static final int TailLength = 40;
   public static final int HEIGHTBar = 150;
@@ -29,7 +29,7 @@ public class Specifications {
   public static AtomicInteger heartCount = new AtomicInteger(3);
   public static boolean winLevel = false;
   public static AtomicInteger Level = new AtomicInteger(1);
-  public static final int TimePowerUp = 10 * 60;
+  public static final int TimePowerUp = 10 / 3 * 2 * 60;
 
   public static void reset() {
       Level.set(1);
