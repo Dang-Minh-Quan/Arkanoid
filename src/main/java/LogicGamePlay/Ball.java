@@ -101,8 +101,8 @@ public class Ball extends BaseClass {
     double ballX = x;
     double ballY = y;
     double radius = width;
-    double paddleLeft = Math.min(paddle.x, paddle.x + paddle.vx);
-    double paddleRight = Math.max(paddleLeft + paddle.width, paddleLeft + paddle.width + paddle.vx);
+    double paddleLeft = paddle.x;
+    double paddleRight = paddleLeft + paddle.width;
     double paddleTop = paddle.y;
     double paddleBottom = paddleTop + paddle.height;
 

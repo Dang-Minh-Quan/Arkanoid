@@ -10,7 +10,7 @@ public class Specifications {
   public static final int COL = 9;
   public static final int ROW = 10;
   public static final int vxOriginal = 10;
-  public static final int LevelMax = 2;
+  public static final int LevelMax = 3;
   public static final int paddleWidthOriginal = 100;
   public static final int paddleHeightOriginal = 20;
   public static final int spvxOriginal = 6;

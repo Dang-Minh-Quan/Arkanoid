@@ -76,7 +76,7 @@ public class SaveGame {
         return false;
       }
 
-      return savedLevel > 1;
+      return savedLevel > 1 && savedLevel<=Specifications.LevelMax;
 
     }
 

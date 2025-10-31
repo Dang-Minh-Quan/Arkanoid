@@ -168,7 +168,6 @@ public class GamePlayController {
         mainGame.stop();
         mainGame = null;
       }
-      //reset();
 
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));

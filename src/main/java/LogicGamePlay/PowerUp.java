@@ -102,7 +102,7 @@ public class PowerUp extends BaseClass {
         gc.drawImage(
                 image,
                 col * frameWidth, row * frameHeight, frameWidth, frameHeight,
-                x, y, width*4, height*4
+                x, y, width*3, height*3
         );
     }
 
