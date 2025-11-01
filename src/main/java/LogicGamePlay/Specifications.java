@@ -36,6 +36,7 @@ public class Specifications {
       winLevel = false;
       numBrick = 0;
       heartCount.set(3);
+      score.set(0);
       GamePlayController.GameOverCheck=false;
   }
 }
