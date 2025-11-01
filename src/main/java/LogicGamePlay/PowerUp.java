@@ -13,22 +13,16 @@ import java.util.ArrayList;
 
 import static LogicGamePlay.Specifications.*;
 
-public class PowerUp extends BaseClass {
+public class PowerUp extends AnimationClass {
     private boolean active = true;
 
     private Image image;
-    private int frameCols = 4;
-    private int frameRows = 4;
-    private int totalFrames = frameCols * frameRows;
-    private int currentFrame = 0;
-    private int frameDelay = 5;  // tốc độ xoay
-    private int delayCounter = 0;
     private Circle HitBoxPowerUp;
     int checkTimePowerUp=TimePowerUp;
     boolean checkActivate=false;
 
     public PowerUp(Image spriteSheet, int x, int y) {
-        super( x, y,0,speedPU, RADIUSPU,RADIUSPU);
+        super(spriteSheet, x, y,0,speedPU, RADIUSPU,RADIUSPU,4,4,5);
         this.image = spriteSheet;
         //type = (int)(Math.random()*PU)%PU;
         type = 4;
@@ -40,11 +34,7 @@ public class PowerUp extends BaseClass {
         if (!active) return;
         y += vy;
         if (y > 720) active = false;
-            delayCounter++;
-        if (delayCounter >= frameDelay) {
-            delayCounter = 0;
-            currentFrame = (currentFrame + 1) % totalFrames;
-        }
+        Update();
     }
 
     public void checkStopPowerUp(List<Ball> balls, Paddle paddle, Ball ball) {
@@ -121,18 +111,7 @@ public class PowerUp extends BaseClass {
 
     public void render(GraphicsContext gc) {
         if (!active || image == null) return;
-
-        int frameWidth = (int) image.getWidth() / frameCols;
-        int frameHeight = (int) image.getHeight() / frameRows;
-
-        int col = currentFrame % frameCols;
-        int row = currentFrame / frameCols;
-
-        gc.drawImage(
-                image,
-                col * frameWidth, row * frameHeight, frameWidth, frameHeight,
-                x, y, width*3, height*3
-        );
+        super.draw(gc);
     }
 
     public boolean isActive() {

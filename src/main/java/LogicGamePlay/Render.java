@@ -10,7 +10,7 @@ import static LogicGamePlay.Specifications.*;
 
 public class Render {
     private long lastTime = 0;
-    private final ArrayList<Explosion> explosions = new ArrayList<>();
+    private final List<Explosion> explosions = new ArrayList<>();
     private final MainImage image = new MainImage();
 
     public void addExplosion(int x, int y) {
@@ -41,7 +41,7 @@ public class Render {
         renderBackBar(gc);
         if(blind==true){
             Image background = image.getBackground();
-            gc.drawImage(background, 0, 0, WIDTH, COL*HEIGHTBrick);
+            gc.drawImage(background, 0, 0, WIDTH, ROW*HEIGHTBrick);
         }
     }
     private void renderBackGround(GraphicsContext gc) {
@@ -92,16 +92,11 @@ public class Render {
     }
 
   private void renderExplosions(GraphicsContext gc) {
-        long currentTime = System.nanoTime();
-        if (lastTime == 0) lastTime = currentTime;
-        double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
-        lastTime = currentTime;
-
         Iterator<Explosion> iterator = explosions.iterator();
         while (iterator.hasNext()) {
             Explosion explosion = iterator.next();
-            explosion.update(deltaTime);
-            if (explosion.toBeRemoved) {
+            explosion.Update();
+            if (explosion.currentFrame>=explosion.frameCols*explosion.frameRows-1) {
                 iterator.remove();
                 continue;
             }
