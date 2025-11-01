@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -27,6 +29,7 @@ import java.io.IOException;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.util.Duration;
 
 import static LogicGamePlay.Specifications.*;
 
@@ -46,6 +49,9 @@ public class GamePlayController {
 
   @FXML
   private Pane PauseMenu;
+
+  @FXML
+  private ImageView LoadingScene;
 
   @FXML
   private Button ButtonResume;
@@ -123,7 +129,13 @@ public class GamePlayController {
       paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
       GamePlay.requestFocus();
       ButtonPause.toFront();
-      mainGame.start();
+
+      PauseTransition loading = new PauseTransition(Duration.seconds(2));
+      loading.setOnFinished(e -> {
+        LoadingScene.setVisible(false);
+        mainGame.start();
+      });
+      loading.play();
     });
   }
 
