@@ -114,7 +114,7 @@ public class MainMenuController {
 
   @FXML
   protected void ExitGame(ActionEvent event) {
-    saveProgress();
+    //saveProgress();
     System.out.println("Clicked Exit");
     System.exit(0);
   }

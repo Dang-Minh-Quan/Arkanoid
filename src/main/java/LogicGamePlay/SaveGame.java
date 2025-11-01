@@ -13,8 +13,8 @@ public class SaveGame {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVE_FILE))) {
       writer.write("Level:" + Specifications.Level.get());
       writer.newLine();
-//      writer.write("Score:" + Specifications.score.get());
-//      writer.newLine();
+      writer.write("Score:" + Specifications.score.get());
+      writer.newLine();
 
       System.out.println("Game progress saved successfully.");
     } catch (IOException e) {
@@ -42,9 +42,9 @@ public class SaveGame {
           case "Level":
             Specifications.Level.set(value);
             break;
-//          case "Score":
-//            Specifications.score.set(value);
-//            break;
+          case "Score":
+            Specifications.score.set(value);
+            break;
         }
       }
       System.out.println("Game progress loaded. Current Level: " + Specifications.Level.get());

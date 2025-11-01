@@ -20,7 +20,7 @@ public class Brick extends BaseClass {
         super(null, j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
     }
 
-    public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps) {
+    public void BallHit(Ball ball,  Render render) {
 
         if(type == 0 ||  destroyed) {
             return;
@@ -30,29 +30,31 @@ public class Brick extends BaseClass {
                 cracked = true;
                 type = 3;
                 Update();
+                return;
             } else {
-                destroyBrick(render,media,powerUps);
+                destroyBrick(render);
             }
         }
         else if (type == 1) {
-            destroyBrick(render,media,powerUps);
+            destroyBrick(render);
         }
         else if(type == 3) {
-            destroyBrick(render,media,powerUps);
+            destroyBrick(render);
         }
     }
 
-    public void destroyBrick(Render render,MainMedia media, List<PowerUp> powerUps) {
+    public void destroyBrick(Render render) {
         if (exploded) return;
         exploded = true;
         destroyed = true;
         type = 0;
         numBrick--;
+        score.addAndGet(10);
         explosion(render);
-        if((int)(Math.random()*probability)%probability==0) {
-            render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15,powerUps);
+        if (Math.random() < 0.9) { // xác suất rơi 40%
+            render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15);
         }
-        media.playDestroyBrick();
+
     }
 
     public void explosion(Render render) {
@@ -61,6 +63,18 @@ public class Brick extends BaseClass {
         render.addExplosion(explosionX, explosionY);
     }
 
+    public void UpdateBrick(Ball ball) {
+        if (ball.type == 0) {
+            if (type > 0) {
+                type = type - 1;
+                numBrick = numBrick - 1;
+            }
+            if (type == -1) {
+                type = -1;
+            }
+        }
+        Update();
+    }
 
     public void Update() {
         MainImage newImage = new MainImage();
@@ -86,11 +100,11 @@ public class Brick extends BaseClass {
         if (type == 0) {
             brick.setFill(Color.TRANSPARENT);
             brick.setStroke(Color.TRANSPARENT);
-        }
-        else  {
+        } else {
             brick.setFill(new ImagePattern(image));
             brick.setStroke(Color.BLACK);
         }
         return brick;
     }
+
 }

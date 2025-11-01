@@ -2,7 +2,6 @@ package LogicGamePlay;
 
 import Interface.GamePlayController;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import static Interface.GamePlayController.*;
 
 public class Specifications {
@@ -29,6 +28,7 @@ public class Specifications {
   public static AtomicInteger heartCount = new AtomicInteger(3);
   public static boolean winLevel = false;
   public static AtomicInteger Level = new AtomicInteger(1);
+  public static AtomicInteger score = new AtomicInteger(0);
   public static final int TimePowerUp = 10 / 3 * 2 * 60;
 
   public static void reset() {

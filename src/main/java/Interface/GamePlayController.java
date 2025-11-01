@@ -119,7 +119,7 @@ public class GamePlayController {
           //System.out.println(numBrick);
           update.updateGame(media, balls, ball, paddle, brick, Level, gameRestarted, powerUps, render);
           //gameLayer.getChildren().clear();
-          render.renderGame(gc, balls, ball, paddle, brick,powerUps);
+          render.renderGame(gc, ball, paddle, brick);
           LastUpdate = now;
         }
       }
