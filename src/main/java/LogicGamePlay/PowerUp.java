@@ -1,6 +1,8 @@
 package LogicGamePlay;
 
 import java.util.List;
+
+import Interface.GamePlayController;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -28,7 +30,8 @@ public class PowerUp extends BaseClass {
     public PowerUp(Image spriteSheet, int x, int y) {
         super( x, y,0,speedPU, RADIUSPU,RADIUSPU);
         this.image = spriteSheet;
-        type = (int)(Math.random()*PU)%PU;
+        //type = (int)(Math.random()*PU)%PU;
+        type = 4;
         if(type==3){checkTimePowerUp=0;}
         HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
     }
@@ -48,22 +51,28 @@ public class PowerUp extends BaseClass {
         if(checkTimePowerUp==0) {
             switch (type) {
                 case 0:
-                  ball.type=0;
+                    ball.type=0;
                     break;
                 case 1:
                   paddle.width=paddle.width-50;
+                    break;
+                case 3:
+                    ball.type=0;
+                    break;
+                case 4:
+                    blind=false;
                     break;
             }
         }
         checkTimePowerUp--;
     }
 
-    public int UpdatePU(List<Ball>balls, Paddle paddle, Ball ball) {
+    public int UpdatePU(List<Ball>balls, Paddle paddle, Ball ball, List<PowerUp> powerUps) {
         y=y+vy;
         HitBoxPowerUp.setCenterY(y);
         if(checkActivate==false) {
             if (Shape.intersect(HitBoxPowerUp, paddle.getPaddle()).getBoundsInLocal().getWidth() > 0) {
-                Activate(balls, paddle, ball);
+                Activate(balls, paddle, ball,powerUps);
                 return 1;
             }
             if (y == HEIGHT + RADIUSPU) {
@@ -73,19 +82,40 @@ public class PowerUp extends BaseClass {
         return 0;
     }
 
-    public void Activate(List<Ball>balls,Paddle paddle,Ball ball){
+    private void Activate(List<Ball>balls,Paddle paddle,Ball ball, List<PowerUp> powerUps){
         switch (type){
             case 0:
-                ball.type=1;
+                ball.type=2;
+                removePowerUp(powerUps,1);
+                removePowerUp(powerUps,3);
                 break;
             case 1:
                 paddle.width=paddle.width+50;
+                removePowerUp(powerUps,type);
                 break;
             case 2:
                 Ball newBall=new Ball();
                 balls.add(newBall);
                 checkTimePowerUp=-1;
                 break;
+            case 3:
+                ball.type=1;
+                removePowerUp(powerUps,1);
+                removePowerUp(powerUps,3);
+                break;
+            case 4:
+                blind= true;
+                checkTimePowerUp=checkTimePowerUp/10;
+                break;
+        }
+    }
+
+    private void removePowerUp(List<PowerUp> powerUps,int Type){
+        for (int i=0;i<powerUps.size();i++){
+            PowerUp p=powerUps.get(i);
+            if(p.type==Type&&p.checkActivate==true){
+                powerUps.remove(i);
+            }
         }
     }
 

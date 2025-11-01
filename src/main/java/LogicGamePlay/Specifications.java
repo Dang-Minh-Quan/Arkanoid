@@ -30,6 +30,7 @@ public class Specifications {
   public static boolean winLevel = false;
   public static AtomicInteger Level = new AtomicInteger(1);
   public static final int TimePowerUp = 10 / 3 * 2 * 60;
+  public static boolean blind=false;
 
   public static void reset() {
       Level.set(1);

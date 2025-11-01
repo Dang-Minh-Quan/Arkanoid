@@ -39,6 +39,10 @@ public class Render {
         renderPowerUp(gc,powerUps);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
+        if(blind==true){
+            Image background = image.getBackground();
+            gc.drawImage(background, 0, 0, WIDTH, COL*HEIGHTBrick);
+        }
     }
     private void renderBackGround(GraphicsContext gc) {
         Image background = image.getBackground();
