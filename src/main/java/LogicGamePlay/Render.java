@@ -29,12 +29,11 @@ public class Render {
         }
     }
 
-    public void renderGame(GraphicsContext gc,List<Ball> balls,  Ball ball, Paddle paddle, Brick[][] brick,List<PowerUp>powerUps) {
+    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle, Brick[][] brick,List<PowerUp>powerUps) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
         renderBackGround(gc);
         renderBrick(gc,brick);
         renderExplosions(gc);
-        renderBall(gc, ball);
         renderBalls(gc, balls);
         renderPowerUp(gc,powerUps);
         renderPaddle(gc, paddle);
@@ -81,14 +80,8 @@ public class Render {
         for (Ball b : balls) {
             Image ballImange = image.getBall();
             b.RenderTail(gc);
-            gc.drawImage(ballImange, b.x - b.width *3/2, b.y-b.width*3/2,b.width * 4, b.width * 4);
+            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
         }
-    }
-
-    private void renderBall(GraphicsContext gc, Ball ball){
-        Image ballImange = image.getBall();
-        ball.RenderTail(gc);
-        gc.drawImage(ballImange, ball.x - ball.width *3/2, ball.y-ball.width*3/2,ball.width * 4, ball.width * 4);
     }
 
   private void renderExplosions(GraphicsContext gc) {

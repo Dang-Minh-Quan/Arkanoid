@@ -19,11 +19,11 @@ public class Ball extends BaseClass {
   private boolean collidedWithPaddle = false;
 
   public Ball() {
-    super(null, 0, WIDTH / 2, HEIGHT - 60, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+    super(null, 0, WIDTH / 2, HEIGHT - 60, 0, -spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
     ball = new Circle(x, y, width, Color.BLUE);
     for (int i = 0; i < TailLength; i++) {
-      TailX[i] = (int) x;
-      TailY[i] = (int) y;
+      TailX[i] =  x;
+      TailY[i] =  y;
       double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
       Color ColorTail = new Color(1, 1, 1, density);
       Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
@@ -71,8 +71,8 @@ public class Ball extends BaseClass {
       gc.setFill(c);
       gc.fillOval(TailX[i] - Tail[i].getRadius(),
           TailY[i] - Tail[i].getRadius(),
-          Tail[i].getRadius() * 3,
-          Tail[i].getRadius() * 3);
+          Tail[i].getRadius() * 2,
+          Tail[i].getRadius() * 2);
     }
   }
 
@@ -80,10 +80,9 @@ public class Ball extends BaseClass {
     return ball;
   }
 
-  public int checkWallCollision(Paddle paddle, AtomicBoolean gameRestarted) {
+  public int checkWallCollision( AtomicBoolean gameRestarted) {
     if(type!=2) {
         if (y >= HEIGHT - height) {
-            gameRestarted.set(true);
             return -1;
         }
     }
@@ -143,13 +142,16 @@ public class Ball extends BaseClass {
 
     boolean above = false, below = false, left = false, right = false;
 
-    if (vy < 0 && brickRow > 0 && brickRow <= ROW && (brickRow) * HEIGHTBrick + width >= y) {
+    if (vy < 0 && brickRow > 0 && brickRow <= ROW
+            && (brickRow) * HEIGHTBrick + width >= y) {
       above = true;
     }
-    if (vy > 0 && brickRow < ROW - 1 && (brickRow + 1) * HEIGHTBrick - width <= y) {
+    if (vy > 0 && brickRow < ROW - 1
+            && (brickRow + 1) * HEIGHTBrick - width <= y) {
       below = true;
     }
-    if (vx < 0 && brickCol > 0 && brickRow < ROW && (brickCol) * WIDTHBrick + width >= x) {
+    if (vx < 0 && brickCol > 0 && brickRow < ROW
+            && (brickCol) * WIDTHBrick + width >= x) {
       left = true;
     }
     if (vx > 0 && brickCol < COL - 1 && brickRow < ROW

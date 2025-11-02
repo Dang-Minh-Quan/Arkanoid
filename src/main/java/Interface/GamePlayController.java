@@ -56,8 +56,9 @@ public class GamePlayController {
 
   private AnimationTimer mainGame;
 
-  private Ball ball;
-  private List<Ball> balls;
+  private ScheduledExecutorService updateExecutor;
+  private ScheduledExecutorService gameThread;
+    private List<Ball> balls;
   private Paddle paddle;
   private Brick[][] brick;
   private Update update;
@@ -65,6 +66,7 @@ public class GamePlayController {
   private MainImage IMAGE;
   private MainMedia media;
   List<PowerUp> powerUps;
+    private final Object Lock = new Object();
 
   public void start(Stage stage) throws IOException {
     if (mainGame != null) {
@@ -81,8 +83,9 @@ public class GamePlayController {
     gameLayer.getChildren().add(canvas);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    ball = new Ball();
+    Ball ball = new Ball();
     balls = new ArrayList<>();
+    balls.add(ball);
     powerUps = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
@@ -94,27 +97,25 @@ public class GamePlayController {
 
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(ball, paddle, balls, brick);
+    update.initializeLevel( paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
     System.out.println(numBrick);
 
-    ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
+    gameThread = Executors.newSingleThreadScheduledExecutor();
     gameThread.schedule(()-> {
         media.playMusic();
         },1, TimeUnit.SECONDS);
 
     mainGame = new AnimationTimer() {
       long LastUpdate = 0;
-
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-          //System.out.println(ball.vx+" "+ball.vy);
-          //System.out.println(numBrick);
-          update.updateGame(media, balls, ball, paddle, brick, Level, gameRestarted, powerUps, render);
-          //gameLayer.getChildren().clear();
-          render.renderGame(gc, balls, ball, paddle, brick,powerUps);
-          LastUpdate = now;
+          synchronized (Lock) {
+              update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
+              render.renderGame(gc, balls, paddle, brick, powerUps);
+              LastUpdate = now;
+          }
         }
       }
     };

@@ -22,18 +22,19 @@ public class MainMedia {
 
     public void playMusic() {
         if(checkLoad) {
-            System.out.println(0);
-            soundThread.execute(() -> {
-                musicPlay.play();
-            });
+            musicPlay.play();
+        }
+    }
+
+    public void stopMusic() {
+        if(checkLoad) {
+            musicPlay.stop();
         }
     }
 
     public void playDestroyBrick() {
         if(checkLoad) {
-            soundThread.execute(() -> {
-                destroyBrick.play();
-            });
+            destroyBrick.play();
         }
     }
 
