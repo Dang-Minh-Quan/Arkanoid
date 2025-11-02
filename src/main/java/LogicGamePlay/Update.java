@@ -79,7 +79,7 @@ public class Update {
               numBrick = numBrick + 1;
           }
           if (brick[i][j].type == 2) {
-              numBrick = numBrick + 2;
+              numBrick = numBrick + 1;
           }
           if (brick[i][j].type == 3) {
               numBrick = numBrick + 1;

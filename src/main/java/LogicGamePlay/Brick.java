@@ -55,6 +55,7 @@ public class Brick extends BaseClass {
                 if (type == 0 || destroyed) {
                     return;
                 }else {
+                    if(type == -1){numBrick=numBrick+1;}
                     type = 1;
                     boom(render, media, powerUps, brick);
                     destroyBrick(render, media, powerUps);
