@@ -196,6 +196,12 @@ public class Update {
             balls.add(ball);
             gameRestarted.set(true);
             heartCount.set(heartCount.get() - 1);
+            for(PowerUp p: powerUps){
+                if(p.checkActivate){
+                    p.checkTimePowerUp = 0;
+                    p.checkStopPowerUp(balls,paddle);
+                }
+            }
             powerUps.clear();
         }
     }

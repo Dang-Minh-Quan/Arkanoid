@@ -56,7 +56,6 @@ public class GamePlayController {
 
   private AnimationTimer mainGame;
 
-  private ScheduledExecutorService updateExecutor;
   private ScheduledExecutorService gameThread;
     private List<Ball> balls;
   private Paddle paddle;
@@ -69,6 +68,10 @@ public class GamePlayController {
     private final Object Lock = new Object();
 
   public void start(Stage stage) throws IOException {
+      IMAGE = new MainImage();
+      media = new MainMedia();
+      IMAGE.LoadImage();
+      media.LoadMedia();;
     if (mainGame != null) {
       mainGame.stop();
       mainGame = null;
@@ -89,10 +92,6 @@ public class GamePlayController {
     powerUps = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
-    IMAGE = new MainImage();
-    media = new MainMedia();
-    IMAGE.LoadImage();
-    media.LoadMedia();;
 
 
     update = new Update(this);
