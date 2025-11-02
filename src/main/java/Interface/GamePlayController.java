@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
@@ -21,6 +20,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -43,6 +44,15 @@ public class GamePlayController {
 
   @FXML
   private Pane WinGame;
+
+  @FXML
+  private Pane SaveHighScore;
+
+  @FXML
+  private Label ScoreLabel;
+
+  @FXML
+  private TextField nameInput;
 
   @FXML
   private Button ButtonPause;
@@ -70,7 +80,10 @@ public class GamePlayController {
   private Render render;
   private MainImage IMAGE;
   private MainMedia media;
+  private int FinalScore;
+  private ScoreManager scoreManager = new ScoreManager();
   List<PowerUp> powerUps;
+
 
   public void start(Stage stage) throws IOException {
     if (mainGame != null) {
@@ -95,7 +108,7 @@ public class GamePlayController {
     IMAGE = new MainImage();
     media = new MainMedia();
     IMAGE.LoadImage();
-    media.LoadMedia();;
+    media.LoadMedia();
 
 
     update = new Update(this);
@@ -191,6 +204,9 @@ public class GamePlayController {
         mainGame = null;
       }
 
+      WinCheck = false;
+      GameOverCheck = false;
+
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
       SwitchScene.fade(stage, root);
@@ -218,8 +234,36 @@ public class GamePlayController {
         mainGame.stop();
         mainGame = null;
       }
-
+      Level.incrementAndGet();
+      SaveGame.saveProgress();
       Stage stage = (Stage) GamePlay.getScene().getWindow();
+
+      if (Level.get() > LevelMax) {
+        FinalScore=score.get();
+
+        System.out.println("Final Score: " + FinalScore);
+
+        WinCheck = false;
+        GameOverCheck = false;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/WinGame.fxml"));
+        Parent root = loader.load();
+
+        SaveScoreController winGameController = loader.getController();
+        if (winGameController != null) {
+          winGameController.setFinalScore(FinalScore, stage);
+        }
+
+        SwitchScene.fade(stage, root);
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+
+        System.out.println("Congratulations! Game Completed. Loading WinGame Scene.");
+        return;
+      }
+      
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
       SwitchScene.fade(stage, root);
       Scene scene = new Scene(root);
@@ -232,5 +276,17 @@ public class GamePlayController {
       e.printStackTrace();
       WinCheck = false;
     }
+  }
+
+  @FXML
+  protected void BackToMenu (ActionEvent event) throws IOException {
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
+
+    System.out.println("Clicked Menu");
   }
 }

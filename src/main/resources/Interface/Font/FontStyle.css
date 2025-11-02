@@ -1,0 +1,19 @@
+/* Khai báo font chữ tùy chỉnh (Custom Font) */
+@font-face {
+    font-family: 'Font'; /* Tên bạn muốn gọi font này trong CSS */
+    src: url('Minecraftia-Regular.ttf'); /* ĐƯỜNG DẪN TƯƠNG ĐỐI đến file font của bạn */
+}
+
+/* Áp dụng font này cho Label */
+.custom-label {
+    -fx-font-family: 'Font';
+    -fx-font-size: 20px;
+    /* Các thuộc tính khác nếu cần */
+}
+
+/* Áp dụng font này cho TextField (TextInput) */
+.custom-text-input {
+    -fx-font-family: 'Font';
+    -fx-font-size: 16px;
+    /* Đảm bảo chiều cao phù hợp nếu font lớn */
+}

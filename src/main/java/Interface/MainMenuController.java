@@ -132,8 +132,6 @@ public class MainMenuController {
 
 
   public void loadNextLevel(Stage stage) throws IOException {
-    Level.incrementAndGet();
-    saveProgress();
 
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
     Parent root = loader.load();
