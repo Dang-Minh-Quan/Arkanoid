@@ -109,4 +109,3 @@ public class PowerUp extends BaseClass {
         return active;
     }
 }
-
