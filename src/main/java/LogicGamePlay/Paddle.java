@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import static LogicGamePlay.Specifications.*;
 
 public class Paddle extends BaseClass {
@@ -25,7 +27,7 @@ public class Paddle extends BaseClass {
     }
 
     public void setPaddle(double dx) {
-        x = dx;
+        x = (int)dx;
         paddle.setX(dx);
     }
 
@@ -45,19 +47,15 @@ public class Paddle extends BaseClass {
         this.moveRight = moveRight;
     }
 
-    public double ClampPosition(double next) {
+    public int ClampPosition(int next) {
         if (next < 0) {
             return 0;
         } else if (next + paddle.getWidth() > WIDTH) {
-            return WIDTH - paddle.getWidth();
+            return WIDTH - (int)paddle.getWidth();
         }
         return next;
     }
 
-    @Override
-    public void Update() {
-
-    }
 
     public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {
         scene.setOnKeyPressed(event -> {

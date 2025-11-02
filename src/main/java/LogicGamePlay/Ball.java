@@ -1,5 +1,6 @@
 package LogicGamePlay;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.layout.Pane;
@@ -28,7 +29,7 @@ public class Ball extends BaseClass {
         }
     }
 
-    public void setBall(double dx, double dy) {
+    public void setBall(int dx, int dy) {
         UpdateTail();
         x = dx;
         y = dy;
@@ -58,12 +59,6 @@ public class Ball extends BaseClass {
                     Tail[i].getRadius() * 3,
                     Tail[i].getRadius() * 3);
         }
-    }
-
-
-    @Override
-    public void Update() {
-
     }
 
     public Circle getBall() {
