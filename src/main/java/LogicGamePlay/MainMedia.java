@@ -22,6 +22,7 @@ public class MainMedia {
 
     public void playMusic() {
         if(checkLoad) {
+            System.out.println(0);
             soundThread.execute(() -> {
                 musicPlay.play();
             });

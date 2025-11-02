@@ -3,47 +3,30 @@ package LogicGamePlay;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Explosion {
-    private static final double FRAME_WIDTH = 64;
-    private static final double FRAME_HEIGHT = 64;
-    private static final int COLUMNS = 4;
-    private static final int ROWS = 4;
-    private static final double FRAME_DURATION = 0.08;
+import static LogicGamePlay.Specifications.*;
 
-    private double x, y;
-    private double elapsedTime = 0;
-    private int currentFrame = 0;
+public class Explosion extends AnimationClass{
     public boolean toBeRemoved = false;
 
     private static final Image explosionImage = new MainImage().getExplosion();
 
 
-    public Explosion(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Explosion(int x, int y) {
+        super(explosionImage, x, y-WIDTHBrick/2,0,speedPU,
+                (WIDTHBrick+HEIGHTBrick)/2,
+                (WIDTHBrick+HEIGHTBrick)/2,
+                4,4,5);
     }
 
-    public void update(double deltaTime) {
-        elapsedTime += deltaTime;
-        if (elapsedTime >= FRAME_DURATION) {
-            currentFrame++;
-            elapsedTime = 0;
-            if (currentFrame >= ROWS * COLUMNS) {
-                toBeRemoved = true;
-            }
+    public void Update() {
+        super.Update();
+        if (currentFrame >= totalFrames - 1) {
+            toBeRemoved = true;
         }
     }
 
     public void draw(GraphicsContext gc) {
         if (toBeRemoved) return;
-
-        int col = currentFrame % COLUMNS;
-        int row = currentFrame / COLUMNS;
-
-        gc.drawImage(
-                explosionImage,
-                col * FRAME_WIDTH, row * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT,
-                x, y, FRAME_WIDTH, FRAME_HEIGHT
-        );
+        super.draw(gc);
     }
 }

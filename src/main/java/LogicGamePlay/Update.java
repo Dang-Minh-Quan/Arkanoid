@@ -20,11 +20,11 @@ public class Update {
   }
 
   public void updateGame(MainMedia media, List<Ball> balls, Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
-    updatePowerUp(balls, ball, paddle, powerUps);
-    updateBall(media, ball, brick, paddle, gameRestarted, powerUps, render);
-    updatePaddle(media, paddle, brick, ball, gameRestarted, powerUps, render);
-    updateBalls(media, balls, brick, paddle, gameRestarted, powerUps, render);
-    updateBrick(balls, ball, paddle, Level, brick);
+      updatePowerUp(balls, ball, paddle, powerUps);
+      updateBall(media, ball, brick, paddle, gameRestarted, powerUps, render);
+      updatePaddle(media, paddle, brick, ball, gameRestarted, powerUps, render);
+      updateBalls(media, balls, brick, paddle, gameRestarted, powerUps, render);
+      updateBrick(balls, ball, paddle, Level, brick);
   }
 
   private void updatePowerUp(List<Ball> balls, Ball ball, Paddle paddle, List<PowerUp> powerUps) {
@@ -36,7 +36,7 @@ public class Update {
           powerUps.get(i).checkStopPowerUp(balls, paddle, ball);
         }
       } else {
-        switch (powerUps.get(i).UpdatePU(balls, paddle, ball)) {
+        switch (powerUps.get(i).UpdatePU(balls, paddle, ball,powerUps)) {
           case 1:
             powerUps.get(i).checkActivate = true;
             break;
@@ -77,8 +77,17 @@ public class Update {
         for (int j = 0; j < COL; j++) {
           brick[i][j] = new Brick(i, j);
           brick[i][j].type = a[i][j];
-          if (brick[i][j].type > 0) {
-            numBrick = numBrick + brick[i][j].type;
+          if (brick[i][j].type == 1) {
+              numBrick = numBrick + 1;
+          }
+          if (brick[i][j].type == 2) {
+              numBrick = numBrick + 2;
+          }
+          if (brick[i][j].type == 3) {
+              numBrick = numBrick + 1;
+          }
+          if (brick[i][j].type == 4) {
+              numBrick = numBrick + 1;
           }
           brick[i][j].Update();
         }
