@@ -19,24 +19,22 @@ public class Update {
     this.controller = controller;
   }
 
-  public void updateGame(MainMedia media, List<Ball> balls, Ball ball, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
-      updatePowerUp(balls, ball, paddle, powerUps);
-      updateBall(media, ball, brick, paddle, gameRestarted, powerUps, render);
-      updatePaddle(media, paddle, brick, ball, gameRestarted, powerUps, render);
+  public void updateGame(MainMedia media, List<Ball> balls, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
+      updatePowerUp(balls, paddle, powerUps);
       updateBalls(media, balls, brick, paddle, gameRestarted, powerUps, render);
-      updateBrick(balls, ball, paddle, Level, brick);
+      updateBrick(balls, paddle, Level, brick);
   }
 
-  private void updatePowerUp(List<Ball> balls, Ball ball, Paddle paddle, List<PowerUp> powerUps) {
+  private void updatePowerUp(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps) {
       for (int i = 0; i < powerUps.size(); i++) {
       if (powerUps.get(i).checkActivate == true) {
         if (powerUps.get(i).checkTimePowerUp == -1) {
           powerUps.remove(i);
         } else {
-          powerUps.get(i).checkStopPowerUp(balls, paddle, ball);
+          powerUps.get(i).checkStopPowerUp(balls, paddle);
         }
       } else {
-        switch (powerUps.get(i).UpdatePU(balls, paddle, ball,powerUps)) {
+        switch (powerUps.get(i).UpdatePU(balls, paddle, powerUps)) {
           case 1:
             powerUps.get(i).checkActivate = true;
             break;
@@ -48,7 +46,7 @@ public class Update {
     }
   }
 
-  private void updateBrick(List<Ball> balls, Ball ball, Paddle paddle, AtomicInteger Level, Brick[][] brick) {
+  private void updateBrick(List<Ball> balls, Paddle paddle, AtomicInteger Level, Brick[][] brick) {
     if (numBrick <= 0) {
       if (winLevel == false) {
         winLevel = true;
@@ -59,14 +57,14 @@ public class Update {
     }
   }
 
-  public void initializeLevel(Ball ball, Paddle paddle, List<Ball> balls, Brick[][] brick) {
+  public void initializeLevel( Paddle paddle, List<Ball> balls, Brick[][] brick) {
 //        System.out.println(Level);
     heartCount.set(3);
     numBrick = 0;
-    builderLevel(balls, ball, brick, paddle, Level);
+    builderLevel(balls, brick, paddle, Level);
   }
 
-  private void builderLevel(List<Ball> balls, Ball ball, Brick[][] brick, Paddle paddle, AtomicInteger Level) {
+  private void builderLevel(List<Ball> balls, Brick[][] brick, Paddle paddle, AtomicInteger Level) {
     Map map = new Map();
     if (Level.get() > LevelMax) {
 //            checkPlay = false;
@@ -133,20 +131,16 @@ public class Update {
   }
 
 
-  private static void updateBall(MainMedia media, Ball ball,
+  private static boolean updateBall(MainMedia media, Ball ball,
                                  Brick[][] brick, Paddle paddle,
                                  AtomicBoolean gameRestarted, List<PowerUp> powerUps,
                                  Render render) {
     int nextBallX = (int) ball.getBall().getCenterX() + (int) ball.vx;
     int nextBallY = (int) ball.getBall().getCenterY() + (int) ball.vy;
     ball.setBall(nextBallX, nextBallY);
-    switch (ball.checkWallCollision(paddle, gameRestarted)) {
+    switch (ball.checkWallCollision( gameRestarted)) {
       case -1:
-        ball.vx = 0;
-        ball.vy = spvxOriginal;
-        gameRestarted.set(true);
-        heartCount.set(heartCount.get() - 1);
-        break;
+        return false;
       case 1:
         ball.vx = -ball.vx;
         ball.vy = -ball.vy;
@@ -188,13 +182,22 @@ public class Update {
       //Brick b = ball.getLastHitBrick();
       // if (b != null) b.BallHit(ball, render);
     }
-
+    return true;
   }
 
   private void updateBalls(MainMedia media, List<Ball> balls, Brick[][] brick, Paddle paddle, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
-    for(Ball b : balls){
-        updatePaddle(media, paddle, brick, b, gameRestarted, powerUps, render);
-        updateBall(media, b, brick, paddle, gameRestarted, powerUps, render);
+    for(int i=0;i<balls.size();i++){
+        updatePaddle(media, paddle, brick, balls.get(i), gameRestarted, powerUps, render);
+        if(!updateBall(media, balls.get(i), brick, paddle, gameRestarted, powerUps, render)){
+            balls.remove(i);
+        }
+        if(balls.size()==0){
+            Ball ball=new Ball();
+            balls.add(ball);
+            gameRestarted.set(true);
+            heartCount.set(heartCount.get() - 1);
+            powerUps.clear();
+        }
     }
   }
 

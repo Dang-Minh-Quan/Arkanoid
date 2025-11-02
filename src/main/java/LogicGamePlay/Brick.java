@@ -5,8 +5,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import java.lang.foreign.StructLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 import static LogicGamePlay.Specifications.*;
@@ -22,6 +20,7 @@ public class Brick extends BaseClass {
     }
 
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,Brick[][] brick) {
+        System.out.println(ball.type);
         switch (ball.type) {
             case 0,2:
                 if (type == 0 || destroyed) {
