@@ -81,8 +81,8 @@ public class Render {
     }
 
     private void renderPaddle(GraphicsContext gc, Paddle paddle) {
-        Image paddleImage = image.getPaddle();
-        gc.drawImage(paddleImage, paddle.x, paddle.y, paddle.width, paddle.height);
+        Image paddleImage = paddle.image;
+        gc.drawImage(paddle.image, paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
     private void renderBalls(GraphicsContext gc,List<Ball> balls){
