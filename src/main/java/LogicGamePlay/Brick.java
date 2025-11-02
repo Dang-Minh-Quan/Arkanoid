@@ -112,7 +112,7 @@ public class Brick extends BaseClass {
             image = newImage.getBrickBroken();
         }
         if (type == 4) {
-            image = newImage.getBrickBroken();
+            image = newImage.getBrick4();
         }
         if (type == -1) {
             image = newImage.getBrick2();

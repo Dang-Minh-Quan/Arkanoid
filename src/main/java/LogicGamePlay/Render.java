@@ -89,7 +89,7 @@ public class Render {
 
     private void renderBalls(GraphicsContext gc,List<Ball> balls){
         for (Ball b : balls) {
-            Image ballImange = image.getBall();
+            Image ballImange = image.getBall1();
             b.RenderTail(gc);
             gc.drawImage(ballImange, b.x - b.width *3/2, b.y-b.width*3/2,b.width * 4, b.width * 4);
         }
