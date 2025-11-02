@@ -93,7 +93,6 @@ public class GamePlayController {
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
 
-
     update = new Update(this);
     render = new Render();
     update.initializeLevel( paddle, balls, brick);
@@ -110,11 +109,10 @@ public class GamePlayController {
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-          synchronized (Lock) {
+              System.out.println(numBrick);
               update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
               render.renderGame(gc, balls, paddle, brick, powerUps);
               LastUpdate = now;
-          }
         }
       }
     };
