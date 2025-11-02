@@ -11,82 +11,82 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class SwitchScene {
-    public static void fade(Stage stage, Parent root) {
-        Scene scene = new Scene(root);
-        FadeTransition fade = new FadeTransition(Duration.millis(700), root);
-        fade.setFromValue(0);
-        fade.setToValue(1);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        fade.play();
-    }
+  public static void fade(Stage stage, Parent root) {
+    Scene scene = new Scene(root);
+    FadeTransition fade = new FadeTransition(Duration.millis(700), root);
+    fade.setFromValue(0);
+    fade.setToValue(1);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    fade.play();
+  }
 
-    public static void slideFromRight(Stage stage, Parent root) {
-        Scene scene = new Scene(root);
-        TranslateTransition slide = new TranslateTransition(Duration.millis(700), root);
-        slide.setFromX(scene.getWidth());
-        slide.setToX(0);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        slide.play();
-    }
+  public static void slideFromRight(Stage stage, Parent root) {
+    Scene scene = new Scene(root);
+    TranslateTransition slide = new TranslateTransition(Duration.millis(700), root);
+    slide.setFromX(scene.getWidth());
+    slide.setToX(0);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    slide.play();
+  }
 
-    public static void slideFromLeft(Stage stage, Parent root) {
-        Scene scene = new Scene(root);
-        TranslateTransition slide = new TranslateTransition(Duration.millis(700), root);
-        slide.setFromX(-scene.getWidth());
-        slide.setToX(0);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        slide.play();
-    }
+  public static void slideFromLeft(Stage stage, Parent root) {
+    Scene scene = new Scene(root);
+    TranslateTransition slide = new TranslateTransition(Duration.millis(700), root);
+    slide.setFromX(-scene.getWidth());
+    slide.setToX(0);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    slide.play();
+  }
 
-    public static void zoomIn(Stage stage, Parent root) {
-        Scene scene = new Scene(root);
-        ScaleTransition zoom = new ScaleTransition(Duration.millis(700), root);
-        zoom.setFromX(0.8);
-        zoom.setFromY(0.8);
-        zoom.setToX(1);
-        zoom.setToY(1);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        zoom.play();
-    }
+  public static void zoomIn(Stage stage, Parent root) {
+    Scene scene = new Scene(root);
+    ScaleTransition zoom = new ScaleTransition(Duration.millis(700), root);
+    zoom.setFromX(0.8);
+    zoom.setFromY(0.8);
+    zoom.setToX(1);
+    zoom.setToY(1);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    zoom.play();
+  }
 
-    public static void zoomOut(Stage stage, Parent root) {
-        Scene scene = new Scene(root);
-        ScaleTransition zoom = new ScaleTransition(Duration.millis(700), root);
-        zoom.setFromX(1.2);
-        zoom.setFromY(1.2);
-        zoom.setToX(1);
-        zoom.setToY(1);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        zoom.play();
-    }
+  public static void zoomOut(Stage stage, Parent root) {
+    Scene scene = new Scene(root);
+    ScaleTransition zoom = new ScaleTransition(Duration.millis(700), root);
+    zoom.setFromX(1.2);
+    zoom.setFromY(1.2);
+    zoom.setToX(1);
+    zoom.setToY(1);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    zoom.play();
+  }
 
-    public static void combo(Stage stage, Parent root) {
-        Scene scene = new Scene(root);
+  public static void combo(Stage stage, Parent root) {
+    Scene scene = new Scene(root);
 
-        TranslateTransition slide = new TranslateTransition(Duration.millis(700), root);
-        slide.setFromX(scene.getWidth());
-        slide.setToX(0);
+    TranslateTransition slide = new TranslateTransition(Duration.millis(700), root);
+    slide.setFromX(scene.getWidth());
+    slide.setToX(0);
 
-        FadeTransition fade = new FadeTransition(Duration.millis(700), root);
-        fade.setFromValue(0);
-        fade.setToValue(1);
+    FadeTransition fade = new FadeTransition(Duration.millis(700), root);
+    fade.setFromValue(0);
+    fade.setToValue(1);
 
-        ScaleTransition zoom = new ScaleTransition(Duration.millis(700), root);
-        zoom.setFromX(0.9);
-        zoom.setFromY(0.9);
-        zoom.setToX(1);
-        zoom.setToY(1);
+    ScaleTransition zoom = new ScaleTransition(Duration.millis(700), root);
+    zoom.setFromX(0.9);
+    zoom.setFromY(0.9);
+    zoom.setToX(1);
+    zoom.setToY(1);
 
-        ParallelTransition combo = new ParallelTransition(slide, fade, zoom);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        combo.play();
-    }
+    ParallelTransition combo = new ParallelTransition(slide, fade, zoom);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    combo.play();
+  }
 
 //  public static void showGame(Canvas canvas) {
 //    container.setOpacity(0);

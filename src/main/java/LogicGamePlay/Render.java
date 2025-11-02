@@ -25,9 +25,9 @@ public class Render {
         explosions.add(new Explosion(x, y));
     }
 
-    public void addPowerUp(int x, int y) {
-        powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
-    }
+public void addPowerUp(int x, int y) {
+    powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
+}
 
     private void renderPowerUp(GraphicsContext gc) {
         for (PowerUp p : powerUps) {
@@ -68,7 +68,7 @@ public class Render {
                     continue;
                 }
 
-                //  b.Update();
+              //  b.Update();
                 if(b.type == 0 || b.image == null) {
                     continue;
                 }
@@ -88,7 +88,7 @@ public class Render {
         gc.drawImage(ballImange, ball.x - ball.width*3/2, ball.y-ball.width*3/2,ball.width * 4, ball.width * 4);
     }
 
-    private void renderExplosions(GraphicsContext gc) {
+  private void renderExplosions(GraphicsContext gc) {
         long currentTime = System.nanoTime();
         if (lastTime == 0) lastTime = currentTime;
         double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;

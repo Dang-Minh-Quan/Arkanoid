@@ -22,163 +22,161 @@ import javafx.stage.Stage;
 import static LogicGamePlay.Specifications.*;
 
 public class MainMenuController {
-    @FXML
-    private Button ButtonPlay;
-    @FXML
-    private Button ButtonNewGame;
-    @FXML
-    private Button ButtonContinueGame;
-    @FXML
-    private Pane SelectionMenu;
-    @FXML
-    private Button ButtonScore;
-    @FXML
-    private Button ButtonExit;
-    @FXML
-    private Button BackToMenu;
-    @FXML
-    private Button ButtonNextLevel;
-    @FXML
-    private Button ButtonPlayAgain;
+  @FXML
+  private Button ButtonPlay;
+  @FXML
+  private Button ButtonNewGame;
+  @FXML
+  private Button ButtonContinueGame;
+  @FXML
+  private Pane SelectionMenu;
+  @FXML
+  private Button ButtonScore;
+  @FXML
+  private Button ButtonExit;
+  @FXML
+  private Button BackToMenu;
+  @FXML
+  private Button ButtonNextLevel;
+  @FXML
+  private Button ButtonPlayAgain;
 
-    @FXML
-    protected void StartGame(ActionEvent event) throws IOException {
-        ButtonPlay.setVisible(false);
+  @FXML
+  protected void StartGame(ActionEvent event) throws IOException {
+    ButtonPlay.setVisible(false);
 
-        SelectionMenu.setVisible(true);
-        SelectionMenu.toFront();
+    SelectionMenu.setVisible(true);
+    SelectionMenu.toFront();
 
-        if (hasSavedGame()) {
-            ButtonContinueGame.setDisable(false);
-        } else {
-            ButtonContinueGame.setDisable(true);
-        }
-
-        System.out.println("Clicked Play");
+    if (hasSavedGame()) {
+      ButtonContinueGame.setDisable(false);
+    } else {
+      ButtonContinueGame.setDisable(true);
     }
 
-    @FXML
-    protected void NewGame(ActionEvent event) throws IOException {
-        reset();
-        saveProgress();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    System.out.println("Clicked Play");
+  }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
-        Parent root = loader.load();
+  @FXML
+  protected void NewGame(ActionEvent event) throws IOException {
+    reset();
+    saveProgress();
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT +HEIGHTBar);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.setResizable(false);
-        stage.show();
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
+    Parent root = loader.load();
 
-        GamePlayController controller = loader.getController();
-        controller.start(stage);
+    Scene scene = new Scene(root, WIDTH, HEIGHT +HEIGHTBar);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.setResizable(false);
+    stage.show();
 
-        System.out.println("Clicked New Game");
-    }
+    GamePlayController controller = loader.getController();
+    controller.start(stage);
 
-    @FXML
-    protected void ContinueGame(ActionEvent event) throws IOException {
-        loadProgress();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    System.out.println("Clicked New Game");
+  }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
-        Parent root = loader.load();
+  @FXML
+  protected void ContinueGame(ActionEvent event) throws IOException {
+    loadProgress();
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root, WIDTH, HEIGHT +HEIGHTBar);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.setResizable(false);
-        stage.show();
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
+    Parent root = loader.load();
 
-        GamePlayController controller = loader.getController();
-        controller.start(stage);
+    Scene scene = new Scene(root, WIDTH, HEIGHT +HEIGHTBar);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.setResizable(false);
+    stage.show();
 
-        System.out.println("Clicked Continue, loading current level");
-    }
+    GamePlayController controller = loader.getController();
+    controller.start(stage);
 
-    @FXML
-    protected void OpenScoreboard(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    System.out.println("Clicked Continue, loading current level");
+  }
 
-        Parent root = FXMLLoader.load(getClass().getResource("/Interface/Scoreboard.fxml"));
-        Scene scene = new Scene(root);
+  @FXML
+  protected void OpenScoreboard(ActionEvent event) throws IOException {
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+    Parent root = FXMLLoader.load(getClass().getResource("/Interface/Scoreboard.fxml"));
+    Scene scene = new Scene(root);
 
-        System.out.println("Clicked Scoreboard");
-    }
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
 
-    @FXML
-    protected void ExitGame(ActionEvent event) {
-        System.out.println("Clicked Exit");
-        System.exit(0);
-    }
+    System.out.println("Clicked Scoreboard");
+  }
 
-    @FXML
-    protected void BackToMenu (ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+  @FXML
+  protected void ExitGame(ActionEvent event) {
+    System.out.println("Clicked Exit");
+    System.exit(0);
+  }
 
-        System.out.println("Clicked Menu");
-    }
+  @FXML
+  protected void BackToMenu (ActionEvent event) throws IOException {
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
+
+    System.out.println("Clicked Menu");
+  }
 
 
-    public void loadNextLevel(Stage stage) throws IOException {
-        Level.incrementAndGet();
-        saveProgress();
+  public void loadNextLevel(Stage stage) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
-        Parent root = loader.load();
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
+    Parent root = loader.load();
 
-        GamePlayController gameController = loader.getController();
+    GamePlayController gameController = loader.getController();
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
 
-        gameController.start(stage);
-    }
+    gameController.start(stage);
+  }
 
-    @FXML
-    protected void NextLevel(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        loadNextLevel(stage);
-    }
+  @FXML
+  protected void NextLevel(ActionEvent event) throws IOException {
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    loadNextLevel(stage);
+  }
 
-    public void loadCurrentLevel(Stage stage) throws IOException {
-        loadProgress();
-        winLevel = false;
-        numBrick = 0;
-        heartCount.set(3);
-        GamePlayController.GameOverCheck = false;
+  public void loadCurrentLevel(Stage stage) throws IOException {
+    loadProgress();
+    winLevel = false;
+    numBrick = 0;
+    heartCount.set(3);
+    GamePlayController.GameOverCheck = false;
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
-        Parent root = loader.load();
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
+    Parent root = loader.load();
 
-        GamePlayController gameController = loader.getController();
+    GamePlayController gameController = loader.getController();
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
 
-        gameController.start(stage);
-        System.out.println("Reloading Level " + Specifications.Level.get());
-    }
+    gameController.start(stage);
+    System.out.println("Reloading Level " + Specifications.Level.get());
+  }
 
-    @FXML
-    protected void PlayAgain(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        loadCurrentLevel(stage);
-    }
+  @FXML
+  protected void PlayAgain(ActionEvent event) throws IOException {
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    loadCurrentLevel(stage);
+  }
 
 }

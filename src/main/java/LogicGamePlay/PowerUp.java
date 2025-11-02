@@ -37,7 +37,7 @@ public class PowerUp extends BaseClass {
         if (!active) return;
         y += vy;
         if (y > 720) active = false;
-        delayCounter++;
+            delayCounter++;
         if (delayCounter >= frameDelay) {
             delayCounter = 0;
             currentFrame = (currentFrame + 1) % totalFrames;
@@ -48,10 +48,10 @@ public class PowerUp extends BaseClass {
         if(checkTimePowerUp==0) {
             switch (type) {
                 case 0:
-                    ball.type=0;
+                  ball.type=0;
                     break;
                 case 1:
-                    paddle.width=paddle.width-50;
+                  paddle.width=paddle.width-50;
                     break;
             }
         }
