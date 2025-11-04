@@ -44,7 +44,6 @@ public class MainMenuController {
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
     ButtonPlay.setVisible(false);
-
     SelectionMenu.setVisible(true);
     SelectionMenu.toFront();
 
@@ -132,6 +131,8 @@ public class MainMenuController {
 
 
   public void loadNextLevel(Stage stage) throws IOException {
+    Level.incrementAndGet();
+    saveProgress();
 
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
     Parent root = loader.load();

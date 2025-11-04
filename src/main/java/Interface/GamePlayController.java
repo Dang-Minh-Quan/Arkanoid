@@ -33,6 +33,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
 
 import static LogicGamePlay.Specifications.*;
+import static LogicGamePlay.SaveGame.saveProgress;
 
 public class GamePlayController {
 
@@ -72,7 +73,8 @@ public class GamePlayController {
 
   private AnimationTimer mainGame;
 
-  private List<Ball> balls;
+  private ScheduledExecutorService gameThread;
+    private List<Ball> balls;
   private Paddle paddle;
   private Brick[][] brick;
   private Update update;
@@ -82,9 +84,14 @@ public class GamePlayController {
   private int FinalScore;
   private ScoreManager scoreManager = new ScoreManager();
   List<PowerUp> powerUps;
+    private final Object Lock = new Object();
 
 
   public void start(Stage stage) throws IOException {
+      IMAGE = new MainImage();
+      media = new MainMedia();
+      IMAGE.LoadImage();
+      media.LoadMedia();;
     if (mainGame != null) {
       mainGame.stop();
       mainGame = null;
@@ -99,8 +106,9 @@ public class GamePlayController {
     gameLayer.getChildren().add(canvas);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
+    Ball ball = new Ball();
     balls = new ArrayList<>();
-    balls.add(new Ball());
+    balls.add(ball);
     powerUps = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
@@ -109,13 +117,14 @@ public class GamePlayController {
     IMAGE.LoadImage();
     media.LoadMedia();
 
+
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(paddle, balls, brick);
+    update.initializeLevel( paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
-//    System.out.println(numBrick);
+    System.out.println(numBrick);
 
-    ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
+    gameThread = Executors.newSingleThreadScheduledExecutor();
     gameThread.schedule(()-> {
         media.playMusic();
         },1, TimeUnit.SECONDS);
@@ -126,12 +135,11 @@ public class GamePlayController {
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-          //System.out.println(ball.vx+" "+ball.vy);
-          //System.out.println(numBrick);
-          update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
-          //gameLayer.getChildren().clear();
-          render.renderGame(gc, balls, paddle, brick, powerUps);
-          LastUpdate = now;
+              //System.out.println(numBrick);
+          System.out.println(Level);
+              update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
+              render.renderGame(gc, balls, paddle, brick, powerUps);
+              LastUpdate = now;
         }
       }
     };
@@ -140,16 +148,17 @@ public class GamePlayController {
       paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
       GamePlay.requestFocus();
       ButtonPause.toFront();
+      mainGame.start();
 
-      PauseTransition loading = new PauseTransition(Duration.seconds(2));
-      loading.setOnFinished(e -> {
-        LoadingScene.setVisible(false);
-        mainGame.start();
-      });
-      loading.play();
-    });
-  }
-
+    if (LoadingScene != null) {
+      FadeTransition fade = new FadeTransition(Duration.millis(700), LoadingScene);
+      fade.setFromValue(1.0);
+      fade.setToValue(0.0);
+      fade.setOnFinished(e -> LoadingScene.setVisible(false));
+      fade.play();
+    }
+  });
+}
   @FXML
   protected void Pause(ActionEvent event) {
     if (mainGame != null) {
@@ -202,9 +211,6 @@ public class GamePlayController {
         mainGame = null;
       }
 
-      WinCheck = false;
-      GameOverCheck = false;
-
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
       SwitchScene.fade(stage, root);
@@ -232,13 +238,13 @@ public class GamePlayController {
         mainGame.stop();
         mainGame = null;
       }
-      Level.incrementAndGet();
-      SaveGame.saveProgress();
+
       Stage stage = (Stage) GamePlay.getScene().getWindow();
-
-      if (Level.get() > LevelMax) {
+      score.set(score.get()+heartCount.get()*20);
+      if (Level.get() == LevelMax) {
         FinalScore=score.get();
-
+        reset();
+        saveProgress();
         System.out.println("Final Score: " + FinalScore);
 
         WinCheck = false;

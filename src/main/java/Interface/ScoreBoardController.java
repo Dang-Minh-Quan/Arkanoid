@@ -58,7 +58,7 @@ public class ScoreBoardController {
 
     int rank = 1;
     for (HighScoreList Player : scores) {
-      Label scoreLabel = new Label("Top" + rank + ": " + Player.getName() + " - " + Player.getScore());
+      Label scoreLabel = new Label("Top" + rank + ": " + Player.getName() + " - Score: " + Player.getScore());
 
       if (customFont != null) {
         scoreLabel.setFont(customFont);
