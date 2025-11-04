@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -27,6 +29,7 @@ import java.io.IOException;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.util.Duration;
 
 import static LogicGamePlay.Specifications.*;
 
@@ -46,6 +49,9 @@ public class GamePlayController {
 
   @FXML
   private Pane PauseMenu;
+
+  @FXML
+  private ImageView LoadingScene;
 
   @FXML
   private Button ButtonResume;
@@ -92,6 +98,11 @@ public class GamePlayController {
     powerUps = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
+    IMAGE = new MainImage();
+    media = new MainMedia();
+    IMAGE.LoadImage();
+    media.LoadMedia();;
+
 
     update = new Update(this);
     render = new Render();
@@ -106,6 +117,7 @@ public class GamePlayController {
 
     mainGame = new AnimationTimer() {
       long LastUpdate = 0;
+
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {

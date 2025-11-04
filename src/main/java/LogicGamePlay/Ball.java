@@ -11,24 +11,23 @@ import javafx.scene.canvas.GraphicsContext;
 import static LogicGamePlay.Specifications.*;
 
 public class Ball extends BaseClass {
+    private Circle ball;
+    private Circle[] Tail = new Circle[TailLength];
+    private int[] TailX = new int[TailLength];
+    private int[] TailY = new int[TailLength];
+    private boolean collidedWithPaddle = false;
 
-  private Circle ball;
-  private Circle[] Tail = new Circle[TailLength];
-  private int[] TailX = new int[TailLength];
-  private int[] TailY = new int[TailLength];
-  private boolean collidedWithPaddle = false;
-
-  public Ball() {
-    super(null, 0, WIDTH / 2, HEIGHT - 60, 0, -spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
-    ball = new Circle(x, y, width, Color.BLUE);
-    for (int i = 0; i < TailLength; i++) {
-      TailX[i] =  x;
-      TailY[i] =  y;
-      double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
-      Color ColorTail = new Color(1, 1, 1, density);
-      Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
+    public Ball() {
+        super(null, 0, WIDTH / 2, HEIGHT - 60, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        ball = new Circle(x, y, width, Color.BLUE);
+        for (int i = 0; i < TailLength; i++) {
+            TailX[i] = (int) x;
+            TailY[i] = (int) y;
+            double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
+            Color ColorTail = new Color(1, 1, 1, density);
+            Tail[i] = new Circle(x, y, width * 0.8 - i / 2, ColorTail);
+        }
     }
-  }
 
   public void setBall(int dx, int dy) {
     x = dx;
@@ -83,6 +82,7 @@ public class Ball extends BaseClass {
   public int checkWallCollision( AtomicBoolean gameRestarted) {
     if(type!=2) {
         if (y >= HEIGHT - height) {
+            gameRestarted.set(true);
             return -1;
         }
     }

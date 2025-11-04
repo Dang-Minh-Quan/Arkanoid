@@ -61,6 +61,10 @@ public class Brick extends BaseClass {
                     destroyBrick(render, media, powerUps);
                 }
             }
+        } else if (type == 1) {
+            destroyBrick(render);
+        } else if (type == 3) {
+            destroyBrick(render);
         }
     }
 
@@ -70,6 +74,7 @@ public class Brick extends BaseClass {
         destroyed = true;
         type = 0;
         numBrick--;
+        score.addAndGet(10);
         explosion(render);
         if((int)(Math.random()*probability)%probability==0) {
             render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15,powerUps);
@@ -93,7 +98,11 @@ public class Brick extends BaseClass {
             if(brickRow+a[i]>=0&&brickRow+a[i]<ROW&&brickCol+b[i]>=0&&brickCol+b[i]<COL){
                 brick[brickRow+a[i]][brickCol+b[i]].BallHit(ball,render,media,powerUps,brick);
             }
+            if (type == -1) {
+                type = -1;
+            }
         }
+        Update();
     }
 
 
@@ -131,4 +140,5 @@ public class Brick extends BaseClass {
         }
         return brick;
     }
+
 }

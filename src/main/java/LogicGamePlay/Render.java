@@ -52,6 +52,7 @@ public class Render {
             gc.drawImage(background, 0, 0, WIDTH, ROW*HEIGHTBrick);
         }
     }
+
     private void renderBackGround(GraphicsContext gc) {
         Image background = image.getBackground();
         gc.drawImage(background, 0, 0, WIDTH, HEIGHT);
@@ -94,6 +95,11 @@ public class Render {
     }
 
   private void renderExplosions(GraphicsContext gc) {
+        long currentTime = System.nanoTime();
+        if (lastTime == 0) lastTime = currentTime;
+        double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
+        lastTime = currentTime;
+
         Iterator<Explosion> iterator = explosions.iterator();
         while (iterator.hasNext()) {
             Explosion explosion = iterator.next();

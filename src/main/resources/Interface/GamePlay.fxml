@@ -29,5 +29,10 @@
             <Button fx:id="ButtonBack" layoutX="65.0" layoutY="104.0" mnemonicParsing="false" onAction="#Back" opacity="0.0" prefHeight="25.0" prefWidth="140.0" text="Back" />
          </children>
       </Pane>
+      <ImageView fx:id="LoadingScene" fitHeight="700.0" fitWidth="500.0" pickOnBounds="true">
+         <image>
+            <Image url="@Image/Loading.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
