@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
@@ -72,8 +73,8 @@ public class GamePlayController {
 
   private AnimationTimer mainGame;
 
-  private Ball ball;
-  private List<Ball> balls;
+  private ScheduledExecutorService gameThread;
+    private List<Ball> balls;
   private Paddle paddle;
   private Brick[][] brick;
   private Update update;
@@ -83,9 +84,14 @@ public class GamePlayController {
   private int FinalScore;
   private ScoreManager scoreManager = new ScoreManager();
   List<PowerUp> powerUps;
+    private final Object Lock = new Object();
 
 
   public void start(Stage stage) throws IOException {
+      IMAGE = new MainImage();
+      media = new MainMedia();
+      IMAGE.LoadImage();
+      media.LoadMedia();;
     if (mainGame != null) {
       mainGame.stop();
       mainGame = null;
@@ -100,8 +106,9 @@ public class GamePlayController {
     gameLayer.getChildren().add(canvas);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    ball = new Ball();
+    Ball ball = new Ball();
     balls = new ArrayList<>();
+    balls.add(ball);
     powerUps = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
@@ -113,11 +120,11 @@ public class GamePlayController {
 
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(ball, paddle, balls, brick);
+    update.initializeLevel( paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
     System.out.println(numBrick);
 
-    ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
+    gameThread = Executors.newSingleThreadScheduledExecutor();
     gameThread.schedule(()-> {
         media.playMusic();
         },1, TimeUnit.SECONDS);
@@ -128,12 +135,10 @@ public class GamePlayController {
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-          //System.out.println(ball.vx+" "+ball.vy);
-          //System.out.println(numBrick);
-          update.updateGame(media, balls, ball, paddle, brick, Level, gameRestarted, powerUps, render);
-          //gameLayer.getChildren().clear();
-          render.renderGame(gc, ball, paddle, brick);
-          LastUpdate = now;
+              System.out.println(numBrick);
+              update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
+              render.renderGame(gc, balls, paddle, brick, powerUps);
+              LastUpdate = now;
         }
       }
     };
@@ -204,9 +209,6 @@ public class GamePlayController {
         mainGame = null;
       }
 
-      WinCheck = false;
-      GameOverCheck = false;
-
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
       SwitchScene.fade(stage, root);
@@ -263,7 +265,7 @@ public class GamePlayController {
         System.out.println("Congratulations! Game Completed. Loading WinGame Scene.");
         return;
       }
-      
+
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
       SwitchScene.fade(stage, root);
       Scene scene = new Scene(root);
