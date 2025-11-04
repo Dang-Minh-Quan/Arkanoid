@@ -8,7 +8,7 @@ public class Specifications {
     public static final int COL = 9;
     public static final int ROW = 10;
     public static final int  vxOriginal = 10;
-    public static final int  LevelMax = 2;
+    public static final int  LevelMax = 3;
     public static final int paddleWidthOriginal = 150;
     public static final int paddleHeightOriginal = 20;
     public static final int spvxOriginal = 10;
@@ -23,7 +23,7 @@ public class Specifications {
     public static final int probability = 10;
     public static final int TailLength = 20;
     public static final int HEIGHTBar = 150;
-    public static final int ballRadiusOriginal = 10;
+    public static final int ballRadiusOriginal = 8;
     public static AtomicInteger heartCount = new AtomicInteger(3);
     public static AtomicInteger Level = new AtomicInteger(1);
     public static AtomicInteger score = new AtomicInteger(0);

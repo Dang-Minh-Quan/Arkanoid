@@ -26,7 +26,7 @@ public class Paddle extends BaseClass {
         return paddle;
     }
 
-    public void setPaddle(int width,int x){
+    public void setPaddle(int width, int x) {
         this.width = width;
         this.x = x;
         paddle.setWidth(width);
@@ -53,7 +53,7 @@ public class Paddle extends BaseClass {
         if (next < 0) {
             return 0;
         } else if (next + paddle.getWidth() > WIDTH) {
-            return WIDTH - (int)paddle.getWidth();
+            return WIDTH - (int) paddle.getWidth();
         }
         return next;
     }

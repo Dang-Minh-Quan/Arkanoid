@@ -61,9 +61,9 @@ public class MainImage {
         return ball;
     }
 
-    public Image getBall1() {
-        return ball1;
-    }
+//    public Image getBall1() {
+//        return ball1;
+//    }
 
     public static Image getExplosion() {
         return explosion;
@@ -81,16 +81,16 @@ public class MainImage {
                 60, 30, false, false);
         brick3 = new Image(getClass().getResourceAsStream("/Interface/Image/brick3.png"),
                 60, 30, false, false);
-        brick4 = new Image(getClass().getResourceAsStream("/Interface/Image/brick4.png"),
-                60, 30, false, false);
+//        brick4 = new Image(getClass().getResourceAsStream("/Interface/Image/brick4.png"),
+//                60, 30, false, false);
         brickBroken = new Image(getClass().getResourceAsStream("/Interface/Image/brickBroken.png"),
                 60, 30, false, false);
         paddle = new Image(getClass().getResourceAsStream("/Interface/Image/paddle.png"),
                 100, 30, false, false);
         ball = new Image(getClass().getResourceAsStream("/Interface/Image/ball.png"),
                 30, 30, false, false);
-        ball1 = new Image(getClass().getResourceAsStream("/Interface/Image/ball1.png"),
-                30, 30, false, false);
+//        ball1 = new Image(getClass().getResourceAsStream("/Interface/Image/ball1.png"),
+//                30, 30, false, false);
         explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"),
                 256, 256, true, false);
         powerUp = new Image(getClass().getResourceAsStream("/Interface/Image/PowerUp.png"),

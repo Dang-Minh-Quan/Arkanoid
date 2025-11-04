@@ -72,7 +72,6 @@ public class GamePlayController {
 
   private AnimationTimer mainGame;
 
-  private Ball ball;
   private List<Ball> balls;
   private Paddle paddle;
   private Brick[][] brick;
@@ -100,8 +99,8 @@ public class GamePlayController {
     gameLayer.getChildren().add(canvas);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    ball = new Ball();
     balls = new ArrayList<>();
+    balls.add(new Ball());
     powerUps = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
@@ -110,12 +109,11 @@ public class GamePlayController {
     IMAGE.LoadImage();
     media.LoadMedia();
 
-
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(ball, paddle, balls, brick);
+    update.initializeLevel(paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
-    System.out.println(numBrick);
+//    System.out.println(numBrick);
 
     ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
     gameThread.schedule(()-> {
@@ -130,9 +128,9 @@ public class GamePlayController {
         if (now - LastUpdate >= 16_000_000) {
           //System.out.println(ball.vx+" "+ball.vy);
           //System.out.println(numBrick);
-          update.updateGame(media, balls, ball, paddle, brick, Level, gameRestarted, powerUps, render);
+          update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
           //gameLayer.getChildren().clear();
-          render.renderGame(gc, ball, paddle, brick);
+          render.renderGame(gc, balls, paddle, brick, powerUps);
           LastUpdate = now;
         }
       }

@@ -14,18 +14,20 @@ import java.util.ArrayList;
 import static LogicGamePlay.Specifications.*;
 
 public class PowerUp extends AnimationClass {
-    private boolean active = true;
-
+    private boolean active;
     private Image image;
     private Circle HitBoxPowerUp;
-    int checkTimePowerUp = TimePowerUp;
-    boolean checkActivate = false;
+    public int checkTimePowerUp;
+    public boolean checkActivate;
 
     public PowerUp(Image spriteSheet, int x, int y) {
         super(spriteSheet, x, y, 0, speedPU, RADIUSPU, RADIUSPU, 4, 4, 5);
+        active = true;
         this.image = spriteSheet;
-        type = (int) (Math.random() * PU) % PU;
+        type = 2;
         HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
+        checkTimePowerUp = TimePowerUp;
+        checkActivate = false;
     }
 
     public void update() {
@@ -97,7 +99,7 @@ public class PowerUp extends AnimationClass {
                         xx = xx - (paddle.x - paddleWidthOriginal / 2);
                     }
                 }
-                paddle.setPaddle(paddleWidthOriginal * 2, paddle.x - xx);
+                paddle.setPaddle(paddleWidthOriginal * 2, paddle.x - x);
                 break;
             case 2:
                 Ball newBall = new Ball();
