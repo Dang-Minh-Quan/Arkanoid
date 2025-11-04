@@ -9,10 +9,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition;
+import javafx.animation.FadeTransition;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,6 +34,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
 
 import static LogicGamePlay.Specifications.*;
+import static LogicGamePlay.SaveGame.saveProgress;
 
 public class GamePlayController {
 
@@ -135,7 +136,8 @@ public class GamePlayController {
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-              System.out.println(numBrick);
+              //System.out.println(numBrick);
+          System.out.println(Level);
               update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
               render.renderGame(gc, balls, paddle, brick, powerUps);
               LastUpdate = now;
@@ -147,16 +149,17 @@ public class GamePlayController {
       paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
       GamePlay.requestFocus();
       ButtonPause.toFront();
+      mainGame.start();
 
-      PauseTransition loading = new PauseTransition(Duration.seconds(2));
-      loading.setOnFinished(e -> {
-        LoadingScene.setVisible(false);
-        mainGame.start();
-      });
-      loading.play();
-    });
-  }
-
+    if (LoadingScene != null) {
+      FadeTransition fade = new FadeTransition(Duration.millis(700), LoadingScene);
+      fade.setFromValue(1.0);
+      fade.setToValue(0.0);
+      fade.setOnFinished(e -> LoadingScene.setVisible(false));
+      fade.play();
+    }
+  });
+}
   @FXML
   protected void Pause(ActionEvent event) {
     if (mainGame != null) {
@@ -236,13 +239,13 @@ public class GamePlayController {
         mainGame.stop();
         mainGame = null;
       }
-      Level.incrementAndGet();
-      SaveGame.saveProgress();
+
       Stage stage = (Stage) GamePlay.getScene().getWindow();
-
-      if (Level.get() > LevelMax) {
+      score.set(score.get()+heartCount.get()*20);
+      if (Level.get() == LevelMax) {
         FinalScore=score.get();
-
+        reset();
+        saveProgress();
         System.out.println("Final Score: " + FinalScore);
 
         WinCheck = false;

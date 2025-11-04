@@ -82,7 +82,7 @@ public class Ball extends BaseClass {
   public int checkWallCollision( AtomicBoolean gameRestarted) {
     if(type!=2) {
         if (y >= HEIGHT - height) {
-            gameRestarted.set(true);
+            //gameRestarted.set(true);
             return -1;
         }
     }

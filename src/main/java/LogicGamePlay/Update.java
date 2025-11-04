@@ -172,7 +172,7 @@ public class Update {
           break;
       }
     }
-    int collisionResult = ball.checkBrickCollision(brick, render);
+    int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps);
     if (collisionResult != 0) {
       if (collisionResult == 1) {
         ball.vx = -ball.vx;
