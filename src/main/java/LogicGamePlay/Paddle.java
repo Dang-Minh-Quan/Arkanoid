@@ -3,10 +3,8 @@ package LogicGamePlay;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static LogicGamePlay.Specifications.*;
 
@@ -17,6 +15,8 @@ public class Paddle extends BaseClass {
 
     public Paddle() {
         super(null, 0, WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
+        MainImage newImage = new MainImage();
+        image = newImage.getPaddle();
         paddle = new Rectangle(x, y, width, height);
         moveLeft = false;
         moveRight = false;
@@ -29,6 +29,13 @@ public class Paddle extends BaseClass {
     public void setPaddle(double dx) {
         x = (int)dx;
         paddle.setX(dx);
+    }
+
+    public void setPaddle(int width,int x){
+        this.width = width;
+        this.x = x;
+        paddle.setWidth(width);
+        paddle.setX(x);
     }
 
     public boolean isMoveLeft() {
@@ -56,6 +63,15 @@ public class Paddle extends BaseClass {
         return next;
     }
 
+    public void Update() {
+        MainImage newImage = new MainImage();
+        if (type == 0) {
+            image = newImage.getPaddle();
+        }
+        if (type == 1) {
+            image = newImage.getPaddle1();
+        }
+    }
 
     public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {
         scene.setOnKeyPressed(event -> {

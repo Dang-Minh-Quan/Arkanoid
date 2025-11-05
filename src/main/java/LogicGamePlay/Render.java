@@ -24,8 +24,8 @@ public class Render {
         explosions.add(new Explosion(x, y));
     }
     public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
-    powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
-}
+        powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
+    }
 
     private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {
         for (PowerUp p : powerUps) {
@@ -37,13 +37,11 @@ public class Render {
         powerUps.removeIf(p -> !p.isActive());
     }
 
-    public void renderGame(GraphicsContext gc,List<Ball> balls,  Ball ball, Paddle paddle, Brick[][] brick,List<PowerUp>powerUps) {
+    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle, Brick[][] brick,List<PowerUp>powerUps) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
         renderBackGround(gc);
         renderBrick(gc,brick);
         renderExplosions(gc);
-        ball.RenderTail(gc);
-        renderBall(gc, ball);
         renderBalls(gc, balls);
         renderPowerUp(gc,powerUps);
         renderPaddle(gc, paddle);
@@ -54,6 +52,7 @@ public class Render {
             gc.drawImage(background, 0, 0, WIDTH, ROW*HEIGHTBrick);
         }
     }
+
     private void renderBackGround(GraphicsContext gc) {
         Image background = image.getBackground();
         gc.drawImage(background, 0, 0, WIDTH, HEIGHT);
@@ -72,7 +71,7 @@ public class Render {
                     continue;
                 }
 
-              //  b.Update();
+                //  b.Update();
                 if(b.type == 0 || b.image == null) {
                     continue;
                 }
@@ -83,25 +82,19 @@ public class Render {
     }
 
     private void renderPaddle(GraphicsContext gc, Paddle paddle) {
-        Image paddleImage = image.getPaddle();
-        gc.drawImage(paddleImage, paddle.x, paddle.y, paddle.width, paddle.height);
+        Image paddleImage = paddle.image;
+        gc.drawImage(paddle.image, paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
     private void renderBalls(GraphicsContext gc,List<Ball> balls){
         for (Ball b : balls) {
-            Image ballImange = image.getBall1();
+            Image ballImange = image.getBall();
             b.RenderTail(gc);
-            gc.drawImage(ballImange, b.x - b.width *3/2, b.y-b.width*3/2,b.width * 4, b.width * 4);
+            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
         }
     }
 
-    private void renderBall(GraphicsContext gc, Ball ball){
-        Image ballImange = image.getBall();
-        ball.RenderTail(gc);
-        gc.drawImage(ballImange, ball.x - ball.width *3/2, ball.y-ball.width*3/2,ball.width * 4, ball.width * 4);
-    }
-
-  private void renderExplosions(GraphicsContext gc) {
+    private void renderExplosions(GraphicsContext gc) {
         Iterator<Explosion> iterator = explosions.iterator();
         while (iterator.hasNext()) {
             Explosion explosion = iterator.next();

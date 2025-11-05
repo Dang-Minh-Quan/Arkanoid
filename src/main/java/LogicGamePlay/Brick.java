@@ -70,6 +70,7 @@ public class Brick extends BaseClass {
         destroyed = true;
         type = 0;
         numBrick--;
+        score.addAndGet(10);
         explosion(render);
         if((int)(Math.random()*probability)%probability==0) {
             render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15,powerUps);

@@ -12,6 +12,7 @@ public class MainImage {
     private static Image brick4;
     private static Image brickBroken;
     private static Image paddle;
+    private static Image paddle1;
     private static Image ball;
     private static Image ball1;
     private static Image background;
@@ -57,6 +58,10 @@ public class MainImage {
         return paddle;
     }
 
+    public Image getPaddle1() {
+        return paddle1;
+    }
+
     public Image getBall() {
         return ball;
     }
@@ -86,6 +91,8 @@ public class MainImage {
         brickBroken = new Image(getClass().getResourceAsStream("/Interface/Image/brickBroken.png"),
                 60, 30, false, false);
         paddle = new Image(getClass().getResourceAsStream("/Interface/Image/paddle.png"),
+                100, 30, false, false);
+        paddle1 = new Image(getClass().getResourceAsStream("/Interface/Image/paddle1.png"),
                 100, 30, false, false);
         ball = new Image(getClass().getResourceAsStream("/Interface/Image/ball.png"),
                 30, 30, false, false);

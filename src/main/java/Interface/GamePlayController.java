@@ -53,10 +53,9 @@ public class GamePlayController {
   @FXML
   private Button ButtonBack;
 
-
   private AnimationTimer mainGame;
 
-  private Ball ball;
+  private ScheduledExecutorService gameThread;
   private List<Ball> balls;
   private Paddle paddle;
   private Brick[][] brick;
@@ -67,10 +66,14 @@ public class GamePlayController {
   List<PowerUp> powerUps;
 
   public void start(Stage stage) throws IOException {
+      IMAGE = new MainImage();
+      media = new MainMedia();
+      IMAGE.LoadImage();
+      media.LoadMedia();;
     if (mainGame != null) {
       mainGame.stop();
       mainGame = null;
-      System.out.println(Specifications.Level.get());
+      //System.out.println(Specifications.Level.get());
     }
 
     gameLayer.toBack();
@@ -81,8 +84,9 @@ public class GamePlayController {
     gameLayer.getChildren().add(canvas);
     GraphicsContext gc = canvas.getGraphicsContext2D();
 
-    ball = new Ball();
+    Ball ball = new Ball();
     balls = new ArrayList<>();
+    balls.add(ball);
     powerUps = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
@@ -94,11 +98,11 @@ public class GamePlayController {
 
     update = new Update(this);
     render = new Render();
-    update.initializeLevel(ball, paddle, balls, brick);
+    update.initializeLevel(paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
-    System.out.println(numBrick);
+   // System.out.println(numBrick);
 
-    ScheduledExecutorService gameThread = Executors.newScheduledThreadPool(1);
+    gameThread = Executors.newScheduledThreadPool(1);
     gameThread.schedule(()-> {
         media.playMusic();
         },1, TimeUnit.SECONDS);
@@ -111,9 +115,9 @@ public class GamePlayController {
         if (now - LastUpdate >= 16_000_000) {
           //System.out.println(ball.vx+" "+ball.vy);
           //System.out.println(numBrick);
-          update.updateGame(media, balls, ball, paddle, brick, Level, gameRestarted, powerUps, render);
+          update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
           //gameLayer.getChildren().clear();
-          render.renderGame(gc, balls, ball, paddle, brick,powerUps);
+          render.renderGame(gc, balls, paddle, brick,powerUps);
           LastUpdate = now;
         }
       }
@@ -182,10 +186,7 @@ public class GamePlayController {
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
       SwitchScene.fade(stage, root);
-      Scene scene = new Scene(root);
-      stage.setScene(scene);
-      stage.centerOnScreen();
-      stage.show();
+
 
       //GameOverCheck = false;
       System.out.println("You Lose!");
@@ -210,10 +211,7 @@ public class GamePlayController {
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
       SwitchScene.fade(stage, root);
-      Scene scene = new Scene(root);
-      stage.setScene(scene);
-      stage.centerOnScreen();
-      stage.show();
+
 
       System.out.println("Win!");
     } catch (IOException e) {
