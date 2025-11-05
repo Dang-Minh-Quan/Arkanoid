@@ -42,7 +42,7 @@ public class Paddle extends BaseClass {
     }
 
     public void paddleBullet(List<Bullet> bullets){
-        if(type == 1) {
+        if(type == 2) {
             if (checkBullet <= 0) {
                 Bullet bullet1 = new Bullet(x + ballRadiusOriginal, y);
                 Bullet bullet2 = new Bullet(x + width - ballRadiusOriginal, y);

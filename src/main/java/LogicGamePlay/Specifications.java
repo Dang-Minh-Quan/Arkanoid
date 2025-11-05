@@ -21,7 +21,7 @@ public class Specifications {
   public static int WIDTHBrick = WIDTH / COL;
   public static int speedPU = 2;
   public static int RADIUSPU = HEIGHTBrick / 2;
-  public static int PU = 5;
+  public static int PU = 6;
   public static final int probability = 10;
   public static final int TailLength = 40;
   public static final int HEIGHTBar = 150;
