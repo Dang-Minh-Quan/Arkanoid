@@ -31,12 +31,12 @@ public class SaveScoreController {
 
   private void loadAndApplyFont() {
     Font scoreFont = Font.loadFont(
-        getClass().getResourceAsStream("/Font/Minecraftia-Regular.ttf"),
+        getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
         20
     );
 
     Font inputFont = Font.loadFont(
-        getClass().getResourceAsStream("/Font/Minecraftia-Regular.ttf"),
+        getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
         16
     );
 

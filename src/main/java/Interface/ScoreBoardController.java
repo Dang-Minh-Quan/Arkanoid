@@ -32,7 +32,7 @@ public class ScoreBoardController {
   public void initialize() {
     if (customFont == null) {
       customFont = Font.loadFont(
-          getClass().getResourceAsStream("/Font/Minecraftia-Regular.ttf"),
+          getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
           30
       );
       if (customFont == null) {
