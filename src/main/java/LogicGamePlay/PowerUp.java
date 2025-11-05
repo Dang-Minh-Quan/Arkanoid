@@ -24,8 +24,8 @@ public class PowerUp extends AnimationClass {
     public PowerUp(Image spriteSheet, int x, int y) {
         super(spriteSheet, x, y,0,speedPU, RADIUSPU,RADIUSPU,4,4,5);
         this.image = spriteSheet;
-        //type = (int)(Math.random()*PU)%PU;
-        type = 2;
+        type = (int)(Math.random()*PU)%PU;
+        //type = 2;
         HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
     }
 

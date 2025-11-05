@@ -24,10 +24,10 @@ public class Specifications {
   public static int speedPU = 2;
   public static int RADIUSPU = HEIGHTBrick / 2;
   public static int PU = 5;
-  public static final int probability = 1;
-  public static final int TailLength = 40;
+  public static final int probability = 6;
   public static final int HEIGHTBar = 150;
   public static final int ballRadiusOriginal = 10;
+  public static final int TailLength = 6 * ballRadiusOriginal;
   public static AtomicInteger heartCount = new AtomicInteger(3);
   public static boolean winLevel = false;
   public static AtomicInteger Level = new AtomicInteger(1);

@@ -25,7 +25,7 @@ public class Ball extends BaseClass {
       TailY[i] =  y;
       double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
       Color ColorTail = new Color(1, 1, 1, density);
-      Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
+      Tail[i] = new Circle(x, y, width- i / 6, ColorTail);
     }
   }
 
@@ -142,19 +142,19 @@ public class Ball extends BaseClass {
 
     boolean above = false, below = false, left = false, right = false;
 
-    if (vy < 0 && brickRow > 0 && brickRow <= ROW
+    if (vy <= 0 && brickRow > 0 && brickRow <= ROW
             && (brickRow) * HEIGHTBrick + width >= y) {
       above = true;
     }
-    if (vy > 0 && brickRow < ROW - 1
+    if (vy >= 0 && brickRow < ROW - 1
             && (brickRow + 1) * HEIGHTBrick - width <= y) {
       below = true;
     }
-    if (vx < 0 && brickCol > 0 && brickRow < ROW
+    if (vx <= 0 && brickCol > 0 && brickRow < ROW
             && (brickCol) * WIDTHBrick + width >= x) {
       left = true;
     }
-    if (vx > 0 && brickCol < COL - 1 && brickRow < ROW
+    if (vx >= 0 && brickCol < COL - 1 && brickRow < ROW
         && (brickCol + 1) * WIDTHBrick - width <= x) {
       right = true;
     }
