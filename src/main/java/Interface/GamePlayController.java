@@ -96,7 +96,7 @@ public class GamePlayController {
     if (mainGame != null) {
       mainGame.stop();
       mainGame = null;
-      System.out.println(Specifications.Level.get());
+      //System.out.println(Specifications.Level.get());
     }
 
     gameLayer.toBack();
@@ -123,7 +123,7 @@ public class GamePlayController {
     render = new Render();
     update.initializeLevel( paddle, balls, brick);
     AtomicBoolean gameRestarted = new AtomicBoolean(true);
-    System.out.println(numBrick);
+    //System.out.println(numBrick);
 
     gameThread = Executors.newSingleThreadScheduledExecutor();
     gameThread.schedule(()-> {
@@ -137,7 +137,7 @@ public class GamePlayController {
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
               //System.out.println(numBrick);
-          System.out.println(Level);
+          //System.out.println(Level);
               update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
               render.renderGame(gc, balls, paddle, brick, powerUps);
               LastUpdate = now;
