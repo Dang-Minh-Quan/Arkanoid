@@ -33,13 +33,6 @@ public class Paddle extends BaseClass {
         paddle.setX(x);
     }
 
-    public void setPaddle(int width,int x){
-        this.width = width;
-        this.x = x;
-        paddle.setWidth(width);
-        paddle.setX(x);
-    }
-
     public boolean isMoveLeft() {
         return moveLeft;
     }

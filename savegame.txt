@@ -1,2 +1,2 @@
-Level:4
-Score:50
+Level:2
+Score:80
