@@ -17,7 +17,7 @@ import static LogicGamePlay.Specifications.*;
 public class Render {
     private long lastTime = 0;
     private final List<Explosion> explosions = new ArrayList<>();
-    private final MainImage image = new MainImage();
+    private final MainImage image = MainImage.getInstance();
     private Font pixelFont;
 
     public void addExplosion(int x, int y) {
@@ -25,7 +25,7 @@ public class Render {
     }
 
     public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
-        powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
+        powerUps.add(new PowerUp(image.getPowerUp(), x, y));
     }
 
     private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {

@@ -15,7 +15,7 @@ public class Paddle extends BaseClass {
 
     public Paddle() {
         super(null, 0, WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
-        MainImage newImage = new MainImage();
+        MainImage newImage = MainImage.getInstance();
         image = newImage.getPaddle();
         paddle = new Rectangle(x, y, width, height);
         moveLeft = false;
@@ -59,7 +59,7 @@ public class Paddle extends BaseClass {
     }
 
     public void Update() {
-        MainImage newImage = new MainImage();
+        MainImage newImage = MainImage.getInstance();
         if (type == 0) {
             image = newImage.getPaddle();
         }
