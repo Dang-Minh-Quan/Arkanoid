@@ -37,19 +37,30 @@ public class Render {
         powerUps.removeIf(p -> !p.isActive());
     }
 
-    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle, Brick[][] brick,List<PowerUp>powerUps) {
+    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle,
+                           Brick[][] brick,List<PowerUp>powerUps,List<Bullet> bullets) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
         renderBackGround(gc);
         renderBrick(gc,brick);
         renderExplosions(gc);
+        ball.RenderTail(gc);
+        renderBall(gc, ball);
         renderBalls(gc, balls);
         renderPowerUp(gc,powerUps);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
+        renderButton(gc, bullets);
         renderHUD(gc);
         if(blind==true){
             Image background = image.getBackground();
             gc.drawImage(background, 0, 0, WIDTH, ROW*HEIGHTBrick);
+        }
+    }
+
+    private void renderButton(GraphicsContext gc,List<Bullet> bullets){
+        for (Bullet b : bullets) {
+            Image ballImange = image.getBall1();
+            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
         }
     }
 
@@ -71,7 +82,7 @@ public class Render {
                     continue;
                 }
 
-                //  b.Update();
+              //  b.Update();
                 if(b.type == 0 || b.image == null) {
                     continue;
                 }
@@ -94,7 +105,12 @@ public class Render {
         }
     }
 
-    private void renderExplosions(GraphicsContext gc) {
+  private void renderExplosions(GraphicsContext gc) {
+        long currentTime = System.nanoTime();
+        if (lastTime == 0) lastTime = currentTime;
+        double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
+        lastTime = currentTime;
+
         Iterator<Explosion> iterator = explosions.iterator();
         while (iterator.hasNext()) {
             Explosion explosion = iterator.next();

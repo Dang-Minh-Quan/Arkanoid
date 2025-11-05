@@ -5,8 +5,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-import java.lang.foreign.StructLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 import static LogicGamePlay.Specifications.*;
@@ -22,43 +20,52 @@ public class Brick extends BaseClass {
     }
 
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,Brick[][] brick) {
+        System.out.println(ball.type);
         switch (ball.type) {
-            case 0,2:
-                if (type == 0 || destroyed) {
-                return;
-                } else {
-                switch (type) {
-                    case 1:
-                        destroyBrick(render, media, powerUps);
-                        break;
-                    case 2:
-                        if (!cracked) {
-                            cracked = true;
-                            type = 3;
-                            Update();
-                        } else {
-                            destroyBrick(render, media, powerUps);
-                        }
-                        break;
-                    case 3:
-                        destroyBrick(render, media, powerUps);
-                        break;
-                    case 4:
-                        type = 1;
-                        boom(render, media, powerUps, brick);
-                        destroyBrick(render, media, powerUps);
-                        break;
-                }
-            }
-            break;
-            case 1:
-            {
+            case 0, 2:
                 if (type == 0 || destroyed) {
                     return;
-                }else {
-                    type = 1;
+                } else {
+                    switch (type) {
+                        case 1:
+                            destroyBrick(render, media, powerUps);
+                            break;
+                        case 2:
+                            if (!cracked) {
+                                cracked = true;
+                                type = 3;
+                                Update();
+                            } else {
+                                destroyBrick(render, media, powerUps);
+                            }
+                            break;
+                        case 3:
+                            destroyBrick(render, media, powerUps);
+                            break;
+                        case 4:
+                            type = 1;
+                            boom(render, media, powerUps, brick);
+                            destroyBrick(render, media, powerUps);
+                            break;
+                        case  5:
+                            PowerUp p = new PowerUp(-1,true);
+                            p.active(powerUps);
+                            powerUps.add(p);
+                            destroyBrick(render, media, powerUps);
+                    }
+                }
+                break;
+            case 1: {
+                if (type == 0 || destroyed) {
+                    return;
+                } else {
+                    if (type == -1) {
+                        numBrick = numBrick + 1;
+                    }
+                    if(type==-1||type==2||type == 4){
+                        type = 1;
+                    }
                     boom(render, media, powerUps, brick);
-                    destroyBrick(render, media, powerUps);
                 }
             }
         }
@@ -85,16 +92,17 @@ public class Brick extends BaseClass {
     }
 
     public void boom(Render render,MainMedia media, List<PowerUp> powerUps,Brick[][] brick){
-        int[] a={0,0,1,1,1,-1,-1,-1};
-        int[] b={1,-1,1,-1,0,1,-1,0};
+        int[] a={0,0,0,1,1,1,-1,-1,-1};
+        int[] b={0,1,-1,1,-1,0,1,-1,0};
         Ball ball = new Ball();
         int brickCol = x / WIDTHBrick;
         int brickRow = y / HEIGHTBrick;
-        for (int i = 0;i <=7 ;i++){
+        for (int i = 0;i <=8 ;i++){
             if(brickRow+a[i]>=0&&brickRow+a[i]<ROW&&brickCol+b[i]>=0&&brickCol+b[i]<COL){
                 brick[brickRow+a[i]][brickCol+b[i]].BallHit(ball,render,media,powerUps,brick);
             }
         }
+        Update();
     }
 
 
@@ -132,4 +140,5 @@ public class Brick extends BaseClass {
         }
         return brick;
     }
+
 }

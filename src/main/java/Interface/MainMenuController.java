@@ -114,7 +114,6 @@ public class MainMenuController {
 
   @FXML
   protected void ExitGame(ActionEvent event) {
-    saveProgress();
     System.out.println("Clicked Exit");
     System.exit(0);
   }
@@ -156,6 +155,7 @@ public class MainMenuController {
   }
 
   public void loadCurrentLevel(Stage stage) throws IOException {
+    loadProgress();
     winLevel = false;
     numBrick = 0;
     heartCount.set(3);

@@ -11,6 +11,16 @@ public abstract class AnimationClass extends BaseClass {
     protected int frameDelay;  // tốc độ xoay
     protected int delayCounter ;
 
+    public AnimationClass(int type){
+        super();
+        this.type = type;
+        this.frameCols = 0;
+        this.frameRows = 0;
+        this.frameDelay = 0;
+        this.totalFrames = frameCols * frameRows;
+        this.currentFrame = 0;
+    }
+
     public AnimationClass(Image image,final int x, final int y, int vx, int vy,
                           final int width, final int height, int frameCols,
                           int frameRows, int frameDelay) {
