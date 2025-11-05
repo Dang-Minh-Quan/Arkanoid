@@ -2,7 +2,6 @@ package LogicGamePlay;
 
 import Interface.GamePlayController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,13 +18,31 @@ public class Update {
     this.controller = controller;
   }
 
-  public void updateGame(MainMedia media, List<Ball> balls, Paddle paddle, Brick[][] brick, AtomicInteger Level, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
+  public void updateGame(MainMedia media, List<Ball> balls,
+                         Paddle paddle, Brick[][] brick,
+                         AtomicInteger Level, AtomicBoolean gameRestarted,
+                         List<PowerUp> powerUps, List<Bullet> bullets, Render render) {
       updatePowerUp(balls, paddle, powerUps);
-      updateBalls(media, balls, brick, paddle, gameRestarted, powerUps, render);
+      updateBullet(media, bullets, brick, powerUps, render);
+      updateBalls(media, balls, bullets, brick, paddle, gameRestarted, powerUps, render);
       updateBrick(balls, paddle, Level, brick);
   }
 
-  private void updatePowerUp(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps) {
+    private static void updateBullet(MainMedia media, List<Bullet> bullets,
+                                      Brick[][] brick, List<PowerUp> powerUps,
+                                      Render render){
+      for (int i = 0; i < bullets.size(); i++){
+          bullets.get(i).setBullet(bullets.get(i).y + bullets.get(i).vy);
+          if(bullets.get(i).checkBullet()){
+              bullets.remove(i);
+          }
+          if(bullets.get(i).checkBrickCollision(media,brick,render,powerUps)!=0){
+              bullets.remove(i);
+          }
+      }
+    }
+
+    private void updatePowerUp(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps) {
       for (int i = 0; i < powerUps.size(); i++) {
       if (powerUps.get(i).checkActivate == true) {
         if (powerUps.get(i).checkTimePowerUp == -1) {
@@ -87,6 +104,9 @@ public class Update {
           if (brick[i][j].type == 4) {
               numBrick = numBrick + 1;
           }
+          if (brick[i][j].type == 5) {
+              numBrick = numBrick + 1;
+          }
           brick[i][j].Update();
         }
       }
@@ -95,7 +115,8 @@ public class Update {
 
   private void updatePaddle(MainMedia media, Paddle paddle,
                             Brick[][] brick,Ball ball, AtomicBoolean gameRestarted,
-                            List<PowerUp> powerUps, Render render) {
+                            List<PowerUp> powerUps,List<Bullet> bullets,Render render) {
+      paddle.paddleBullet(bullets);
     if (heartCount.get() == 0) {
       ball.setBall(paddle.x + paddle.width / 2, HEIGHT - 60);
       Platform.runLater(() -> controller.GameOver());
@@ -135,8 +156,8 @@ public class Update {
                                  Brick[][] brick, Paddle paddle,
                                  AtomicBoolean gameRestarted, List<PowerUp> powerUps,
                                  Render render) {
-    int nextBallX = (int) ball.getBall().getCenterX() + (int) ball.vx;
-    int nextBallY = (int) ball.getBall().getCenterY() + (int) ball.vy;
+    int nextBallX = (int) ball.getBall().getCenterX() +  ball.vx;
+    int nextBallY = (int) ball.getBall().getCenterY() +  ball.vy;
     ball.setBall(nextBallX, nextBallY);
     switch (ball.checkWallCollision( gameRestarted)) {
       case -1:
@@ -172,22 +193,22 @@ public class Update {
           break;
       }
     }
-    int collisionResult = ball.checkBrickCollision(brick, render);
+    int collisionResult = ball.checkBrickCollision(media,brick, render,powerUps);
     if (collisionResult != 0) {
       if (collisionResult == 1) {
         ball.vx = -ball.vx;
       } else if (collisionResult == 2) {
         ball.vy = -ball.vy;
       }
-      //Brick b = ball.getLastHitBrick();
-      // if (b != null) b.BallHit(ball, render);
     }
     return true;
   }
 
-  private void updateBalls(MainMedia media, List<Ball> balls, Brick[][] brick, Paddle paddle, AtomicBoolean gameRestarted, List<PowerUp> powerUps, Render render) {
+  private void updateBalls(MainMedia media, List<Ball> balls,List<Bullet> bullets,
+                           Brick[][] brick, Paddle paddle, AtomicBoolean gameRestarted,
+                           List<PowerUp> powerUps, Render render) {
     for(int i=0;i<balls.size();i++){
-        updatePaddle(media, paddle, brick, balls.get(i), gameRestarted, powerUps, render);
+        if(i==0)updatePaddle(media, paddle, brick, balls.get(i), gameRestarted, powerUps,bullets, render);
         if(!updateBall(media, balls.get(i), brick, paddle, gameRestarted, powerUps, render)){
             balls.remove(i);
         }
@@ -202,6 +223,8 @@ public class Update {
                     p.checkStopPowerUp(balls,paddle);
                 }
             }
+            bullets.clear();
+            blind = false;
             powerUps.clear();
         }
     }

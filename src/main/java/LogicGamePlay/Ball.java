@@ -11,7 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import static LogicGamePlay.Specifications.*;
 
 public class Ball extends BaseClass {
-    private Circle ball;
+    protected Circle ball;
     private Circle[] Tail = new Circle[TailLength];
     private int[] TailX = new int[TailLength];
     private int[] TailY = new int[TailLength];
@@ -21,12 +21,17 @@ public class Ball extends BaseClass {
         super(null, 0, WIDTH / 2, HEIGHT - 60, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
         for (int i = 0; i < TailLength; i++) {
-            TailX[i] = (int) x;
-            TailY[i] = (int) y;
+            TailX[i] = x;
+            TailY[i] = y;
             double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
             Color ColorTail = new Color(1, 1, 1, density);
-            Tail[i] = new Circle(x, y, width * 0.8 - i / 2, ColorTail);
+            Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
         }
+    }
+
+    protected Ball(int x,int y){
+        super(null, 0, x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        ball = new Circle(x, y, width, Color.BLUE);
     }
 
   public void setBall(int dx, int dy) {
@@ -51,7 +56,7 @@ public class Ball extends BaseClass {
     }
   }
 
-  public void UpdateNodeTail(int TailX0, int TailY0) {
+  private void UpdateNodeTail(int TailX0, int TailY0) {
     for (int i = TailLength - 1; i > 0; i--) {
       TailX[i] = TailX[i - 1];
       TailY[i] = TailY[i - 1];
@@ -82,7 +87,6 @@ public class Ball extends BaseClass {
   public int checkWallCollision( AtomicBoolean gameRestarted) {
     if(type!=2) {
         if (y >= HEIGHT - height) {
-            gameRestarted.set(true);
             return -1;
         }
     }

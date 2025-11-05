@@ -21,10 +21,16 @@ public class PowerUp extends AnimationClass {
     int checkTimePowerUp=TimePowerUp;
     boolean checkActivate=false;
 
+    public PowerUp(int type, boolean checkActivate){
+        super(type);
+        this.checkActivate = checkActivate;
+    }
+
     public PowerUp(Image spriteSheet, int x, int y) {
         super(spriteSheet, x, y,0,speedPU, RADIUSPU,RADIUSPU,4,4,5);
         this.image = spriteSheet;
         type = (int)(Math.random()*PU)%PU;
+        type = 1;
         HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
     }
 
@@ -38,6 +44,9 @@ public class PowerUp extends AnimationClass {
     public void checkStopPowerUp(List<Ball> balls, Paddle paddle) {
         if(checkTimePowerUp==0) {
             switch (type) {
+                case -1:
+                    blind=false;
+                    break;
                 case 0:
                     for (int i=0;i<balls.size();i++) {
                         balls.get(i).type = 0;
@@ -53,8 +62,9 @@ public class PowerUp extends AnimationClass {
                         balls.get(i).type = 0;
                     }
                     break;
-                case 4:
-                    blind=false;
+                case 5:
+                    paddle.type = 0;
+                    paddle.Update();
                     break;
             }
         }
@@ -76,8 +86,18 @@ public class PowerUp extends AnimationClass {
         return 0;
     }
 
-    private void Activate(List<Ball>balls,Paddle paddle,List<PowerUp> powerUps){
+    public void active(List<PowerUp> powerUps){
+        List<Ball>balls = new ArrayList<>();
+        Paddle paddle = new Paddle();
+        Activate(balls,paddle,powerUps);
+    }
+
+    public void Activate(List<Ball>balls,Paddle paddle,List<PowerUp> powerUps){
         switch (type){
+            case -1:
+                blind= true;
+                checkTimePowerUp=checkTimePowerUp/10;
+                break;
             case 0:
                 removePowerUp(balls,paddle,powerUps,0);
                 removePowerUp(balls,paddle,powerUps,3);
@@ -87,6 +107,7 @@ public class PowerUp extends AnimationClass {
                 break;
             case 1:
                 removePowerUp(balls,paddle,powerUps,type);
+                removePowerUp(balls,paddle,powerUps,5);
                 paddle.type=1;
                 paddle.Update();
                 int xx = paddleWidthOriginal/2;
@@ -112,8 +133,13 @@ public class PowerUp extends AnimationClass {
                 }
                 break;
             case 4:
-                blind= true;
-                checkTimePowerUp=checkTimePowerUp/10;
+                score.addAndGet(10);
+                break;
+            case 5:
+                removePowerUp(balls,paddle,powerUps,type);
+                removePowerUp(balls,paddle,powerUps,1);
+                paddle.type=3;
+                paddle.Update();
                 break;
         }
     }

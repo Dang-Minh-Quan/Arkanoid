@@ -37,7 +37,8 @@ public class Render {
         powerUps.removeIf(p -> !p.isActive());
     }
 
-    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle, Brick[][] brick,List<PowerUp>powerUps) {
+    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle,
+                           Brick[][] brick,List<PowerUp>powerUps,List<Bullet> bullets) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
         renderBackGround(gc);
         renderBrick(gc,brick);
@@ -46,10 +47,18 @@ public class Render {
         renderPowerUp(gc,powerUps);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
+        renderButton(gc, bullets);
         renderHUD(gc);
         if(blind==true){
             Image background = image.getBackground();
             gc.drawImage(background, 0, 0, WIDTH, ROW*HEIGHTBrick);
+        }
+    }
+
+    private void renderButton(GraphicsContext gc,List<Bullet> bullets){
+        for (Bullet b : bullets) {
+            Image ballImange = image.getBall1();
+            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
         }
     }
 

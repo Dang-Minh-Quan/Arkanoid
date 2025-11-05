@@ -1,5 +1,7 @@
 package LogicGamePlay;
 
+import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ public class Paddle extends BaseClass {
     private Rectangle paddle;
     private boolean moveLeft;
     private boolean moveRight;
+    private int checkBullet = timeButter;
 
     public Paddle() {
         super(null, 0, WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
@@ -36,6 +39,20 @@ public class Paddle extends BaseClass {
         this.x = x;
         paddle.setWidth(width);
         paddle.setX(x);
+    }
+
+    public void paddleBullet(List<Bullet> bullets){
+        if(type == 1) {
+            if (checkBullet <= 0) {
+                Bullet bullet1 = new Bullet(x + ballRadiusOriginal, y);
+                Bullet bullet2 = new Bullet(x + width - ballRadiusOriginal, y);
+                bullets.add(bullet1);
+                bullets.add(bullet2);
+                checkBullet = timeButter;
+            } else {
+                checkBullet--;
+            }
+        }
     }
 
     public boolean isMoveLeft() {

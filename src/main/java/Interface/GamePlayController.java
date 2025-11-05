@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -64,6 +65,7 @@ public class GamePlayController {
 
   private ScheduledExecutorService gameThread;
     private List<Ball> balls;
+    private List<Bullet> bullets;
   private Paddle paddle;
   private Brick[][] brick;
   private Update update;
@@ -96,6 +98,7 @@ public class GamePlayController {
     balls = new ArrayList<>();
     balls.add(ball);
     powerUps = new ArrayList<>();
+    bullets = new ArrayList<>();
     paddle = new Paddle();
     brick = new Brick[ROW][COL];
     IMAGE = new MainImage();
@@ -115,15 +118,24 @@ public class GamePlayController {
         media.playMusic();
         },1, TimeUnit.SECONDS);
 
-    mainGame = new AnimationTimer() {
+//      gameThread = Executors.newSingleThreadScheduledExecutor();
+//      gameThread.scheduleAtFixedRate(() -> {
+//          synchronized (Lock) {
+//              update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
+//          }
+//      }, 0, 16, TimeUnit.MILLISECONDS);
+
+
+      mainGame = new AnimationTimer() {
       long LastUpdate = 0;
 
       @Override
       public void handle(long now) {
         if (now - LastUpdate >= 16_000_000) {
-              System.out.println(numBrick);
-              update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, render);
-              render.renderGame(gc, balls, paddle, brick, powerUps);
+//            synchronized (Lock) {
+                update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, bullets,render);
+                render.renderGame(gc, balls, paddle, brick, powerUps,bullets);
+//            }
               LastUpdate = now;
         }
       }
@@ -134,6 +146,14 @@ public class GamePlayController {
       GamePlay.requestFocus();
       ButtonPause.toFront();
       mainGame.start();
+        if (LoadingScene != null) {
+            FadeTransition fade = new FadeTransition(Duration.millis(700), LoadingScene);
+            fade.setFromValue(1.0);
+            fade.setToValue(0.0);
+            fade.setOnFinished(e -> LoadingScene.setVisible(false));
+            fade.play();
+        }
+
     });
   }
 
@@ -164,8 +184,8 @@ public class GamePlayController {
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
     if (mainGame != null) {
-      mainGame.stop();
-      mainGame = null;
+        mainGame.stop();
+        mainGame = null;
     }
 
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
@@ -185,17 +205,17 @@ public class GamePlayController {
       GameOverCheck = true;
 
       if (mainGame != null) {
-        mainGame.stop();
-        mainGame = null;
+          mainGame.stop();
+          mainGame = null;
       }
 
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
       SwitchScene.fade(stage, root);
-      Scene scene = new Scene(root);
-      stage.setScene(scene);
-      stage.centerOnScreen();
-      stage.show();
+//      Scene scene = new Scene(root);
+//      stage.setScene(scene);
+//      stage.centerOnScreen();
+//      stage.show();
 
       //GameOverCheck = false;
       System.out.println("You Lose!");
@@ -213,17 +233,17 @@ public class GamePlayController {
       WinCheck = true;
 
       if (mainGame != null) {
-        mainGame.stop();
-        mainGame = null;
+          mainGame.stop();
+          mainGame = null;
       }
 
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
       SwitchScene.fade(stage, root);
-      Scene scene = new Scene(root);
-      stage.setScene(scene);
-      stage.centerOnScreen();
-      stage.show();
+//      Scene scene = new Scene(root);
+//      stage.setScene(scene);
+//      stage.centerOnScreen();
+//      stage.show();
 
       System.out.println("Win!");
     } catch (IOException e) {
