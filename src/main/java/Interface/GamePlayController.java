@@ -211,7 +211,6 @@ public class GamePlayController extends MainMenuController {
       stage.centerOnScreen();
       stage.show();
 
-      //GameOverCheck = false;
       System.out.println("You Lose!");
     } catch (IOException e) {
       e.printStackTrace();
