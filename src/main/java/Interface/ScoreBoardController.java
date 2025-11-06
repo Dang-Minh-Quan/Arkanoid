@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-public class ScoreBoardController extends GamePlayController {
+public class ScoreBoardController extends MainMenuController {
 
   @FXML
   private Button ButtonBack;
@@ -65,6 +65,12 @@ public class ScoreBoardController extends GamePlayController {
 
   @FXML
   protected void BackToMenu(ActionEvent event) throws IOException {
-    super.BackToMenu(event);
+    media.playPressButton();
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
   }
 }

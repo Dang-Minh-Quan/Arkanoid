@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
+import static Interface.MainMenuController.media;
 
 import java.io.IOException;
 
@@ -90,6 +91,8 @@ public class SaveScoreController {
 
   @FXML
   protected void BackToScoreBoard() throws IOException {
+    media.playMenuMusic();
+    media.stopGamePlayMusic();
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/ScoreBoard.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
@@ -99,6 +102,8 @@ public class SaveScoreController {
 
   @FXML
   protected void BackToMenu() throws IOException {
+    media.stopGamePlayMusic();
+    media.playMenuMusic();
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);

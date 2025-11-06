@@ -17,7 +17,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -126,7 +125,7 @@ public class GamePlayController extends MainMenuController {
 
     gameThread = Executors.newSingleThreadScheduledExecutor();
     gameThread.schedule(()-> {
-        media.playMusic();
+        media.playGamePlayMusic();
         },1, TimeUnit.SECONDS);
 
     mainGame = new AnimationTimer() {
@@ -161,6 +160,7 @@ public class GamePlayController extends MainMenuController {
 }
   @FXML
   protected void Pause(ActionEvent event) {
+    super.media.playPressButton();
     if (mainGame != null) {
       mainGame.stop();
     }
@@ -219,6 +219,7 @@ public class GamePlayController extends MainMenuController {
   }
 
   boolean WinCheck = false;
+  static boolean WinGameCheck = false;
 
   public void Win() {
     try {
@@ -233,6 +234,9 @@ public class GamePlayController extends MainMenuController {
       Stage stage = (Stage) GamePlay.getScene().getWindow();
       score.set(score.get()+heartCount.get()*20);
       if (Level.get() == LevelMax) {
+        WinGameCheck = true;
+//        media.stopGamePlayMusic();
+//        media.playMenuMusic();
         FinalScore=score.get();
         reset();
         saveProgress();
@@ -275,13 +279,6 @@ public class GamePlayController extends MainMenuController {
 
   @FXML
   protected void BackToMenu (ActionEvent event) throws IOException {
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
-
-    System.out.println("Clicked Menu");
+    super.BackToMenu(event);
   }
 }
