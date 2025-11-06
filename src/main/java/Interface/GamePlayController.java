@@ -86,6 +86,7 @@ public class GamePlayController {
     private int FinalScore;
     private ScoreManager scoreManager = new ScoreManager();
     List<PowerUp> powerUps;
+    List<Bullet> bullets;
     private final Object Lock = new Object();
 
 
@@ -126,18 +127,18 @@ public class GamePlayController {
             media.playMusic();
         }, 1, TimeUnit.SECONDS);
 
-      mainGame = new AnimationTimer() {
-      long LastUpdate = 0;
+        mainGame = new AnimationTimer() {
+            long LastUpdate = 0;
 
-      @Override
-      public void handle(long now) {
-        if (now - LastUpdate >= 16_000_000) {
-            update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, bullets,render);
-            render.renderGame(gc, balls, paddle, brick, powerUps,bullets);
-            LastUpdate = now;
-        }
-      }
-    };
+            @Override
+            public void handle(long now) {
+                if (now - LastUpdate >= 16_000_000) {
+                    update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, bullets, render);
+                    render.renderGame(gc, balls, paddle, brick, powerUps, bullets);
+                    LastUpdate = now;
+                }
+            }
+        };
 
         Platform.runLater(() -> {
             paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);

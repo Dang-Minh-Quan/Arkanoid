@@ -64,7 +64,7 @@ public class PowerUp extends AnimationClass {
                 paddle.Update();
                 break;
         }
-        checkTimePowerUp--;
+        TimePowerUp--;
     }
 
     public int UpdatePU(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps) {
@@ -94,7 +94,7 @@ public class PowerUp extends AnimationClass {
                 }
                 break;
             case 1:
-                if(paddle.type != 1) {
+                if (paddle.type != 1) {
                     paddle.type = 1;
                     paddle.Update();
                     int xx = paddleWidthOriginal / 2;
@@ -121,15 +121,23 @@ public class PowerUp extends AnimationClass {
                 score.addAndGet(10);
                 break;
             case 5:
-                if(paddle.type == 1){
+                if (paddle.type == 1) {
                     paddle.setPaddle(paddleWidthOriginal, paddle.x + paddleWidthOriginal / 2);
                 }
                 paddle.type = 2;
                 paddle.Update();
                 break;
-            }
         }
     }
+    public void render(GraphicsContext gc) {
+        if (!active || image == null) return;
+        super.draw(gc);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+}
 
 //    private void removePowerUp(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps, int Type) {
 //        for (int i = 0; i < powerUps.size(); i++) {
@@ -142,14 +150,3 @@ public class PowerUp extends AnimationClass {
 //            }
 //        }
 //    }
-
-    public void render(GraphicsContext gc) {
-        if (!active || image == null) return;
-        super.draw(gc);
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-}
-
