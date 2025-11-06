@@ -12,8 +12,9 @@ public class Bullet extends Ball{
     }
 
     @Override
-    public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render, List<PowerUp> powerUps) {
-        return super.checkBrickCollision(media, brick, render, powerUps);
+    public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render,
+                                   List<PowerUp> powerUps,PowerUpManager powerUpManager) {
+        return super.checkBrickCollision(media, brick, render, powerUps,powerUpManager);
     }
 
     public boolean checkBullet(){

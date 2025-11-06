@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static LogicGamePlay.Specifications.*;
@@ -19,7 +20,8 @@ public class Brick extends BaseClass {
         super(null, j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
     }
 
-    public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,Brick[][] brick) {
+    public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
+                        Brick[][] brick, PowerUpManager powerUpManager) {
         System.out.println(ball.type);
         switch (ball.type) {
             case 0, 2:
@@ -44,13 +46,12 @@ public class Brick extends BaseClass {
                             break;
                         case 4:
                             type = 1;
-                            boom(render, media, powerUps, brick);
+                            boom(render, media, powerUps, brick,powerUpManager);
                             destroyBrick(render, media, powerUps);
                             break;
                         case  5:
-                            PowerUp p = new PowerUp(-1,true);
-                            p.active(powerUps);
-                            powerUps.add(p);
+                            PowerUp p = new PowerUp(-1);
+                            powerUpManager.applyPowerUp(p,new Paddle(),new ArrayList<>());
                             destroyBrick(render, media, powerUps);
                     }
                 }
@@ -65,7 +66,7 @@ public class Brick extends BaseClass {
                     if(type==-1||type==2||type == 4){
                         type = 1;
                     }
-                    boom(render, media, powerUps, brick);
+                    boom(render, media, powerUps, brick,powerUpManager);
                 }
             }
         }
@@ -91,7 +92,8 @@ public class Brick extends BaseClass {
         render.addExplosion(explosionX, explosionY);
     }
 
-    public void boom(Render render,MainMedia media, List<PowerUp> powerUps,Brick[][] brick){
+    public void boom(Render render,MainMedia media, List<PowerUp> powerUps,
+                     Brick[][] brick, PowerUpManager powerUpManager){
         int[] a={0,0,0,1,1,1,-1,-1,-1};
         int[] b={0,1,-1,1,-1,0,1,-1,0};
         Ball ball = new Ball();
@@ -99,7 +101,7 @@ public class Brick extends BaseClass {
         int brickRow = y / HEIGHTBrick;
         for (int i = 0;i <=8 ;i++){
             if(brickRow+a[i]>=0&&brickRow+a[i]<ROW&&brickCol+b[i]>=0&&brickCol+b[i]<COL){
-                brick[brickRow+a[i]][brickCol+b[i]].BallHit(ball,render,media,powerUps,brick);
+                brick[brickRow+a[i]][brickCol+b[i]].BallHit(ball,render,media,powerUps,brick,powerUpManager);
             }
         }
         Update();
