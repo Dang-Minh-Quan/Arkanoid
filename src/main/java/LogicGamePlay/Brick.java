@@ -15,11 +15,12 @@ public class Brick extends BaseClass {
     private boolean exploded = false;
 
     private MainImage imageLoad;
-    public Brick(int i,int j) {
-        super(null, j*WIDTHBrick, i*HEIGHTBrick, WIDTHBrick,HEIGHTBrick);
+
+    public Brick(int i, int j) {
+        super(null, j * WIDTHBrick, i * HEIGHTBrick, WIDTHBrick, HEIGHTBrick);
     }
 
-    public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,Brick[][] brick) {
+    public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps, Brick[][] brick) {
         System.out.println(ball.type);
         switch (ball.type) {
             case 0, 2:
@@ -47,8 +48,8 @@ public class Brick extends BaseClass {
                             boom(render, media, powerUps, brick);
                             destroyBrick(render, media, powerUps);
                             break;
-                        case  5:
-                            PowerUp p = new PowerUp(-1,true);
+                        case 5:
+                            PowerUp p = new PowerUp(-1, true);
                             p.active(powerUps);
                             powerUps.add(p);
                             destroyBrick(render, media, powerUps);
@@ -62,7 +63,7 @@ public class Brick extends BaseClass {
                     if (type == -1) {
                         numBrick = numBrick + 1;
                     }
-                    if(type==-1||type==2||type == 4){
+                    if (type == -1 || type == 2 || type == 4) {
                         type = 1;
                     }
                     boom(render, media, powerUps, brick);
@@ -71,7 +72,7 @@ public class Brick extends BaseClass {
         }
     }
 
-    public void destroyBrick(Render render,MainMedia media, List<PowerUp> powerUps) {
+    public void destroyBrick(Render render, MainMedia media, List<PowerUp> powerUps) {
         if (exploded) return;
         exploded = true;
         destroyed = true;
@@ -79,27 +80,27 @@ public class Brick extends BaseClass {
         numBrick--;
         score.addAndGet(10);
         explosion(render);
-        if((int)(Math.random()*probability)%probability==0) {
-            render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15,powerUps);
+        if ((int) (Math.random() * probability) % probability == 0) {
+            render.addPowerUp(x + width / 2 - 15, y + height / 2 - 15, powerUps);
         }
         media.playDestroyBrick();
     }
 
     public void explosion(Render render) {
-        int explosionX =  (x + width / 2 - 32);
-        int explosionY =  (y + height / 2 - 32);
+        int explosionX = (x + width / 2 - 32);
+        int explosionY = (y + height / 2 - 32);
         render.addExplosion(explosionX, explosionY);
     }
 
-    public void boom(Render render,MainMedia media, List<PowerUp> powerUps,Brick[][] brick){
-        int[] a={0,0,0,1,1,1,-1,-1,-1};
-        int[] b={0,1,-1,1,-1,0,1,-1,0};
+    public void boom(Render render, MainMedia media, List<PowerUp> powerUps, Brick[][] brick) {
+        int[] a = {0, 0, 0, 1, 1, 1, -1, -1, -1};
+        int[] b = {0, 1, -1, 1, -1, 0, 1, -1, 0};
         Ball ball = new Ball();
         int brickCol = x / WIDTHBrick;
         int brickRow = y / HEIGHTBrick;
-        for (int i = 0;i <=8 ;i++){
-            if(brickRow+a[i]>=0&&brickRow+a[i]<ROW&&brickCol+b[i]>=0&&brickCol+b[i]<COL){
-                brick[brickRow+a[i]][brickCol+b[i]].BallHit(ball,render,media,powerUps,brick);
+        for (int i = 0; i <= 8; i++) {
+            if (brickRow + a[i] >= 0 && brickRow + a[i] < ROW && brickCol + b[i] >= 0 && brickCol + b[i] < COL) {
+                brick[brickRow + a[i]][brickCol + b[i]].BallHit(ball, render, media, powerUps, brick);
             }
         }
         Update();
@@ -133,8 +134,7 @@ public class Brick extends BaseClass {
         if (type == 0) {
             brick.setFill(Color.TRANSPARENT);
             brick.setStroke(Color.TRANSPARENT);
-        }
-        else  {
+        } else {
             brick.setFill(new ImagePattern(image));
             brick.setStroke(Color.BLACK);
         }

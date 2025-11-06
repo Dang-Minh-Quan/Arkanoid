@@ -15,10 +15,12 @@ public class MainImage {
     private static Image paddle1;
     private static Image ball;
     private static Image ball1;
+    private static Image ballpower;
     private static Image background;
     private static Image explosion;
     private static Image bar;
     private static Image powerUp;
+    private static Image bullet;
 
     public Image getBrick1() {
 
@@ -70,12 +72,20 @@ public class MainImage {
         return ball1;
     }
 
+    public static Image getBallpower() {
+        return ballpower;
+    }
+
     public static Image getExplosion() {
         return explosion;
     }
 
     public static Image getPowerup() {
         return powerUp;
+    }
+
+    public Image getBullet() {
+        return bullet;
     }
 
     public void LoadImage() {
@@ -98,11 +108,15 @@ public class MainImage {
                 30, 30, false, false);
         ball1 = new Image(getClass().getResourceAsStream("/Interface/Image/ball1.png"),
                 30, 30, false, false);
+        ballpower = new Image(getClass().getResourceAsStream("/Interface/Image/ballpower.png"),
+                30, 30, false, false);
         explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"),
                 256, 256, true, false);
         powerUp = new Image(getClass().getResourceAsStream("/Interface/Image/PowerUp.png"),
                 128 * 8, 128 * 8, true, false);
         bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"),
                 WIDTH, HEIGHTBar, false, false);
+        bullet = new Image(getClass().getResourceAsStream("/Interface/Image/bullet.png"),
+                10, 10, false, false);
     }
 }

@@ -5,23 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2ca2c24-5c84-4c18-9568-d8bc111ca8d0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Bullet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Interface/Image/Loading.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/savegame.txt" beforeDir="false" afterPath="$PROJECT_DIR$/savegame.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Interface/GamePlayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Interface/GamePlayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Interface/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Interface/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/AnimationClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/AnimationClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Ball.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Brick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Brick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/MainMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/MainMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Paddle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/MainImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/MainImage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/PowerUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/PowerUp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Render.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Render.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/SaveGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/SaveGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Specifications.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Specifications.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LogicGamePlay/Update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Interface/GamePlay.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Interface/GamePlay.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Interface/Image/paddle1.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Interface/Image/paddle1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Interface/Map/Level1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Interface/Map/Level1.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,18 +45,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Unnamed.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging Ngoc",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/UET/Arkanoid"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Ngoc&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/UET/Arkanoid&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Interface.MenuApplication" />

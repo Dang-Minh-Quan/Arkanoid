@@ -23,13 +23,14 @@ public class Render {
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
     }
+
     public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
         powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
     }
 
     private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {
         for (PowerUp p : powerUps) {
-            if(!p.checkActivate) {
+            if (!p.checkActivate) {
                 p.update();
                 p.render(gc);
             }
@@ -37,30 +38,30 @@ public class Render {
         powerUps.removeIf(p -> !p.isActive());
     }
 
-    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle,
-                           Brick[][] brick,List<PowerUp>powerUps,List<Bullet> bullets) {
-        gc.clearRect(0,0,WIDTH, HEIGHT);
+    public void renderGame(GraphicsContext gc, List<Ball> balls, Paddle paddle,
+                           Brick[][] brick, List<PowerUp> powerUps, List<Bullet> bullets) {
+        gc.clearRect(0, 0, WIDTH, HEIGHT);
         renderBackGround(gc);
-        renderBrick(gc,brick);
+        renderBrick(gc, brick);
         renderExplosions(gc);
-        ball.RenderTail(gc);
-        renderBall(gc, ball);
+        // ball.RenderTail(gc);
+        // renderBall(gc, ball);
         renderBalls(gc, balls);
-        renderPowerUp(gc,powerUps);
+        renderPowerUp(gc, powerUps);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
         renderButton(gc, bullets);
         renderHUD(gc);
-        if(blind==true){
+        if (blind == true) {
             Image background = image.getBackground();
-            gc.drawImage(background, 0, 0, WIDTH, ROW*HEIGHTBrick);
+            gc.drawImage(background, 0, 0, WIDTH, ROW * HEIGHTBrick);
         }
     }
 
-    private void renderButton(GraphicsContext gc,List<Bullet> bullets){
+    private void renderButton(GraphicsContext gc, List<Bullet> bullets) {
         for (Bullet b : bullets) {
-            Image ballImange = image.getBall1();
-            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
+            Image bulletImange = image.getBullet();
+            gc.drawImage(bulletImange, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
         }
     }
 
@@ -71,19 +72,18 @@ public class Render {
 
     private void renderBackBar(GraphicsContext gc) {
         Image bar = image.getBar();
-        gc.drawImage(bar,0,HEIGHT, WIDTH, HEIGHTBar);
+        gc.drawImage(bar, 0, HEIGHT, WIDTH, HEIGHTBar);
     }
 
     private void renderBrick(GraphicsContext gc, Brick[][] brick) {
-        for(int i = 0; i < ROW; i++) {
-            for(int j = 0; j < COL; j++) {
+        for (int i = 0; i < ROW; i++) {
+            for (int j = 0; j < COL; j++) {
                 Brick b = brick[i][j];
-                if(b == null) {
+                if (b == null) {
                     continue;
                 }
 
-              //  b.Update();
-                if(b.type == 0 || b.image == null) {
+                if (b.type == 0 || b.image == null) {
                     continue;
                 }
 
@@ -93,19 +93,44 @@ public class Render {
     }
 
     private void renderPaddle(GraphicsContext gc, Paddle paddle) {
-        Image paddleImage = paddle.image;
-        gc.drawImage(paddle.image, paddle.x, paddle.y, paddle.width, paddle.height);
+        Image img;
+        switch (paddle.type) {
+            case 1:
+                img = image.getPaddle();
+                break;
+            case 2:
+                img = image.getPaddle1();
+                break;   // paddle gun
+            default:
+                img = image.getPaddle();
+                break;
+        }
+
+        gc.drawImage(img, paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
-    private void renderBalls(GraphicsContext gc,List<Ball> balls){
+
+    private void renderBalls(GraphicsContext gc, List<Ball> balls) {
         for (Ball b : balls) {
-            Image ballImange = image.getBall();
+            Image img;
+            switch (b.type) {
+                case 1:
+                    img = image.getBall1();
+                    break;
+                case 2:
+                    img = image.getBallpower();
+                    break;
+                default:
+                    img = image.getBall();
+                    break;
+            }
+
             b.RenderTail(gc);
-            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
+            gc.drawImage(img, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
         }
     }
 
-  private void renderExplosions(GraphicsContext gc) {
+    private void renderExplosions(GraphicsContext gc) {
         long currentTime = System.nanoTime();
         if (lastTime == 0) lastTime = currentTime;
         double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;
@@ -115,7 +140,7 @@ public class Render {
         while (iterator.hasNext()) {
             Explosion explosion = iterator.next();
             explosion.Update();
-            if (explosion.currentFrame>=explosion.frameCols*explosion.frameRows-1) {
+            if (explosion.currentFrame >= explosion.frameCols * explosion.frameRows - 1) {
                 iterator.remove();
                 continue;
             }
