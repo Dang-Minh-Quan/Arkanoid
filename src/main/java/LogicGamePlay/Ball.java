@@ -25,7 +25,7 @@ public class Ball extends BaseClass {
       TailY[i] =  y;
       double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
       Color ColorTail = new Color(1, 1, 1, density);
-      Tail[i] = new Circle(x, y, width- i / 6, ColorTail);
+      Tail[i] = new Circle(x, y, width - i / 6, ColorTail);
     }
   }
 
