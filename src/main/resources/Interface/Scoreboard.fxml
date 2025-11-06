@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.ScoreBoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.ScoreBoardController">
    <children>
-      <VBox fx:id="ScoreBoard" layoutX="44.0" layoutY="49.0" prefHeight="547.0" prefWidth="411.0" />
-      <Button fx:id="ButtonBack" layoutX="415.0" layoutY="654.0" mnemonicParsing="false" onAction="#Back" prefHeight="32.0" prefWidth="70.0" text="Back" />
-      <Button layoutX="329.0" layoutY="654.0" mnemonicParsing="false" onAction="#Reset" prefHeight="32.0" prefWidth="70.0" text="Reset" />
+      <ImageView fitHeight="799.0" fitWidth="500.0" layoutY="-93.0" pickOnBounds="true">
+         <image>
+            <Image url="@Image/ScoreBoard.png" />
+         </image>
+      </ImageView>
+      <VBox fx:id="ScoreBoard" layoutX="140.0" layoutY="238.0" prefHeight="299.0" prefWidth="244.0" />
+      <Button focusTraversable="false" layoutX="331.0" layoutY="570.0" mnemonicParsing="false" onAction="#Reset" prefHeight="70.0" prefWidth="152.0">
+         <graphic>
+            <ImageView fitHeight="60.0" fitWidth="150.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/ResetButton.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="ButtonBack" focusTraversable="false" layoutX="331.0" layoutY="630.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="70.0" prefWidth="168.0">
+         <graphic>
+            <ImageView fitHeight="60.0" fitWidth="150.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/Back_Button.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

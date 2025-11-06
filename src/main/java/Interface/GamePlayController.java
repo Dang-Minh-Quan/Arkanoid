@@ -37,7 +37,7 @@ import javafx.util.Duration;
 import static LogicGamePlay.Specifications.*;
 import static LogicGamePlay.SaveGame.saveProgress;
 
-public class GamePlayController {
+public class GamePlayController extends MainMenuController {
 
     @FXML
     private Pane GamePlay;
@@ -121,10 +121,10 @@ public class GamePlayController {
         AtomicBoolean gameRestarted = new AtomicBoolean(true);
         //System.out.println(numBrick);
 
-        gameThread = Executors.newSingleThreadScheduledExecutor();
-        gameThread.schedule(() -> {
-            media.playMusic();
-        }, 1, TimeUnit.SECONDS);
+    gameThread = Executors.newSingleThreadScheduledExecutor();
+    gameThread.schedule(()-> {
+        media.playGamePlayMusic();
+        },1, TimeUnit.SECONDS);
 
       mainGame = new AnimationTimer() {
       long LastUpdate = 0;
@@ -139,154 +139,142 @@ public class GamePlayController {
       }
     };
 
-        Platform.runLater(() -> {
-            paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
-            GamePlay.requestFocus();
-            ButtonPause.toFront();
-            mainGame.start();
+    Platform.runLater(() -> {
+      paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
+      GamePlay.requestFocus();
+      ButtonPause.toFront();
+      mainGame.start();
 
-            if (LoadingScene != null) {
-                FadeTransition fade = new FadeTransition(Duration.millis(700), LoadingScene);
-                fade.setFromValue(1.0);
-                fade.setToValue(0.0);
-                fade.setOnFinished(e -> LoadingScene.setVisible(false));
-                fade.play();
-            }
-        });
+    if (LoadingScene != null) {
+      FadeTransition fade = new FadeTransition(Duration.millis(700), LoadingScene);
+      fade.setFromValue(1.0);
+      fade.setToValue(0.0);
+      fade.setOnFinished(e -> LoadingScene.setVisible(false));
+      fade.play();
     }
-
-    @FXML
-    protected void Pause(ActionEvent event) {
-        if (mainGame != null) {
-            mainGame.stop();
-        }
-        PauseMenu.setVisible(true);
-        ButtonPause.setVisible(false);
-        System.out.println("Game Paused");
+  });
+}
+  @FXML
+  protected void Pause(ActionEvent event) {
+    super.media.playPressButton();
+    if (mainGame != null) {
+      mainGame.stop();
     }
+    PauseMenu.setVisible(true);
+    ButtonPause.setVisible(false);
+    System.out.println("Game Paused");
+  }
 
-    @FXML
-    protected void Resume(ActionEvent event) {
-        if (mainGame != null) {
-            mainGame.start();
-        }
-        PauseMenu.setVisible(false);
-        ButtonPause.setVisible(true);
-
-        GamePlay.requestFocus();
-        System.out.println("Game Resumed");
+  @FXML
+  protected void Resume(ActionEvent event) {
+    if (mainGame != null) {
+      mainGame.start();
     }
+    PauseMenu.setVisible(false);
+    ButtonPause.setVisible(true);
 
-    @FXML
-    protected void Back(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    GamePlay.requestFocus();
+    System.out.println("Game Resumed");
+  }
 
-        if (mainGame != null) {
-            mainGame.stop();
-            mainGame = null;
+  @FXML
+  protected void Restart(ActionEvent event) throws IOException  {
+    super.PlayAgain(event);
+    PauseMenu.setVisible(false);
+    ButtonPause.setVisible(true);
+
+    GamePlay.requestFocus();
+    System.out.println("Game Restarted");
+  }
+
+  public static boolean GameOverCheck = false;
+
+  public void GameOver() {
+    try {
+      if (heartCount.get() > 0 || GameOverCheck) return;
+      GameOverCheck = true;
+
+      if (mainGame != null) {
+        mainGame.stop();
+        mainGame = null;
+      }
+
+      Stage stage = (Stage) GamePlay.getScene().getWindow();
+      Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
+      SwitchScene.fade(stage, root);
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.centerOnScreen();
+      stage.show();
+
+      System.out.println("You Lose!");
+    } catch (IOException e) {
+      e.printStackTrace();
+      GameOverCheck = false;
+    }
+  }
+
+  boolean WinCheck = false;
+  static boolean WinGameCheck = false;
+
+  public void Win() {
+    try {
+      if (WinCheck) return;
+      WinCheck = true;
+
+      if (mainGame != null) {
+        mainGame.stop();
+        mainGame = null;
+      }
+
+      Stage stage = (Stage) GamePlay.getScene().getWindow();
+      score.set(score.get()+heartCount.get()*20);
+      if (Level.get() == LevelMax) {
+        WinGameCheck = true;
+//        media.stopGamePlayMusic();
+//        media.playMenuMusic();
+        FinalScore=score.get();
+        reset();
+        saveProgress();
+        System.out.println("Final Score: " + FinalScore);
+
+        WinCheck = false;
+        GameOverCheck = false;
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/WinGame.fxml"));
+        Parent root = loader.load();
+
+        SaveScoreController winGameController = loader.getController();
+        if (winGameController != null) {
+          winGameController.setFinalScore(FinalScore, stage);
         }
 
-        Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+        SwitchScene.fade(stage, root);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
 
-        System.out.println("Clicked Back");
+        System.out.println("Congratulations! Game Completed. Loading WinGame Scene.");
+        return;
+      }
+
+      Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
+      SwitchScene.fade(stage, root);
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.centerOnScreen();
+      stage.show();
+
+      System.out.println("Win!");
+    } catch (IOException e) {
+      e.printStackTrace();
+      WinCheck = false;
     }
+  }
 
-    public static boolean GameOverCheck = false;
-
-    public void GameOver() {
-        try {
-            if (heartCount.get() > 0 || GameOverCheck) return;
-            GameOverCheck = true;
-
-            if (mainGame != null) {
-                mainGame.stop();
-                mainGame = null;
-            }
-
-            Stage stage = (Stage) GamePlay.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
-            SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
-
-            //GameOverCheck = false;
-            System.out.println("You Lose!");
-        } catch (IOException e) {
-            e.printStackTrace();
-            GameOverCheck = false;
-        }
-    }
-
-    boolean WinCheck = false;
-
-    public void Win() {
-        try {
-            if (WinCheck) return;
-            WinCheck = true;
-
-            if (mainGame != null) {
-                mainGame.stop();
-                mainGame = null;
-            }
-
-            Stage stage = (Stage) GamePlay.getScene().getWindow();
-            score.set(score.get() + heartCount.get() * 20);
-            if (Level.get() == LevelMax) {
-                FinalScore = score.get();
-                reset();
-                saveProgress();
-                System.out.println("Final Score: " + FinalScore);
-
-                WinCheck = false;
-                GameOverCheck = false;
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/WinGame.fxml"));
-                Parent root = loader.load();
-
-                SaveScoreController winGameController = loader.getController();
-                if (winGameController != null) {
-                    winGameController.setFinalScore(FinalScore, stage);
-                }
-
-                SwitchScene.fade(stage, root);
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
-
-                System.out.println("Congratulations! Game Completed. Loading WinGame Scene.");
-                return;
-            }
-
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
-            SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
-
-            System.out.println("Win!");
-        } catch (IOException e) {
-            e.printStackTrace();
-            WinCheck = false;
-        }
-    }
-
-    @FXML
-    protected void BackToMenu(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-
-        System.out.println("Clicked Menu");
-    }
+  @FXML
+  protected void BackToMenu (ActionEvent event) throws IOException {
+    super.BackToMenu(event);
+  }
 }

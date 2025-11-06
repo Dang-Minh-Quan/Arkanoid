@@ -57,6 +57,7 @@ public class Update {
             }
         }
     }
+  }
 
     private void updateBrick(List<Ball> balls, Paddle paddle, AtomicInteger Level, Brick[][] brick) {
         if (numBrick <= 0) {

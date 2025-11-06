@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
+import static Interface.MainMenuController.media;
 
 import java.io.IOException;
 
@@ -31,27 +32,14 @@ public class SaveScoreController {
 
   private void loadAndApplyFont() {
     Font scoreFont = Font.loadFont(
-        getClass().getResourceAsStream("/Font/Minecraftia-Regular.ttf"),
+        getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
         20
     );
 
     Font inputFont = Font.loadFont(
-        getClass().getResourceAsStream("/Font/Minecraftia-Regular.ttf"),
+        getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
         16
     );
-
-    if (scoreFont != null) {
-      ScoreLabel.setFont(scoreFont);
-      System.out.println("Thành công");
-    } else {
-      System.err.println("Cảnh báo: Không thể tải font ScoreLabel. Kiểm tra lại đường dẫn /Font/Minecraftia-Regular.ttf.");
-    }
-
-    if (inputFont != null) {
-      nameInput.setFont(inputFont);
-    } else {
-      System.err.println("Cảnh báo: Không thể tải font TextField.");
-    }
   }
 
   public void setFinalScore(int score, Stage stage) {
@@ -60,7 +48,7 @@ public class SaveScoreController {
     this.scoreSaved = false;
 
     loadAndApplyFont();
-    ScoreLabel.setText("SCORE: " + String.valueOf(score));
+    ScoreLabel.setText("YOUR SCORE: " + String.valueOf(score));
 
     if (scoreManager.isTopScore(finalScore)) {
       SaveHighScore.setVisible(true);
@@ -91,6 +79,8 @@ public class SaveScoreController {
     String playerName = nameInput.getText().trim();
     if (playerName.isEmpty()) {
       playerName = "Player";
+    } else if(playerName.length()>9) {
+      playerName = playerName.substring(0,9) + "...";
     }
 
     scoreManager.addScore(playerName, finalScore);
@@ -101,6 +91,8 @@ public class SaveScoreController {
 
   @FXML
   protected void BackToScoreBoard() throws IOException {
+    media.playMenuMusic();
+    media.stopGamePlayMusic();
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/ScoreBoard.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
@@ -110,6 +102,8 @@ public class SaveScoreController {
 
   @FXML
   protected void BackToMenu() throws IOException {
+    media.stopGamePlayMusic();
+    media.playMenuMusic();
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);

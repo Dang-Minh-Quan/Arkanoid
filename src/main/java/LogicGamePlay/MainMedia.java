@@ -3,8 +3,11 @@ package LogicGamePlay;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 
 public class MainMedia {
 
@@ -19,18 +22,27 @@ public class MainMedia {
 
     private Media music;
     private MediaPlayer musicPlay;
+    private static MediaPlayer GameplayMusic;
+    private static MediaPlayer MenuMusic;
     private AudioClip destroyBrick;
     private final ExecutorService soundThread;
     private volatile boolean isLoaded = false;
+    private static AudioClip PressButton;
 
     private MainMedia() {
         this.soundThread = Executors.newSingleThreadExecutor();
         loadMedia();
     }
 
-    public void playMusic() {
-        if (isLoaded && musicPlay != null) {
-            musicPlay.play();
+    public void playGamePlayMusic() {
+        if(isLoaded && musicPlay != null) {
+            GameplayMusic.play();
+        }
+    }
+
+    public static void stopGamePlayMusic() {
+        if(isLoaded && musicPlay != null) {
+            GameplayMusic.stop();
         }
     }
 
@@ -38,7 +50,18 @@ public class MainMedia {
         if (isLoaded && musicPlay != null) {
             musicPlay.stop();
         }
+  public static void playMenuMusic() {
+    if(isLoaded && musicPlay != null) {
+      if (MenuMusic.getStatus() == MediaPlayer.Status.PLAYING) {
+        MenuMusic.stop();
+      }
+      MenuMusic.play();
     }
+  }
+
+  public static void stopMenuMusic() {
+      MenuMusic.stop();
+  }
 
     public void playDestroyBrick() {
         if (isLoaded && destroyBrick != null) {
@@ -48,15 +71,27 @@ public class MainMedia {
 
     private void loadMedia() {
         soundThread.execute(() -> {
+    public static void playPressButton() {
+      if(checkLoad) {
+        PressButton.play();
+      }
+    }
+
+    public void LoadMedia() {
+        soundThread.execute(()-> {
             try {
                 music = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
-                musicPlay = new MediaPlayer(music);
-                musicPlay.setVolume(0.5);
-                musicPlay.setCycleCount(MediaPlayer.INDEFINITE);
-
+                GameplayMusic = new MediaPlayer((music));
+                GameplayMusic.setVolume(0.5);
+                GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
+                music = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
+                MenuMusic = new MediaPlayer((music));
+                MenuMusic.setVolume(1);
+                MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
                 destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
+                PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
                 destroyBrick.setVolume(1);
-
+                PressButton.setVolume(1);
                 isLoaded = true;
             } catch (Exception e) {
                 System.err.println("Lỗi load âm thanh: " + e.getMessage());

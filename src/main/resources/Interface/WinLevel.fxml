@@ -5,15 +5,36 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainMenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainMenuController">
    <children>
       <ImageView fitHeight="700.0" fitWidth="500.0" pickOnBounds="true">
          <image>
             <Image url="@Image/WinLevel.png" />
          </image>
       </ImageView>
-      <Button fx:id="ButtonNextLevel" layoutX="136.0" layoutY="344.0" mnemonicParsing="false" onAction="#NextLevel" opacity="0.0" prefHeight="57.0" prefWidth="247.0" text="Next Level" />
-      <Button fx:id="ButtonPlayAgain" layoutX="136.0" layoutY="416.0" mnemonicParsing="false" onAction="#PlayAgain" opacity="0.0" prefHeight="57.0" prefWidth="247.0" text="Play Again" />
-      <Button fx:id="BackToMenu" layoutX="136.0" layoutY="493.0" mnemonicParsing="false" onAction="#BackToMenu" opacity="0.0" prefHeight="57.0" prefWidth="247.0" text="Back" />
+      <Button fx:id="ButtonNextLevel" focusTraversable="false" layoutX="121.0" layoutY="305.0" mnemonicParsing="false" onAction="#NextLevel" prefHeight="0.0" prefWidth="258.0">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="240.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/NextlevelButton.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="ButtonPlayAgain" focusTraversable="false" layoutX="121.0" layoutY="382.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="27.0" prefWidth="258.0">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="240.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/PlayagainButton.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="BackToMenu" focusTraversable="false" layoutX="119.0" layoutY="460.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="57.0" prefWidth="247.0">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="242.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/Back_Button.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </Pane>
