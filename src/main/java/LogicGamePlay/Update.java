@@ -158,7 +158,7 @@ public class Update {
         case 1:
           double paddleCenter = paddle.getPaddle().getX() + paddle.getPaddle().getWidth() / 2.0;
           double offset = Math.abs(paddleCenter - ball.x) / (paddleCenter - paddle.x);
-          double baseAngle = Math.toRadians(45) * offset + ((Math.random() % 1) == 1 ? Math.toRadians(10) : -Math.toRadians(10));
+          double baseAngle = Math.toRadians(45) * offset;
           if (ball.vx >= 0) {
             ball.vx = (int)(spvxOriginal * Math.sin(baseAngle));
           } else {

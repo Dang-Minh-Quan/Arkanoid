@@ -36,7 +36,7 @@ import javafx.util.Duration;
 import static LogicGamePlay.Specifications.*;
 import static LogicGamePlay.SaveGame.saveProgress;
 
-public class GamePlayController {
+public class GamePlayController extends MainMenuController {
 
   @FXML
   private Pane GamePlay;
@@ -75,7 +75,7 @@ public class GamePlayController {
   private AnimationTimer mainGame;
 
   private ScheduledExecutorService gameThread;
-    private List<Ball> balls;
+  private List<Ball> balls;
   private Paddle paddle;
   private Brick[][] brick;
   private Update update;
@@ -85,8 +85,7 @@ public class GamePlayController {
   private int FinalScore;
   private ScoreManager scoreManager = new ScoreManager();
   List<PowerUp> powerUps;
-    private final Object Lock = new Object();
-
+  private final Object Lock = new Object();
 
   public void start(Stage stage) throws IOException {
       IMAGE = new MainImage();
@@ -183,21 +182,13 @@ public class GamePlayController {
   }
 
   @FXML
-  protected void Back(ActionEvent event) throws IOException {
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+  protected void Restart(ActionEvent event) throws IOException  {
+    super.PlayAgain(event);
+    PauseMenu.setVisible(false);
+    ButtonPause.setVisible(true);
 
-    if (mainGame != null) {
-      mainGame.stop();
-      mainGame = null;
-    }
-
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
-
-    System.out.println("Clicked Back");
+    GamePlay.requestFocus();
+    System.out.println("Game Restarted");
   }
 
   public static boolean GameOverCheck = false;

@@ -7,27 +7,48 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" style="-fx-background-image: url(&quot;Interface/background1.png&quot;); -fx-background-repeat: no-repeat; -fx-background-size: cover; -fx-background-position: center;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" style="-fx-background-image: url(&quot;Interface/background1.png&quot;); -fx-background-repeat: no-repeat; -fx-background-size: cover; -fx-background-position: center;" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainMenuController">
    <children>
       <ImageView fitHeight="700.0" fitWidth="500.0" layoutY="1.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0">
          <image>
-            <Image url="@Image/MenuBackground.jpg" />
+            <Image url="@Image/MenuBackground.png" />
          </image>
       </ImageView>
-      <Button fx:id="ButtonPlay" layoutX="128.0" layoutY="298.0" mnemonicParsing="false" onAction="#StartGame" opacity="0.0" prefHeight="53.0" prefWidth="258.0" text="Play">
+      <Button fx:id="ButtonPlay" focusTraversable="false" layoutX="112.0" layoutY="286.0" mnemonicParsing="false" onAction="#StartGame" prefHeight="54.0" prefWidth="271.0">
          <font>
             <Font size="10.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="62.0" fitWidth="266.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/PlayButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
-      <Button fx:id="ButtonExit" layoutX="128.0" layoutY="449.0" mnemonicParsing="false" onAction="#ExitGame" opacity="0.0" prefHeight="54.0" prefWidth="258.0" text="Exit">
+      <Button fx:id="ButtonScore" focusTraversable="false" layoutX="116.0" layoutY="350.0" mnemonicParsing="false" onAction="#OpenScoreboard" prefHeight="54.0" prefWidth="258.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="62.0" fitWidth="266.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/ScoreBoardButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="ButtonExit" focusTraversable="false" layoutX="112.0" layoutY="415.0" mnemonicParsing="false" onAction="#ExitGame" prefHeight="54.0" prefWidth="258.0">
          <font>
             <Font size="16.0" />
          </font>
-      </Button>
-      <Button fx:id="ButtonScore" layoutX="128.0" layoutY="375.0" mnemonicParsing="false" onAction="#OpenScoreboard" opacity="0.0" prefHeight="54.0" prefWidth="258.0" text="Scoreboard">
-         <font>
-            <Font size="10.0" />
-         </font>
+         <graphic>
+            <ImageView fitHeight="62.0" fitWidth="266.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/ExitButton.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
       <Pane fx:id="SelectionMenu" layoutX="86.0" layoutY="275.0" prefHeight="200.0" prefWidth="342.0" visible="false">
          <children>
@@ -41,13 +62,27 @@
                   <Image url="@Image/Selection.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="BlurButton" fitHeight="45.0" fitWidth="186.0" layoutX="64.0" layoutY="66.0" pickOnBounds="true">
+            <Button fx:id="ButtonContinueGame" layoutX="54.0" layoutY="59.0" mnemonicParsing="false" onAction="#ContinueGame" prefHeight="60.0" prefWidth="180.0">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="185.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@Image/ContinueButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <ImageView fx:id="BlurButton" fitHeight="49.0" fitWidth="188.0" layoutX="61.0" layoutY="64.0" pickOnBounds="true">
                <image>
                   <Image url="@Image/BlurButton.png" />
                </image>
             </ImageView>
-            <Button fx:id="ButtonContinueGame" layoutX="66.0" layoutY="71.0" mnemonicParsing="false" onAction="#ContinueGame" opacity="0.0" prefHeight="39.0" prefWidth="189.0" text="Contine" />
-            <Button fx:id="ButtonNewGame" layoutX="69.0" layoutY="120.0" mnemonicParsing="false" onAction="#NewGame" opacity="0.0" prefHeight="39.0" prefWidth="180.0" text="New Game" />
+            <Button fx:id="ButtonNewGame" layoutX="53.0" layoutY="113.0" mnemonicParsing="false" onAction="#NewGame" prefHeight="55.0" prefWidth="72.0" text="New Game">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="185.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Image/NewgameButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </Pane>
    </children>
