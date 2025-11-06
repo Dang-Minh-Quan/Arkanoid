@@ -21,9 +21,9 @@ public class Map {
                 break;
         }
         InputStream input = getClass().getResourceAsStream(path);
-        try(Scanner sc=new Scanner(input)) {
-            for (int i=0;i<ROW;i++){
-                for (int j=0;j<COL;j++){
+        try (Scanner sc = new Scanner(input)) {
+            for (int i = 0; i < ROW; i++) {
+                for (int j = 0; j < COL; j++) {
                     a[i][j] = sc.nextInt();
                 }
             }

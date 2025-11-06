@@ -8,7 +8,7 @@ import static LogicGamePlay.Specifications.*;
 public class Explosion extends AnimationClass{
     public boolean toBeRemoved = false;
 
-    private static final Image explosionImage = new MainImage().getExplosion();
+    private static final Image explosionImage = MainImage.getInstance().getExplosion();
 
 
     public Explosion(int x, int y) {

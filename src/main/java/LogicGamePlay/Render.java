@@ -17,19 +17,20 @@ import static LogicGamePlay.Specifications.*;
 public class Render {
     private long lastTime = 0;
     private final List<Explosion> explosions = new ArrayList<>();
-    private final MainImage image = new MainImage();
+    private final MainImage image = MainImage.getInstance();
     private Font pixelFont;
 
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
     }
+
     public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
-    powerUps.add(new PowerUp(MainImage.getPowerup(), x, y));
-}
+        powerUps.add(new PowerUp(image.getPowerUp(), x, y));
+    }
 
     private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {
         for (PowerUp p : powerUps) {
-            if(!p.checkActivate) {
+            if (!p.checkActivate) {
                 p.update();
                 p.render(gc);
             }
@@ -47,7 +48,7 @@ public class Render {
         renderPowerUp(gc,powerUps);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
-        renderButton(gc, bullets);
+        renderBullet(gc, bullets);
         renderHUD(gc);
         if(blind==true){
             Image background = image.getBackground();
@@ -55,7 +56,7 @@ public class Render {
         }
     }
 
-    private void renderButton(GraphicsContext gc,List<Bullet> bullets){
+    private void renderBullet(GraphicsContext gc,List<Bullet> bullets){
         for (Bullet b : bullets) {
             Image ballImange = image.getBall1();
             gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
@@ -69,19 +70,19 @@ public class Render {
 
     private void renderBackBar(GraphicsContext gc) {
         Image bar = image.getBar();
-        gc.drawImage(bar,0,HEIGHT, WIDTH, HEIGHTBar);
+        gc.drawImage(bar, 0, HEIGHT, WIDTH, HEIGHTBar);
     }
 
     private void renderBrick(GraphicsContext gc, Brick[][] brick) {
-        for(int i = 0; i < ROW; i++) {
-            for(int j = 0; j < COL; j++) {
+        for (int i = 0; i < ROW; i++) {
+            for (int j = 0; j < COL; j++) {
                 Brick b = brick[i][j];
-                if(b == null) {
+                if (b == null) {
                     continue;
                 }
 
-              //  b.Update();
-                if(b.type == 0 || b.image == null) {
+                //  b.Update();
+                if (b.type == 0 || b.image == null) {
                     continue;
                 }
 
@@ -95,11 +96,11 @@ public class Render {
         gc.drawImage(paddle.image, paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
-    private void renderBalls(GraphicsContext gc,List<Ball> balls){
+    private void renderBalls(GraphicsContext gc, List<Ball> balls) {
         for (Ball b : balls) {
-            Image ballImange = image.getBall1();
+            Image ballImange = image.getBall();
             b.RenderTail(gc);
-            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
+            gc.drawImage(ballImange, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
         }
     }
 
@@ -113,7 +114,7 @@ public class Render {
         while (iterator.hasNext()) {
             Explosion explosion = iterator.next();
             explosion.Update();
-            if (explosion.currentFrame>=explosion.frameCols*explosion.frameRows-1) {
+            if (explosion.currentFrame >= explosion.frameCols * explosion.frameRows - 1) {
                 iterator.remove();
                 continue;
             }

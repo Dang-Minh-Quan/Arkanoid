@@ -24,7 +24,7 @@ public abstract class AnimationClass extends BaseClass {
     public AnimationClass(Image image,final int x, final int y, int vx, int vy,
                           final int width, final int height, int frameCols,
                           int frameRows, int frameDelay) {
-        super(image,x,y,vx,vy,width,height);
+        super(image, x, y, vx, vy, width, height);
         this.frameCols = frameCols;
         this.frameRows = frameRows;
         this.frameDelay = frameDelay;
@@ -51,7 +51,7 @@ public abstract class AnimationClass extends BaseClass {
         gc.drawImage(
                 image,
                 col * frameWidth, row * frameHeight, frameWidth, frameHeight,
-                x, y, width*2, height*2
+                x, y, width * 2, height * 2
         );
     }
 }

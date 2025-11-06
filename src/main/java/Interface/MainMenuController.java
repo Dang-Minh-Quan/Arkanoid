@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 import static LogicGamePlay.Specifications.*;
 
 public class MainMenuController {
@@ -26,6 +27,8 @@ public class MainMenuController {
   private Button ButtonPlay;
   @FXML
   private Button ButtonNewGame;
+  @FXML
+  private ImageView BlurButton;
   @FXML
   private Button ButtonContinueGame;
   @FXML
@@ -44,14 +47,15 @@ public class MainMenuController {
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
     ButtonPlay.setVisible(false);
-
     SelectionMenu.setVisible(true);
     SelectionMenu.toFront();
 
     if (hasSavedGame()) {
       ButtonContinueGame.setDisable(false);
+      BlurButton.setVisible(false);
     } else {
       ButtonContinueGame.setDisable(true);
+      BlurButton.setVisible(true);
     }
 
     System.out.println("Clicked Play");

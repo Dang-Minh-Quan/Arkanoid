@@ -3,7 +3,7 @@ package LogicGamePlay;
 
 import javafx.scene.image.Image;
 
-public class BaseClass {
+public abstract class BaseClass {
     public Image image;
     public int type;
     public int x;

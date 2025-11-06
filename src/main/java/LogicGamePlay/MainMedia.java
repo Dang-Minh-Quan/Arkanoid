@@ -3,54 +3,63 @@ package LogicGamePlay;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 public class MainMedia {
-    private Media music ;
+
+    private static MainMedia instance;
+
+    public static synchronized MainMedia getInstance() {
+        if (instance == null) {
+            instance = new MainMedia();
+        }
+        return instance;
+    }
+
+    private Media music;
     private MediaPlayer musicPlay;
     private AudioClip destroyBrick;
-    private ExecutorService soundThread;
-    private boolean checkLoad = false;
+    private final ExecutorService soundThread;
+    private volatile boolean isLoaded = false;
 
-    public MainMedia(){
-        this.soundThread= Executors.newFixedThreadPool(1);
+    private MainMedia() {
+        this.soundThread = Executors.newSingleThreadExecutor();
+        loadMedia();
     }
 
     public void playMusic() {
-        if(checkLoad) {
+        if (isLoaded && musicPlay != null) {
             musicPlay.play();
         }
     }
 
     public void stopMusic() {
-        if(checkLoad) {
+        if (isLoaded && musicPlay != null) {
             musicPlay.stop();
         }
     }
 
     public void playDestroyBrick() {
-        if(checkLoad) {
-            destroyBrick.play();
+        if (isLoaded && destroyBrick != null) {
+            soundThread.execute(() -> destroyBrick.play());
         }
     }
 
-    public void LoadMedia() {
-        soundThread.execute(()-> {
+    private void loadMedia() {
+        soundThread.execute(() -> {
             try {
                 music = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
-                musicPlay = new MediaPlayer((music));
+                musicPlay = new MediaPlayer(music);
                 musicPlay.setVolume(0.5);
                 musicPlay.setCycleCount(MediaPlayer.INDEFINITE);
+
                 destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
                 destroyBrick.setVolume(1);
-                checkLoad = true;
-            }
-            catch (Exception e){
-                System.err.println("loi");
+
+                isLoaded = true;
+            } catch (Exception e) {
+                System.err.println("Lỗi load âm thanh: " + e.getMessage());
             }
         });
     }

@@ -29,15 +29,25 @@
             <Font size="10.0" />
          </font>
       </Button>
-      <Pane fx:id="SelectionMenu" layoutX="93.0" layoutY="276.0" prefHeight="252.0" prefWidth="318.0" visible="false">
+      <Pane fx:id="SelectionMenu" layoutX="86.0" layoutY="275.0" prefHeight="200.0" prefWidth="342.0" visible="false">
          <children>
-            <ImageView fitHeight="700.0" fitWidth="506.0" layoutX="-98.0" layoutY="-275.0" pickOnBounds="true">
+            <ImageView fitHeight="700.0" fitWidth="506.0" layoutX="-91.0" layoutY="-275.0" pickOnBounds="true">
                <image>
                   <Image url="@Image/BlurBackground.png" />
                </image>
             </ImageView>
-            <Button fx:id="ButtonContinueGame" layoutX="108.0" layoutY="61.0" mnemonicParsing="false" onAction="#ContinueGame" prefHeight="46.0" prefWidth="103.0" text="Contine" />
-            <Button fx:id="ButtonNewGame" layoutX="108.0" layoutY="155.0" mnemonicParsing="false" onAction="#NewGame" prefHeight="46.0" prefWidth="103.0" text="New Game" />
+            <ImageView fitHeight="252.0" fitWidth="436.0" layoutX="-58.0" layoutY="-37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Image/Selection.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="BlurButton" fitHeight="45.0" fitWidth="186.0" layoutX="64.0" layoutY="66.0" pickOnBounds="true">
+               <image>
+                  <Image url="@Image/BlurButton.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="ButtonContinueGame" layoutX="66.0" layoutY="71.0" mnemonicParsing="false" onAction="#ContinueGame" opacity="0.0" prefHeight="39.0" prefWidth="189.0" text="Contine" />
+            <Button fx:id="ButtonNewGame" layoutX="69.0" layoutY="120.0" mnemonicParsing="false" onAction="#NewGame" opacity="0.0" prefHeight="39.0" prefWidth="180.0" text="New Game" />
          </children>
       </Pane>
    </children>

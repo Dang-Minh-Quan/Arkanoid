@@ -2,6 +2,7 @@ package LogicGamePlay;
 
 import Interface.GamePlayController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -150,8 +151,8 @@ public class Update {
                                       Brick[][] brick, Paddle paddle,
                                       AtomicBoolean gameRestarted, List<PowerUp> powerUps,
                                       Render render) {
-        int nextBallX = (int) ball.getBall().getCenterX() + ball.vx;
-        int nextBallY = (int) ball.getBall().getCenterY() + ball.vy;
+        int nextBallX = (int) ball.getBall().getCenterX() + (int) ball.vx;
+        int nextBallY = (int) ball.getBall().getCenterY() + (int) ball.vy;
         ball.setBall(nextBallX, nextBallY);
         switch (ball.checkWallCollision(gameRestarted)) {
             case -1:
@@ -173,7 +174,10 @@ public class Update {
                 case 1:
                     double paddleCenter = paddle.getPaddle().getX() + paddle.getPaddle().getWidth() / 2.0;
                     double offset = Math.abs(paddleCenter - ball.x) / (paddleCenter - paddle.x);
-                    double baseAngle = Math.toRadians(45) * offset + Math.toRadians(10);
+                    double baseAngle = Math.toRadians(45) * offset;
+                    if (baseAngle <= Math.toRadians(20)) {
+                        baseAngle = Math.toRadians(20);
+                    }
                     if (ball.vx >= 0) {
                         ball.vx = (int) (spvxOriginal * Math.sin(baseAngle));
                     } else {
@@ -187,13 +191,15 @@ public class Update {
                     break;
             }
         }
-        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps,powerUpManager);
+        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps);
         if (collisionResult != 0) {
             if (collisionResult == 1) {
                 ball.vx = -ball.vx;
             } else if (collisionResult == 2) {
                 ball.vy = -ball.vy;
             }
+            //Brick b = ball.getLastHitBrick();
+            // if (b != null) b.BallHit(ball, render);
         }
         return true;
     }

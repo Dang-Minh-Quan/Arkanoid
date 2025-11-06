@@ -35,18 +35,11 @@ public class Specifications {
   public static int timeButter = 60;
 
     public static void reset() {
-        if (GamePlayController.GameOverCheck) {
-            winLevel = false;
-            numBrick = 0;
-            heartCount.set(3);
-            blind = false;
-        } else {
-            Level.set(1);
-            winLevel = false;
-            numBrick = 0;
-            heartCount.set(3);
-            blind = false;
-        }
-
+        Level.set(1);
+        winLevel = false;
+        numBrick = 0;
+        heartCount.set(3);
+        score.set(0);
+        GamePlayController.GameOverCheck = false;
     }
 }
