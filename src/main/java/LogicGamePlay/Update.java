@@ -85,37 +85,24 @@ public class Update {
 //            checkPlay = false;
         } else {
             //ball.resert();
-            int[][] a = map.builderMap(Level.get());
+            String[][] a = map.builderMap(Level.get());
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
-                    String type = "";
-                    if (a[i][j] == 1) {
-                        type = "normal brick";
-                    } else if (a[i][j] == 2) {
-                        type = "unbreakable brick";
-                    } else if (a[i][j] == 3) {
-                        type = "strong brick";
-                    } else if (a[i][j] == 4) {
-                        type = "explosive brick";
-                    }
-                    brick[i][j] = gameObject.createBrick(i, j, type);
-                    if (brick[i][j] == null) {
-                        continue;
-                    }
+                    brick[i][j] = new Brick(i, j);
                     brick[i][j].type = a[i][j];
-                    if (brick[i][j].type == 1) {
+                    if (brick[i][j].type == "basic") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 2) {
+                    if (brick[i][j].type == "solid") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 3) {
+                    if (brick[i][j].type == "broken") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 4) {
+                    if (brick[i][j].type == "boom") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 5) {
+                    if (brick[i][j].type == "blind") {
                         numBrick = numBrick + 1;
                     }
                     brick[i][j].Update();
@@ -207,7 +194,7 @@ public class Update {
                     break;
             }
         }
-        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps, powerUpManager);
+        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps,powerUpManager);
         if (collisionResult != 0) {
             if (collisionResult == 1) {
                 ball.vx = -ball.vx;
@@ -240,6 +227,5 @@ public class Update {
             }
         }
     }
-
 }
 

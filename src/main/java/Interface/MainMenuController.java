@@ -7,7 +7,7 @@ import static LogicGamePlay.Specifications.HEIGHT;
 import static LogicGamePlay.Specifications.HEIGHTBar;
 import static LogicGamePlay.Specifications.WIDTH;
 
-import LogicGamePlay.SaveGame;
+import LogicGamePlay.MainMedia;
 import LogicGamePlay.Specifications;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -44,8 +44,12 @@ public class MainMenuController {
   @FXML
   private Button ButtonPlayAgain;
 
+  public MainMedia media;
+
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     ButtonPlay.setVisible(false);
     SelectionMenu.setVisible(true);
     SelectionMenu.toFront();
@@ -63,6 +67,8 @@ public class MainMenuController {
 
   @FXML
   protected void NewGame(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     reset();
     saveProgress();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -84,6 +90,8 @@ public class MainMenuController {
 
   @FXML
   protected void ContinueGame(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     loadProgress();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -104,6 +112,8 @@ public class MainMenuController {
 
   @FXML
   protected void OpenScoreboard(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/Scoreboard.fxml"));
@@ -118,12 +128,21 @@ public class MainMenuController {
 
   @FXML
   protected void ExitGame(ActionEvent event) {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     System.out.println("Clicked Exit");
     System.exit(0);
   }
 
   @FXML
   protected void BackToMenu (ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    if(!GamePlayController.WinGameCheck) {
+      media.playMenuMusic();
+    }
+    GamePlayController.WinGameCheck=false;
+    media.playPressButton();
+    GamePlayController.GameOverCheck = false;
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
     Scene scene = new Scene(root);
@@ -138,7 +157,6 @@ public class MainMenuController {
   public void loadNextLevel(Stage stage) throws IOException {
     Level.incrementAndGet();
     saveProgress();
-
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
     Parent root = loader.load();
 
@@ -154,6 +172,8 @@ public class MainMenuController {
 
   @FXML
   protected void NextLevel(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     loadNextLevel(stage);
   }
@@ -164,7 +184,6 @@ public class MainMenuController {
     numBrick = 0;
     heartCount.set(3);
     GamePlayController.GameOverCheck = false;
-
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
     Parent root = loader.load();
 
@@ -181,6 +200,8 @@ public class MainMenuController {
 
   @FXML
   protected void PlayAgain(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     loadCurrentLevel(stage);
   }

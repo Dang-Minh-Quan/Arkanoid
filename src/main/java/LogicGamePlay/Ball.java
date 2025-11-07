@@ -18,19 +18,20 @@ public abstract class Ball extends BaseClass {
     private boolean collidedWithPaddle = false;
 
     public Ball() {
-        super(null, 0, WIDTH / 2, HEIGHT - 60, 0, -spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        super(null, "basic", WIDTH / 2, HEIGHT - 60,
+                0, -spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
         for (int i = 0; i < TailLength; i++) {
             TailX[i] = x;
             TailY[i] = y;
             double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
-            Color ColorTail = new Color(64 / 255.0, 224 / 255.0, 208 / 255.0, density);
-            Tail[i] = new Circle(x, y, width - i / 6, ColorTail);
+            Color ColorTail = new Color(1, 1, 1, density);
+            Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
         }
     }
 
-    protected Ball(int x, int y) {
-        super(null, 0, x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+    protected Ball(int x,int y){
+        super(null, "basic", x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
     }
 
@@ -84,26 +85,26 @@ public abstract class Ball extends BaseClass {
         return ball;
     }
 
-    public int checkWallCollision(AtomicBoolean gameRestarted) {
-        if (type != 2) {
-            if (y >= HEIGHT - height) {
-                return -1;
-            }
+  public int checkWallCollision( AtomicBoolean gameRestarted) {
+    if(type!="immortal") {
+        if (y >= HEIGHT - height) {
+            return -1;
         }
-        boolean check1 = x <= width || x >= WIDTH - width;
-        boolean check2 = y <= height;
-        if (type == 2) {
-            check2 = y <= height || y >= HEIGHT - height;
-        }
-        if (check1 && check2) {
-            return 1;
-        } else if (check1) {
-            return 2;
-        } else if (check2) {
-            return 3;
-        }
-        return 0;
     }
+    boolean check1 = x <= width || x >= WIDTH - width;
+    boolean check2 = y <= height;
+    if(type == "immortal"){
+        check2 = y <= height || y >= HEIGHT - height;
+    }
+    if (check1 && check2) {
+      return 1;
+    } else if (check1) {
+      return 2;
+    } else if (check2) {
+      return 3;
+    }
+    return 0;
+  }
 
     public int checkPaddleCollision(Paddle paddle) {
         double ballX = x;
@@ -146,6 +147,22 @@ public abstract class Ball extends BaseClass {
 
         boolean above = false, below = false, left = false, right = false;
 
+    if (vy <= 0 && brickRow > 0 && brickRow <= ROW
+            && (brickRow) * HEIGHTBrick + width >= y) {
+      above = true;
+    }
+    if (vy >= 0 && brickRow < ROW - 1
+            && (brickRow + 1) * HEIGHTBrick - width <= y) {
+      below = true;
+    }
+    if (vx <= 0 && brickCol > 0 && brickRow < ROW
+            && (brickCol) * WIDTHBrick + width >= x) {
+      left = true;
+    }
+    if (vx >= 0 && brickCol < COL - 1 && brickRow < ROW
+        && (brickCol + 1) * WIDTHBrick - width <= x) {
+      right = true;
+    }
         if (vy <= 0 && brickRow > 0 && brickRow <= ROW
                 && (brickRow) * HEIGHTBrick + width >= y) {
             above = true;
@@ -163,74 +180,74 @@ public abstract class Ball extends BaseClass {
             right = true;
         }
 
-        if (above == true) {
-            if (brick[brickRow - 1][brickCol].type != 0) {
-                brick[brickRow - 1][brickCol].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 2;
-            }
-        }
-        if (below == true) {
-            if (brick[brickRow + 1][brickCol].type != 0) {
-                brick[brickRow + 1][brickCol].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 2;
-            }
-        }
-        if (left == true) {
-            if (brick[brickRow][brickCol - 1].type != 0) {
-                brick[brickRow][brickCol - 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 1;
-            }
-        }
-        if (right == true) {
-            if (brick[brickRow][brickCol + 1].type != 0) {
-                brick[brickRow][brickCol + 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 1;
-            }
-        }
-        if (above == true && left == true) {
-            if (brick[brickRow - 1][brickCol - 1].type != 0) {
-                brick[brickRow - 1][brickCol - 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
-                        (brickCol) * WIDTHBrick - (int) x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        if (below == true && left == true) {
-            if (brick[brickRow + 1][brickCol - 1].type != 0) {
-                brick[brickRow + 1][brickCol - 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
-                        (brickCol) * WIDTHBrick - (int) x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        if (above == true && right == true) {
-            if (brick[brickRow - 1][brickCol + 1].type != 0) {
-                brick[brickRow - 1][brickCol + 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
-                        (brickCol + 1) * WIDTHBrick - (int) x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        if (below == true && right == true) {
-            if (brick[brickRow + 1][brickCol + 1].type != 0) {
-                brick[brickRow + 1][brickCol + 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
-                        (brickCol + 1) * WIDTHBrick - (int) x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        return 0;
+    if (above == true) {
+      if (brick[brickRow - 1][brickCol].type != "non") {
+        brick[brickRow - 1][brickCol].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        return 2;
+      }
     }
+    if (below == true) {
+      if (brick[brickRow + 1][brickCol].type != "non") {
+        brick[brickRow + 1][brickCol].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        return 2;
+      }
+    }
+    if (left == true) {
+      if (brick[brickRow][brickCol - 1].type != "non") {
+        brick[brickRow][brickCol - 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        return 1;
+      }
+    }
+    if (right == true) {
+      if (brick[brickRow][brickCol + 1].type != "non") {
+        brick[brickRow][brickCol + 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        return 1;
+      }
+    }
+    if (above == true && left == true) {
+      if (brick[brickRow - 1][brickCol - 1].type != "non") {
+        brick[brickRow - 1][brickCol - 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
+            (brickCol) * WIDTHBrick - (int) x)) {
+          return 2;
+        } else {
+          return 1;
+        }
+      }
+    }
+    if (below == true && left == true) {
+      if (brick[brickRow + 1][brickCol - 1].type != "non") {
+        brick[brickRow + 1][brickCol - 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
+            (brickCol) * WIDTHBrick - (int) x)) {
+          return 2;
+        } else {
+          return 1;
+        }
+      }
+    }
+    if (above == true && right == true) {
+      if (brick[brickRow - 1][brickCol + 1].type != "non") {
+        brick[brickRow - 1][brickCol + 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
+            (brickCol + 1) * WIDTHBrick - (int) x)) {
+          return 2;
+        } else {
+          return 1;
+        }
+      }
+    }
+    if (below == true && right == true) {
+      if (brick[brickRow + 1][brickCol + 1].type != "non") {
+        brick[brickRow + 1][brickCol + 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
+        if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
+            (brickCol + 1) * WIDTHBrick - (int) x)) {
+          return 2;
+        } else {
+          return 1;
+        }
+      }
+    }
+    return 0;
+  }
 }

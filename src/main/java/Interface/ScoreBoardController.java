@@ -1,6 +1,7 @@
 package Interface;
 
 import LogicGamePlay.HighScoreList;
+import LogicGamePlay.MainMedia;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-public class ScoreBoardController {
+public class ScoreBoardController extends MainMenuController {
 
   @FXML
   private Button ButtonBack;
@@ -31,14 +32,11 @@ public class ScoreBoardController {
   public void initialize() {
     if (customFont == null) {
       customFont = Font.loadFont(
-          getClass().getResourceAsStream("/Font/Minecraftia-Regular.ttf"),
-          30
+          getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
+          15
       );
-      if (customFont == null) {
-        System.err.println("Cảnh báo: Không thể tải font Minecraftia-Regular.ttf. Vẫn sử dụng font mặc định.");
-      }
     }
-
+    ScoreBoard.setSpacing(-7);
     displayScores();
     ButtonBack.toFront();
   }
@@ -47,24 +45,11 @@ public class ScoreBoardController {
     ScoreBoard.getChildren().clear();
     List<HighScoreList> scores = scoreManager.getHighScores();
 
-    if (scores.isEmpty()) {
-      Label emptyLabel = new Label("Empty.");
-      if (customFont != null) {
-        emptyLabel.setFont(customFont);
-      }
-      ScoreBoard.getChildren().add(emptyLabel);
-      return;
-    }
-
     int rank = 1;
     for (HighScoreList Player : scores) {
-      Label scoreLabel = new Label("Top" + rank + ": " + Player.getName() + " - Score: " + Player.getScore());
+      Label scoreLabel = new Label("Top" + rank + ": " + Player.getName() + " - " + Player.getScore());
 
-      if (customFont != null) {
-        scoreLabel.setFont(customFont);
-      } else {
-        scoreLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #3b2a1a;");
-      }
+      scoreLabel.setFont(customFont);
 
       ScoreBoard.getChildren().add(scoreLabel);
       rank++;
@@ -79,15 +64,14 @@ public class ScoreBoardController {
   }
 
   @FXML
-  protected void Back(ActionEvent event) throws IOException {
+  protected void BackToMenu(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
+    media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.centerOnScreen();
     stage.show();
-
-    System.out.println("Clicked Back to Main Menu.");
   }
 }

@@ -27,47 +27,47 @@ public abstract class Brick extends BaseClass {
                         Brick[][] brick, PowerUpManager powerUpManager) {
         System.out.println(ball.type);
         switch (ball.type) {
-            case 0, 2:
-                if (type == 0 || destroyed) {
+            case "basic", "immortal":
+                if (type == "non" || destroyed) {
                     return;
                 } else {
                     switch (type) {
-                        case 1:
+                        case "basic":
                             destroyBrick(render, media, powerUps);
                             break;
-                        case 2:
+                        case "solid":
                             if (!cracked) {
                                 cracked = true;
-                                type = 3;
+                                type = "broken";
                                 Update();
                             } else {
                                 destroyBrick(render, media, powerUps);
                             }
                             break;
-                        case 3:
+                        case "broken":
                             destroyBrick(render, media, powerUps);
                             break;
-                        case 4:
-                            type = 1;
-                            boom(render, media, powerUps, brick, powerUpManager);
+                        case "boom":
+                            type = "basic";
+                            boom(render, media, powerUps, brick,powerUpManager);
                             destroyBrick(render, media, powerUps);
                             break;
-                        case 5:
-                            PowerUp p = new PowerUp(-1);
-                            powerUpManager.applyPowerUp(p, gameObject.createPaddle("long paddle"), new ArrayList<>());
+                        case "blind":
+                            PowerUp p = new PowerUp("blind");
+                            powerUpManager.applyPowerUp(p,new Paddle(),new ArrayList<>());
                             destroyBrick(render, media, powerUps);
                     }
                 }
                 break;
-            case 1: {
-                if (type == 0 || destroyed) {
+            case "boom": {
+                if (type == "non" || destroyed) {
                     return;
                 } else {
-                    if (type == -1) {
+                    if (type == "hard") {
                         numBrick = numBrick + 1;
                     }
-                    if (type == -1 || type == 2 || type == 4) {
-                        type = 1;
+                    if (type == "hard" || type == "solid" || type == "boom") {
+                        type = "basic";
                     }
                     boom(render, media, powerUps, brick, powerUpManager);
                 }
@@ -79,7 +79,7 @@ public abstract class Brick extends BaseClass {
         if (exploded) return;
         exploded = true;
         destroyed = true;
-        type = 0;
+        type = "non";
         numBrick--;
         score.addAndGet(10);
         explosion(render);
@@ -108,40 +108,30 @@ public abstract class Brick extends BaseClass {
                 brick[brickRow + a[i]][brickCol + b[i]].BallHit(ball, render, media, powerUps, brick, powerUpManager);
             }
         }
+        Update();
     }
 
 
     public void Update() {
         MainImage newImage = MainImage.getInstance();
-        if (type == 0) {
+        if (type == "non") {
             image = null;
         }
-        if (type == 1) {
+        if (type == "basic") {
             image = newImage.getBrick1();
         }
-        if (type == 2) {
+        if (type == "solid") {
             image = newImage.getBrick3();
         }
-        if (type == 3) {
+        if (type == "broken") {
             image = newImage.getBrickBroken();
         }
-        if (type == 4) {
+        if (type == "boom") {
             image = newImage.getBrick4();
         }
-        if (type == -1) {
+        if (type == "hard") {
             image = newImage.getBrick2();
         }
     }
 
-    public Rectangle builderBrick(int i, int j) {
-        Rectangle brick = new Rectangle(x, y, width, height);
-        if (type == 0) {
-            brick.setFill(Color.TRANSPARENT);
-            brick.setStroke(Color.TRANSPARENT);
-        } else {
-            brick.setFill(new ImagePattern(image));
-            brick.setStroke(Color.BLACK);
-        }
-        return brick;
-    }
 }

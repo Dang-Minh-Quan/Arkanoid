@@ -6,11 +6,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="GamePlay" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.GamePlayController">
+<AnchorPane fx:id="GamePlay" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.GamePlayController">
    <children>
       <Pane fx:id="gameLayer" prefHeight="700.0" prefWidth="500.0">
          <children>
-            <Button fx:id="ButtonPause" cancelButton="true" layoutX="418.0" layoutY="594.0" mnemonicParsing="false" onAction="#Pause" opacity="0.0" prefHeight="42.0" prefWidth="48.0" text="Pause" />
+            <Button fx:id="ButtonPause" cancelButton="true" layoutX="411.0" layoutY="584.0" mnemonicParsing="false" onAction="#Pause" prefHeight="42.0" prefWidth="48.0">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Image/PauseButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </Pane>
       <Pane fx:id="PauseMenu" layoutX="112.0" layoutY="281.0" prefHeight="138.0" prefWidth="276.0" visible="false">
@@ -20,13 +27,36 @@
                   <Image url="@Image/BlurBackground.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="188.0" fitWidth="361.0" layoutX="-34.0" layoutY="-20.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="200.0" fitWidth="400.0" layoutX="-62.0" layoutY="-27.0" pickOnBounds="true">
                <image>
                   <Image url="@Image/PauseMenu.png" />
                </image>
             </ImageView>
-            <Button fx:id="ButtonResume" layoutX="61.0" layoutY="62.0" mnemonicParsing="false" onAction="#Resume" opacity="0.0" prefHeight="25.0" prefWidth="146.0" text="Resume" />
-            <Button fx:id="ButtonBack" layoutX="65.0" layoutY="104.0" mnemonicParsing="false" onAction="#Back" opacity="0.0" prefHeight="25.0" prefWidth="140.0" text="Back" />
+            <Button fx:id="ButtonResume" layoutX="21.0" layoutY="49.0" mnemonicParsing="false" onAction="#Resume" prefHeight="51.0" prefWidth="188.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="205.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@Image/ResumeButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="ButtonRestart" focusTraversable="false" layoutX="21.0" layoutY="93.0" mnemonicParsing="false" onAction="#Restart" prefHeight="27.0" prefWidth="87.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@Image/RestartButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="ButtonBack" focusTraversable="false" layoutX="125.0" layoutY="93.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="27.0" prefWidth="87.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="102.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@Image/BackButton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </Pane>
       <ImageView fx:id="LoadingScene" fitHeight="700.0" fitWidth="500.0" pickOnBounds="true">

@@ -5,8 +5,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static LogicGamePlay.Specifications.*;
 
@@ -17,7 +19,7 @@ public abstract class Paddle extends BaseClass {
     private int checkBullet = timeButter;
 
     public Paddle() {
-        super(null, 0, WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
+        super(null, "basic", WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
         MainImage newImage = MainImage.getInstance();
         image = newImage.getPaddle();
         paddle = new Rectangle(x, y, width, height);
@@ -29,6 +31,11 @@ public abstract class Paddle extends BaseClass {
         return paddle;
     }
 
+    public void setPaddle(int x) {
+        this.x = x;
+        paddle.setX(x);
+    }
+
     public void setPaddle(int width, int x) {
         this.width = width;
         this.x = x;
@@ -37,7 +44,7 @@ public abstract class Paddle extends BaseClass {
     }
 
     public void paddleBullet(List<Bullet> bullets){
-        if(type == 2) {
+        if(type == "shoot") {
             if (checkBullet <= 0) {
                 Bullet bullet1 = new Bullet(x + ballRadiusOriginal, y);
                 Bullet bullet2 = new Bullet(x + width - ballRadiusOriginal, y);
@@ -77,11 +84,14 @@ public abstract class Paddle extends BaseClass {
 
     public void Update() {
         MainImage newImage = MainImage.getInstance();
-        if (type == 0) {
+        if (type == "basic") {
             image = newImage.getPaddle();
         }
-        if (type == 1) {
+        if (type == "long") {
             image = newImage.getPaddle1();
+        }
+        if (type == "shoot") {
+            image = newImage.getPaddle2();
         }
     }
 

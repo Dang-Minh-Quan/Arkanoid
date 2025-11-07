@@ -41,11 +41,11 @@ public class Render {
     public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle,
                            Brick[][] brick,List<PowerUp>powerUps,List<Bullet> bullets) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
-        renderBackGround(gc);
+        //renderBackGround(gc);
         renderBrick(gc,brick);
         renderExplosions(gc);
         renderBalls(gc, balls);
-        renderPowerUp(gc,powerUps);
+        renderPowerUp(gc, powerUps);
         renderPaddle(gc, paddle);
         renderBackBar(gc);
         renderBullet(gc, bullets);
@@ -58,8 +58,8 @@ public class Render {
 
     private void renderBullet(GraphicsContext gc,List<Bullet> bullets){
         for (Bullet b : bullets) {
-            Image ballImange = image.getBall1();
-            gc.drawImage(ballImange, b.x - b.width, b.y-b.width,b.width *2, b.width *2);
+            Image bulletImange = image.getBullet();
+            gc.drawImage(bulletImange, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
         }
     }
 
@@ -81,8 +81,7 @@ public class Render {
                     continue;
                 }
 
-                //  b.Update();
-                if (b.type == 0 || b.image == null) {
+                if (b.type == "non" || b.image == null) {
                     continue;
                 }
 
@@ -92,19 +91,43 @@ public class Render {
     }
 
     private void renderPaddle(GraphicsContext gc, Paddle paddle) {
-        Image paddleImage = paddle.image;
-        gc.drawImage(paddle.image, paddle.x, paddle.y, paddle.width, paddle.height);
+        Image img;
+        switch (paddle.type) {
+            case "long":
+                img = image.getPaddle1();
+                break;
+            case "shoot":
+                img = image.getPaddle2();
+                break;   // paddle gun
+            default:
+                img = image.getPaddle();
+                break;
+        }
+
+        gc.drawImage(img, paddle.x, paddle.y, paddle.width, paddle.height);
     }
 
     private void renderBalls(GraphicsContext gc, List<Ball> balls) {
         for (Ball b : balls) {
-            Image ballImange = image.getBall();
+            Image img;
+            switch (b.type) {
+                case "boom":
+                    img = image.getBall1();
+                    break;
+                case "immortal":
+                    img = image.getBallpower();
+                    break;
+                default:
+                    img = image.getBall();
+                    break;
+            }
+
             b.RenderTail(gc);
-            gc.drawImage(ballImange, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
+            gc.drawImage(img, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
         }
     }
 
-  private void renderExplosions(GraphicsContext gc) {
+    private void renderExplosions(GraphicsContext gc) {
         long currentTime = System.nanoTime();
         if (lastTime == 0) lastTime = currentTime;
         double deltaTime = (currentTime - lastTime) / 1_000_000_000.0;

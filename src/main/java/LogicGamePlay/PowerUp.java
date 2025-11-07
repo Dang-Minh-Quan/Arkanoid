@@ -22,7 +22,7 @@ public class PowerUp extends AnimationClass {
     int TimePowerUp = TimePowerUpOriginal;
     boolean checkActivate = false;
 
-    public PowerUp(int type) {
+    public PowerUp(String type) {
         super(type);
         gameObject = new GameObject();
     }
@@ -30,7 +30,27 @@ public class PowerUp extends AnimationClass {
     public PowerUp(Image spriteSheet, int x, int y) {
         super(spriteSheet, x, y, 0, speedPU, RADIUSPU, RADIUSPU, 4, 4, 5);
         this.image = spriteSheet;
-        type = (int) (Math.random() * PU) % PU;
+        int randomType = (int) (Math.random() * PU) % PU;
+        switch (randomType){
+            case 0:
+                type = "ball_immortal";
+                break;
+            case 1:
+                type = "paddle_shoot";
+                break;
+            case 2:
+                type = "ball_add";
+                break;
+            case 3:
+                type = "ball_boom";
+                break;
+            case 4:
+                type = "bonus_point";
+                break;
+            case 5:
+                type = "paddle_long";
+                break;
+        }
         HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
     }
 
@@ -43,26 +63,26 @@ public class PowerUp extends AnimationClass {
 
     public void StopPowerUp(List<Ball> balls, Paddle paddle) {
         switch (type) {
-            case -1:
+            case "blind":
                 blind = false;
                 break;
-            case 0:
+            case "ball_immortal":
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = 0;
+                    balls.get(i).type = "basic";
                 }
                 break;
-            case 1:
-                paddle.type = 0;
+            case "paddle_shoot":
+                paddle.type = "basic";
                 paddle.Update();
                 paddle.setPaddle(paddleWidthOriginal, paddle.x + paddleWidthOriginal / 2);
                 break;
-            case 3:
+            case "ball_boom":
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = 0;
+                    balls.get(i).type = "basic";
                 }
                 break;
-            case 5:
-                paddle.type = 0;
+            case "paddle_long":
+                paddle.type = "basic";
                 paddle.Update();
                 break;
         }
@@ -87,17 +107,17 @@ public class PowerUp extends AnimationClass {
 
     public void Activate(List<Ball> balls, Paddle paddle) {
         switch (type) {
-            case -1:
+            case "blind":
                 blind = true;
                 break;
-            case 0:
+            case "ball_immortal":
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = 2;
+                    balls.get(i).type = "immortal";
                 }
                 break;
-            case 1:
-                if (paddle.type != 1) {
-                    paddle.type = 1;
+            case "paddle_long":
+                if(paddle.type != "long") {
+                    paddle.type = "long";
                     paddle.Update();
                     int xx = paddleWidthOriginal / 2;
                     if (paddle.width + paddle.x + xx > WIDTH) {
@@ -110,37 +130,27 @@ public class PowerUp extends AnimationClass {
                     paddle.setPaddle(paddleWidthOriginal * 2, paddle.x - xx);
                 }
                 break;
-            case 2:
-                Ball newBall = gameObject.createBall("normal ball");
+            case "ball_add":
+                Ball newBall = new Ball();
                 balls.add(newBall);
                 break;
-            case 3:
+            case "ball_boom":
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = 1;
+                    balls.get(i).type = "boom";
                 }
                 break;
-            case 4:
+            case "bonus_point":
                 score.addAndGet(10);
                 break;
-            case 5:
-                if (paddle.type == 1) {
+            case "paddle_shoot":
+                if(paddle.type == "long"){
                     paddle.setPaddle(paddleWidthOriginal, paddle.x + paddleWidthOriginal / 2);
                 }
-                paddle.type = 2;
+                paddle.type = "shoot";
                 paddle.Update();
                 break;
         }
     }
-
-    public void render(GraphicsContext gc) {
-        if (!active || image == null) return;
-        super.draw(gc);
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-}
 
 //    private void removePowerUp(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps, int Type) {
 //        for (int i = 0; i < powerUps.size(); i++) {
@@ -153,3 +163,14 @@ public class PowerUp extends AnimationClass {
 //            }
 //        }
 //    }
+
+    public void render(GraphicsContext gc) {
+        if (!active || image == null) return;
+        super.draw(gc);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+}
+
