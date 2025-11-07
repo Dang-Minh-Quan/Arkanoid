@@ -1,6 +1,7 @@
 package Interface;
 
 import LogicGamePlay.HighScoreList;
+import LogicGamePlay.MainMedia;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,6 +65,7 @@ public class ScoreBoardController extends MainMenuController {
 
   @FXML
   protected void BackToMenu(ActionEvent event) throws IOException {
+      media = MainMedia.getInstance();
     media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));

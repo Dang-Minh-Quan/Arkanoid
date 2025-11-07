@@ -1,7 +1,8 @@
 package Interface;
 //package java.LogicGamePlay;
 
-import static Interface.MainMenuController.media;
+
+import LogicGamePlay.MainMedia;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,8 +15,8 @@ import java.io.IOException;
 public class MenuApplication extends Application {
 
   @Override
-  public void start(Stage stage) throws IOException {;
-    media.LoadMedia();
+  public void start(Stage stage) throws IOException {
+      MainMedia media = MainMedia.getInstance();
     try {
       Thread.sleep(500);
     } catch (InterruptedException e) {

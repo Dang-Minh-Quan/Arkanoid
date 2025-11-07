@@ -29,6 +29,11 @@ public class Paddle extends BaseClass {
         return paddle;
     }
 
+    public void setPaddle(int x) {
+        this.x = x;
+        paddle.setX(x);
+    }
+
     public void setPaddle(int width, int x) {
         this.width = width;
         this.x = x;

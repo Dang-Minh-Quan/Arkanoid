@@ -57,7 +57,6 @@ public class Update {
             }
         }
     }
-  }
 
     private void updateBrick(List<Ball> balls, Paddle paddle, AtomicInteger Level, Brick[][] brick) {
         if (numBrick <= 0) {
@@ -192,7 +191,7 @@ public class Update {
                     break;
             }
         }
-        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps);
+        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps,powerUpManager);
         if (collisionResult != 0) {
             if (collisionResult == 1) {
                 ball.vx = -ball.vx;
@@ -225,6 +224,5 @@ public class Update {
             }
         }
     }
-
 }
 

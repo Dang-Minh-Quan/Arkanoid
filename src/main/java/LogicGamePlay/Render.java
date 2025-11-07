@@ -41,7 +41,7 @@ public class Render {
     public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle,
                            Brick[][] brick,List<PowerUp>powerUps,List<Bullet> bullets) {
         gc.clearRect(0,0,WIDTH, HEIGHT);
-        renderBackGround(gc);
+        //renderBackGround(gc);
         renderBrick(gc,brick);
         renderExplosions(gc);
         renderBalls(gc, balls);

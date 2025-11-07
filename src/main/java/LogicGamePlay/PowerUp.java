@@ -64,7 +64,6 @@ public class PowerUp extends AnimationClass {
                 paddle.Update();
                 break;
         }
-        checkTimePowerUp--;
     }
 
     public int UpdatePU(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps) {
@@ -127,7 +126,6 @@ public class PowerUp extends AnimationClass {
                 paddle.type = 2;
                 paddle.Update();
                 break;
-            }
         }
     }
 

@@ -3,10 +3,15 @@ package LogicGamePlay;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import static LogicGamePlay.Specifications.*;
+import static javafx.util.Duration.ZERO;
 
 
 public class MainMedia {
@@ -20,48 +25,61 @@ public class MainMedia {
         return instance;
     }
 
-    private Media music;
-    private MediaPlayer musicPlay;
-    private static MediaPlayer GameplayMusic;
-    private static MediaPlayer MenuMusic;
+    private Media media;
+    private MediaPlayer GameplayMusic;
+    private MediaPlayer MenuMusic;
+    private MediaPlayer BackGround;
+    private MediaView BackGroundView;
     private AudioClip destroyBrick;
-    private final ExecutorService soundThread;
+    private final ScheduledExecutorService soundThread = Executors.newScheduledThreadPool(2);
     private volatile boolean isLoaded = false;
     private static AudioClip PressButton;
 
-    private MainMedia() {
-        this.soundThread = Executors.newSingleThreadExecutor();
-        loadMedia();
+    public MainMedia() {
+        LoadMedia();
     }
 
     public void playGamePlayMusic() {
-        if(isLoaded && musicPlay != null) {
+        if (isLoaded && GameplayMusic != null) {
+            stopMenuMusic();
             GameplayMusic.play();
         }
     }
 
-    public static void stopGamePlayMusic() {
-        if(isLoaded && musicPlay != null) {
+    public void stopGamePlayMusic() {
+        if (isLoaded && GameplayMusic != null) {
             GameplayMusic.stop();
+            GameplayMusic.seek(ZERO);
+
         }
     }
 
-    public void stopMusic() {
-        if (isLoaded && musicPlay != null) {
-            musicPlay.stop();
+    public void playMenuMusic() {
+        if (isLoaded && MenuMusic != null) {
+            stopGamePlayMusic();
+            if (MenuMusic.getStatus() == MediaPlayer.Status.PLAYING) {
+                MenuMusic.stop();
+            }
+            MenuMusic.play();
         }
-  public static void playMenuMusic() {
-    if(isLoaded && musicPlay != null) {
-      if (MenuMusic.getStatus() == MediaPlayer.Status.PLAYING) {
-        MenuMusic.stop();
-      }
-      MenuMusic.play();
     }
-  }
 
-  public static void stopMenuMusic() {
-      MenuMusic.stop();
-  }
+    public void stopMenuMusic() {
+        if (isLoaded && MenuMusic != null) {
+            MenuMusic.stop();
+            MenuMusic.seek(ZERO);
+        }
+    }
+
+    public MediaView getBackGroundView() {
+        return BackGroundView;
+    }
+
+    public void ViewBackGrounnd() {
+        if (isLoaded && BackGround != null) {
+            BackGround.play();
+        }
+    }
 
     public void playDestroyBrick() {
         if (isLoaded && destroyBrick != null) {
@@ -69,33 +87,34 @@ public class MainMedia {
         }
     }
 
-    private void loadMedia() {
-        soundThread.execute(() -> {
-    public static void playPressButton() {
-      if(checkLoad) {
-        PressButton.play();
-      }
+    public void playPressButton() {
+        if (isLoaded && destroyBrick != null) {
+            PressButton.play();
+        }
     }
 
     public void LoadMedia() {
-        soundThread.execute(()-> {
-            try {
-                music = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
-                GameplayMusic = new MediaPlayer((music));
-                GameplayMusic.setVolume(0.5);
-                GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
-                music = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
-                MenuMusic = new MediaPlayer((music));
-                MenuMusic.setVolume(1);
-                MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
-                destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
-                PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
-                destroyBrick.setVolume(1);
-                PressButton.setVolume(1);
-                isLoaded = true;
-            } catch (Exception e) {
-                System.err.println("Lỗi load âm thanh: " + e.getMessage());
-            }
-        });
+        if (!isLoaded) {
+            media = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
+            GameplayMusic = new MediaPlayer((media));
+            GameplayMusic.setVolume(0.5);
+            GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
+            media = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
+            MenuMusic = new MediaPlayer((media));
+            MenuMusic.setVolume(1);
+            MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
+            media = new Media(getClass().getResource("/Interface/media/BackGround2.mp4").toExternalForm());
+            BackGround = new MediaPlayer(media);
+            BackGround.setCycleCount(MediaPlayer.INDEFINITE);
+            BackGroundView = new MediaView(BackGround);
+            BackGroundView.setFitWidth(WIDTH);
+            BackGroundView.setFitHeight(HEIGHT + HEIGHTBar);
+            BackGroundView.setPreserveRatio(false);
+            destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
+            PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
+            destroyBrick.setVolume(1);
+            PressButton.setVolume(1);
+            isLoaded = true;
+        }
     }
 }
