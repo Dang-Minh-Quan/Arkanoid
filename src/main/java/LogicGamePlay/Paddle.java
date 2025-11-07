@@ -19,7 +19,7 @@ public class Paddle extends BaseClass {
     private int checkBullet = timeButter;
 
     public Paddle() {
-        super(null, 0, WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
+        super(null, "basic", WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
         MainImage newImage = MainImage.getInstance();
         image = newImage.getPaddle();
         paddle = new Rectangle(x, y, width, height);
@@ -44,7 +44,7 @@ public class Paddle extends BaseClass {
     }
 
     public void paddleBullet(List<Bullet> bullets){
-        if(type == 2) {
+        if(type == "shoot") {
             if (checkBullet <= 0) {
                 Bullet bullet1 = new Bullet(x + ballRadiusOriginal, y);
                 Bullet bullet2 = new Bullet(x + width - ballRadiusOriginal, y);
@@ -84,13 +84,13 @@ public class Paddle extends BaseClass {
 
     public void Update() {
         MainImage newImage = MainImage.getInstance();
-        if (type == 0) {
+        if (type == "basic") {
             image = newImage.getPaddle();
         }
-        if (type == 1) {
+        if (type == "long") {
             image = newImage.getPaddle1();
         }
-        if (type == 2) {
+        if (type == "shoot") {
             image = newImage.getPaddle2();
         }
     }

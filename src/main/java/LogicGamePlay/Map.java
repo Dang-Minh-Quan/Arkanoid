@@ -6,8 +6,8 @@ import java.util.Scanner;
 import static LogicGamePlay.Specifications.*;
 
 public class Map {
-    public int[][] builderMap(int Level) {
-        int[][] a = new int[ROW][COL];
+    public String[][] builderMap(int Level) {
+        String[][] a = new String[ROW][COL];
         String path = new String();
         switch (Level) {
             case 1:
@@ -24,7 +24,30 @@ public class Map {
         try (Scanner sc = new Scanner(input)) {
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
-                    a[i][j] = sc.nextInt();
+                    int k = sc.nextInt();
+                    switch (k){
+                        case 0:
+                            a[i][j] = "non";
+                            break;
+                        case 1:
+                            a[i][j] = "basic";
+                            break;
+                        case 2:
+                            a[i][j] = "solid";
+                            break;
+                        case 3:
+                            a[i][j] = "broken";
+                            break;
+                        case 4:
+                            a[i][j] = "boom";
+                            break;
+                        case 5:
+                            a[i][j] = "blind";
+                            break;
+                        case 6:
+                            a[i][j] = "hard";
+                            break;
+                    }
                 }
             }
         }

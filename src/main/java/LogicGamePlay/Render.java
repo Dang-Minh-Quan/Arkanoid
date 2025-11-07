@@ -81,7 +81,7 @@ public class Render {
                     continue;
                 }
 
-                if (b.type == 0 || b.image == null) {
+                if (b.type == "non" || b.image == null) {
                     continue;
                 }
 
@@ -93,10 +93,10 @@ public class Render {
     private void renderPaddle(GraphicsContext gc, Paddle paddle) {
         Image img;
         switch (paddle.type) {
-            case 1:
+            case "long":
                 img = image.getPaddle1();
                 break;
-            case 2:
+            case "shoot":
                 img = image.getPaddle2();
                 break;   // paddle gun
             default:
@@ -111,10 +111,10 @@ public class Render {
         for (Ball b : balls) {
             Image img;
             switch (b.type) {
-                case 1:
+                case "boom":
                     img = image.getBall1();
                     break;
-                case 2:
+                case "immortal":
                     img = image.getBallpower();
                     break;
                 default:

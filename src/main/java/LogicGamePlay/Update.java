@@ -82,24 +82,24 @@ public class Update {
 //            checkPlay = false;
         } else {
             //ball.resert();
-            int[][] a = map.builderMap(Level.get());
+            String[][] a = map.builderMap(Level.get());
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
                     brick[i][j] = new Brick(i, j);
                     brick[i][j].type = a[i][j];
-                    if (brick[i][j].type == 1) {
+                    if (brick[i][j].type == "basic") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 2) {
+                    if (brick[i][j].type == "solid") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 3) {
+                    if (brick[i][j].type == "broken") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 4) {
+                    if (brick[i][j].type == "boom") {
                         numBrick = numBrick + 1;
                     }
-                    if (brick[i][j].type == 5) {
+                    if (brick[i][j].type == "blind") {
                         numBrick = numBrick + 1;
                     }
                     brick[i][j].Update();

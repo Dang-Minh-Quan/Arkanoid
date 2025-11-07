@@ -18,7 +18,8 @@ public class Ball extends BaseClass {
     private boolean collidedWithPaddle = false;
 
     public Ball() {
-        super(null, 0, WIDTH / 2, HEIGHT - 60, 0, -spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        super(null, "basic", WIDTH / 2, HEIGHT - 60,
+                0, -spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
         for (int i = 0; i < TailLength; i++) {
             TailX[i] = x;
@@ -30,7 +31,7 @@ public class Ball extends BaseClass {
     }
 
     protected Ball(int x,int y){
-        super(null, 0, x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        super(null, "basic", x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
     }
 
@@ -85,14 +86,14 @@ public class Ball extends BaseClass {
   }
 
   public int checkWallCollision( AtomicBoolean gameRestarted) {
-    if(type!=2) {
+    if(type!="immortal") {
         if (y >= HEIGHT - height) {
             return -1;
         }
     }
     boolean check1 = x <= width || x >= WIDTH - width;
     boolean check2 = y <= height;
-    if(type == 2){
+    if(type == "immortal"){
         check2 = y <= height || y >= HEIGHT - height;
     }
     if (check1 && check2) {
@@ -180,31 +181,31 @@ public class Ball extends BaseClass {
         }
 
     if (above == true) {
-      if (brick[brickRow - 1][brickCol].type != 0) {
+      if (brick[brickRow - 1][brickCol].type != "non") {
         brick[brickRow - 1][brickCol].BallHit(this, render, media,powerUps,brick,powerUpManager);
         return 2;
       }
     }
     if (below == true) {
-      if (brick[brickRow + 1][brickCol].type != 0) {
+      if (brick[brickRow + 1][brickCol].type != "non") {
         brick[brickRow + 1][brickCol].BallHit(this, render, media,powerUps,brick,powerUpManager);
         return 2;
       }
     }
     if (left == true) {
-      if (brick[brickRow][brickCol - 1].type != 0) {
+      if (brick[brickRow][brickCol - 1].type != "non") {
         brick[brickRow][brickCol - 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
         return 1;
       }
     }
     if (right == true) {
-      if (brick[brickRow][brickCol + 1].type != 0) {
+      if (brick[brickRow][brickCol + 1].type != "non") {
         brick[brickRow][brickCol + 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
         return 1;
       }
     }
     if (above == true && left == true) {
-      if (brick[brickRow - 1][brickCol - 1].type != 0) {
+      if (brick[brickRow - 1][brickCol - 1].type != "non") {
         brick[brickRow - 1][brickCol - 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
         if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol) * WIDTHBrick - (int) x)) {
@@ -215,7 +216,7 @@ public class Ball extends BaseClass {
       }
     }
     if (below == true && left == true) {
-      if (brick[brickRow + 1][brickCol - 1].type != 0) {
+      if (brick[brickRow + 1][brickCol - 1].type != "non") {
         brick[brickRow + 1][brickCol - 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
         if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol) * WIDTHBrick - (int) x)) {
@@ -226,7 +227,7 @@ public class Ball extends BaseClass {
       }
     }
     if (above == true && right == true) {
-      if (brick[brickRow - 1][brickCol + 1].type != 0) {
+      if (brick[brickRow - 1][brickCol + 1].type != "non") {
         brick[brickRow - 1][brickCol + 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
         if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol + 1) * WIDTHBrick - (int) x)) {
@@ -237,7 +238,7 @@ public class Ball extends BaseClass {
       }
     }
     if (below == true && right == true) {
-      if (brick[brickRow + 1][brickCol + 1].type != 0) {
+      if (brick[brickRow + 1][brickCol + 1].type != "non") {
         brick[brickRow + 1][brickCol + 1].BallHit(this, render, media,powerUps,brick,powerUpManager);
         if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
             (brickCol + 1) * WIDTHBrick - (int) x)) {

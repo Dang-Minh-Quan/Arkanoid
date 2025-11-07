@@ -15,20 +15,20 @@ public class PowerUpManager {
         powerUp.Activate(balls,paddle);
         activePowerUp.add(powerUp);
         switch (powerUp.type){
-            case 0,3:
+            case "ball_immortal", "ball_boom":
                 activeBall++;
-            case 1,5:
+            case "paddle_long","paddle_shoot":
                 activePaddle++;
         }
         Sheduler.schedule(()->{
             switch (powerUp.type){
-                case 0,3:
+                case "ball_immortal", "ball_boom":
                     activeBall--;
                     if(activeBall == 0){
                         powerUp.StopPowerUp(balls,paddle);
                         activePowerUp.remove(powerUp);
                     }
-                case 1,5:
+                case "paddle_long","paddle_shoot":
                     activePaddle--;
                     if(activePaddle == 0){
                         powerUp.StopPowerUp(balls,paddle);
@@ -42,7 +42,31 @@ public class PowerUpManager {
         activePaddle = 0;
         activeBall = 0;
         for (int j = -1;j < 6;j++){
-            PowerUp powerUp = new PowerUp(j);
+            String k = new String();
+            switch (j){
+                case -1:
+                    k = "blind";
+                    break;
+                case 0:
+                    k = "ball_immortal";
+                    break;
+                case 1:
+                    k = "paddle_long";
+                    break;
+                case 2:
+                    k = "ball_add";
+                    break;
+                case 3:
+                    k = "ball_boom";
+                    break;
+                case 4:
+                    k = "bonus_point";
+                    break;
+                case 5:
+                    k = "paddle_shoot";
+                    break;
+            }
+            PowerUp powerUp = new PowerUp(k);
             powerUp.StopPowerUp(balls,paddle);
         }
         activePowerUp.clear();
