@@ -131,7 +131,7 @@ public class PowerUp extends AnimationClass {
                 }
                 break;
             case "ball_add":
-                Ball newBall = new Ball();
+                Ball newBall = gameObject.createBall("normal ball");
                 balls.add(newBall);
                 break;
             case "ball_boom":

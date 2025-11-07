@@ -49,12 +49,12 @@ public abstract class Brick extends BaseClass {
                             break;
                         case "boom":
                             type = "basic";
-                            boom(render, media, powerUps, brick,powerUpManager);
+                            boom(render, media, powerUps, brick, powerUpManager);
                             destroyBrick(render, media, powerUps);
                             break;
                         case "blind":
                             PowerUp p = new PowerUp("blind");
-                            powerUpManager.applyPowerUp(p,new Paddle(),new ArrayList<>());
+                            powerUpManager.applyPowerUp(p, gameObject.createPaddle("normal"), new ArrayList<>());
                             destroyBrick(render, media, powerUps);
                     }
                 }

@@ -88,7 +88,10 @@ public class Update {
             String[][] a = map.builderMap(Level.get());
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
-                    brick[i][j] = new Brick(i, j);
+                    brick[i][j] = gameObject.createBrick(i, j, a[i][j]);
+                    if (brick[i][j] == null) {
+                        continue;
+                    }
                     brick[i][j].type = a[i][j];
                     if (brick[i][j].type == "basic") {
                         numBrick = numBrick + 1;
