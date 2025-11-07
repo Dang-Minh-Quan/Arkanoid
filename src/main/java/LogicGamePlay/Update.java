@@ -14,10 +14,13 @@ import static LogicGamePlay.Specifications.*;
 public class Update {
 
     private GamePlayController controller;
-    private PowerUpManager powerUpManager = new PowerUpManager();
+    private PowerUpManager powerUpManager;
+    private GameObject gameObject;
 
     public Update(GamePlayController controller) {
         this.controller = controller;
+        gameObject = new GameObject();
+        powerUpManager = new PowerUpManager();
     }
 
     public void updateGame(MainMedia media, List<Ball> balls,
@@ -85,7 +88,20 @@ public class Update {
             int[][] a = map.builderMap(Level.get());
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
-                    brick[i][j] = new Brick(i, j);
+                    String type = "";
+                    if (a[i][j] == 1) {
+                        type = "normal brick";
+                    } else if (a[i][j] == 2) {
+                        type = "unbreakable brick";
+                    } else if (a[i][j] == 3) {
+                        type = "strong brick";
+                    } else if (a[i][j] == 4) {
+                        type = "explosive brick";
+                    }
+                    brick[i][j] = gameObject.createBrick(i, j, type);
+                    if (brick[i][j] == null) {
+                        continue;
+                    }
                     brick[i][j].type = a[i][j];
                     if (brick[i][j].type == 1) {
                         numBrick = numBrick + 1;
@@ -213,7 +229,7 @@ public class Update {
                 balls.remove(i);
             }
             if (balls.size() == 0) {
-                Ball ball = new Ball();
+                Ball ball = gameObject.createBall("normal ball");
                 balls.add(ball);
                 gameRestarted.set(true);
                 heartCount.set(heartCount.get() - 1);

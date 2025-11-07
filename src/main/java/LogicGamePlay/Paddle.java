@@ -10,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 
 import static LogicGamePlay.Specifications.*;
 
-public class Paddle extends BaseClass {
+public abstract class Paddle extends BaseClass {
     private Rectangle paddle;
     private boolean moveLeft;
     private boolean moveRight;

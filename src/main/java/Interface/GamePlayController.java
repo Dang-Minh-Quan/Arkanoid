@@ -76,6 +76,7 @@ public class GamePlayController {
     private AnimationTimer mainGame;
 
     private ScheduledExecutorService gameThread;
+    private GameObject gameObject;
     private List<Ball> balls;
     private Paddle paddle;
     private Brick[][] brick;
@@ -108,11 +109,12 @@ public class GamePlayController {
         gameLayer.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        Ball ball = new Ball();
+        gameObject = new GameObject();
+        Ball ball = gameObject.createBall("normal ball");
         balls = new ArrayList<>();
         balls.add(ball);
         powerUps = new ArrayList<>();
-        paddle = new Paddle();
+        paddle = gameObject.createPaddle("normal paddle");
         brick = new Brick[ROW][COL];
         bullets = new ArrayList<>();
 

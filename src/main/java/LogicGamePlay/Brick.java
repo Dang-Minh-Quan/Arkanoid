@@ -10,15 +10,17 @@ import java.util.List;
 
 import static LogicGamePlay.Specifications.*;
 
-public class Brick extends BaseClass {
+public abstract class Brick extends BaseClass {
     private boolean cracked = false;
     private boolean destroyed = false;
     private boolean exploded = false;
 
+    private GameObject gameObject;
     private MainImage imageLoad;
 
     public Brick(int i, int j) {
         super(null, j * WIDTHBrick, i * HEIGHTBrick, WIDTHBrick, HEIGHTBrick);
+        gameObject = new GameObject();
     }
 
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
@@ -47,12 +49,12 @@ public class Brick extends BaseClass {
                             break;
                         case 4:
                             type = 1;
-                            boom(render, media, powerUps, brick,powerUpManager);
+                            boom(render, media, powerUps, brick, powerUpManager);
                             destroyBrick(render, media, powerUps);
                             break;
-                        case  5:
+                        case 5:
                             PowerUp p = new PowerUp(-1);
-                            powerUpManager.applyPowerUp(p,new Paddle(),new ArrayList<>());
+                            powerUpManager.applyPowerUp(p, gameObject.createPaddle("long paddle"), new ArrayList<>());
                             destroyBrick(render, media, powerUps);
                     }
                 }
@@ -64,10 +66,10 @@ public class Brick extends BaseClass {
                     if (type == -1) {
                         numBrick = numBrick + 1;
                     }
-                    if(type==-1||type==2||type == 4){
+                    if (type == -1 || type == 2 || type == 4) {
                         type = 1;
                     }
-                    boom(render, media, powerUps, brick,powerUpManager);
+                    boom(render, media, powerUps, brick, powerUpManager);
                 }
             }
         }
@@ -94,16 +96,16 @@ public class Brick extends BaseClass {
         render.addExplosion(explosionX, explosionY);
     }
 
-    public void boom(Render render,MainMedia media, List<PowerUp> powerUps,
-                     Brick[][] brick, PowerUpManager powerUpManager){
-        int[] a={0,0,0,1,1,1,-1,-1,-1};
-        int[] b={0,1,-1,1,-1,0,1,-1,0};
-        Ball ball = new Ball();
+    public void boom(Render render, MainMedia media, List<PowerUp> powerUps,
+                     Brick[][] brick, PowerUpManager powerUpManager) {
+        int[] a = {0, 0, 0, 1, 1, 1, -1, -1, -1};
+        int[] b = {0, 1, -1, 1, -1, 0, 1, -1, 0};
+        Ball ball = gameObject.createBall("normal type");
         int brickCol = x / WIDTHBrick;
         int brickRow = y / HEIGHTBrick;
-        for (int i = 0;i <=8 ;i++){
-            if(brickRow+a[i]>=0&&brickRow+a[i]<ROW&&brickCol+b[i]>=0&&brickCol+b[i]<COL){
-                brick[brickRow+a[i]][brickCol+b[i]].BallHit(ball,render,media,powerUps,brick,powerUpManager);
+        for (int i = 0; i <= 8; i++) {
+            if (brickRow + a[i] >= 0 && brickRow + a[i] < ROW && brickCol + b[i] >= 0 && brickCol + b[i] < COL) {
+                brick[brickRow + a[i]][brickCol + b[i]].BallHit(ball, render, media, powerUps, brick, powerUpManager);
             }
         }
     }

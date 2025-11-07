@@ -18,11 +18,13 @@ public class PowerUp extends AnimationClass {
 
     private Image image;
     private Circle HitBoxPowerUp;
+    private GameObject gameObject = new GameObject();
     int TimePowerUp = TimePowerUpOriginal;
     boolean checkActivate = false;
 
     public PowerUp(int type) {
         super(type);
+        gameObject = new GameObject();
     }
 
     public PowerUp(Image spriteSheet, int x, int y) {
@@ -109,7 +111,7 @@ public class PowerUp extends AnimationClass {
                 }
                 break;
             case 2:
-                Ball newBall = new Ball();
+                Ball newBall = gameObject.createBall("normal ball");
                 balls.add(newBall);
                 break;
             case 3:
@@ -129,6 +131,7 @@ public class PowerUp extends AnimationClass {
                 break;
         }
     }
+
     public void render(GraphicsContext gc) {
         if (!active || image == null) return;
         super.draw(gc);
