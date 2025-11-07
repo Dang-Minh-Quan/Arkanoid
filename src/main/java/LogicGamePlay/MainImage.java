@@ -13,9 +13,9 @@ public class MainImage {
         return instance;
     }
 
-    private Image brick1, brick2, brick3, brick4, brickBroken;
+    private Image brick1, brick2, brick3, brick4, brick5, brickBroken;
     private Image paddle, paddle1, paddle2, ball, ball1, ballpower, bullet,
-            background, explosion, bar, powerUp;
+            background, explosion, bar, powerUp, SquidInk;
 
     private MainImage() {
         loadImages();
@@ -31,6 +31,8 @@ public class MainImage {
                 60, 30, false, false);
         brick4 = new Image(getClass().getResourceAsStream("/Interface/Image/brick4.png"),
                 60, 30, false, false);
+        brick5 = new Image(getClass().getResourceAsStream("/Interface/Image/brick5.png"),
+          60, 30, false, false);
         brickBroken = new Image(getClass().getResourceAsStream("/Interface/Image/brickBroken.png"),
                 60, 30, false, false);
         paddle = new Image(getClass().getResourceAsStream("/Interface/Image/paddle.png"),
@@ -53,12 +55,15 @@ public class MainImage {
                 128 * 8, 128 * 8, true, false);
         bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"),
                 Specifications.WIDTH, Specifications.HEIGHTBar, false, false);
+        SquidInk = new Image(getClass().getResourceAsStream("/Interface/Image/SquidInk.png"),
+                  500, 600, false, false);
     }
 
     public Image getBrick1() { return brick1; }
     public Image getBrick2() { return brick2; }
     public Image getBrick3() { return brick3; }
     public Image getBrick4() { return brick4; }
+    public Image getBrick5() { return brick5; }
     public Image getBrickBroken() { return brickBroken; }
     public Image getPaddle() { return paddle; }
     public Image getPaddle1() { return paddle1; }
@@ -71,5 +76,5 @@ public class MainImage {
     public Image getBar() { return bar; }
     public Image getBallpower() { return ballpower; }
     public Image getBullet() { return bullet; }
-
+    public Image getSquidInk() { return SquidInk; }
 }

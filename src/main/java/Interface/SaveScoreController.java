@@ -16,7 +16,7 @@ import javafx.scene.text.Font;
 
 import java.io.IOException;
 
-public class SaveScoreController {
+public class SaveScoreController extends MainMenuController {
 
   @FXML
   private Pane SaveHighScore;
@@ -87,26 +87,29 @@ public class SaveScoreController {
     scoreManager.addScore(playerName, finalScore);
     scoreSaved = true;
 
-    BackToScoreBoard();
+    BackToScoreBoard(event);
   }
 
   @FXML
-  protected void BackToScoreBoard() throws IOException {
-    media.playMenuMusic();
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/ScoreBoard.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
+  protected void BackToScoreBoard(ActionEvent event) throws IOException {
+//    media.playMenuMusic();
+//    Parent root = FXMLLoader.load(getClass().getResource("/Interface/ScoreBoard.fxml"));
+//    Scene scene = new Scene(root);
+//    stage.setScene(scene);
+//    stage.centerOnScreen();
+//    stage.show();
+    super.OpenScoreboard(event);
   }
 
   @FXML
-  protected void BackToMenu() throws IOException {
-    media.playMenuMusic();
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
+  //@Override
+  protected void BackToMenu (ActionEvent event) throws IOException {
+//    media.playMenuMusic();
+//    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+//    Scene scene = new Scene(root);
+//    stage.setScene(scene);
+//    stage.centerOnScreen();
+//    stage.show();
+    super.BackToMenu(event);
   }
 }

@@ -147,34 +147,36 @@ public class GamePlayController extends MainMenuController {
 
     @FXML
     protected void Pause(ActionEvent event) {
-        if (mainGame != null) {
-            mainGame.stop();
-        }
-        PauseMenu.setVisible(true);
-        ButtonPause.setVisible(false);
-        System.out.println("Game Paused");
+      media.playPressButton();
+      if (mainGame != null) {
+          mainGame.stop();
+      }
+      PauseMenu.setVisible(true);
+      ButtonPause.setVisible(false);
+      System.out.println("Game Paused");
     }
 
     @FXML
     protected void Resume(ActionEvent event) {
-        if (mainGame != null) {
-            mainGame.start();
-        }
-        PauseMenu.setVisible(false);
-        ButtonPause.setVisible(true);
+      media.playPressButton();
+      if (mainGame != null) {
+          mainGame.start();
+      }
+      PauseMenu.setVisible(false);
+      ButtonPause.setVisible(true);
 
-        GamePlay.requestFocus();
-        System.out.println("Game Resumed");
+      GamePlay.requestFocus();
+      System.out.println("Game Resumed");
     }
 
     @FXML
     protected void Restart(ActionEvent event) throws IOException  {
-        super.PlayAgain(event);
-        PauseMenu.setVisible(false);
-        ButtonPause.setVisible(true);
+      super.PlayAgain(event);
+      PauseMenu.setVisible(false);
+      ButtonPause.setVisible(true);
 
-        GamePlay.requestFocus();
-        System.out.println("Game Restarted");
+      GamePlay.requestFocus();
+      System.out.println("Game Restarted");
     }
 
     public static boolean GameOverCheck = false;

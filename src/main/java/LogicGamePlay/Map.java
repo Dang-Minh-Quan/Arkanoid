@@ -19,6 +19,9 @@ public class Map {
             case 3:
                 path= "/Interface/Map/Level3.txt";
                 break;
+            case 4:
+              path= "/Interface/Map/Level4.txt";
+              break;
         }
         InputStream input = getClass().getResourceAsStream(path);
         try (Scanner sc = new Scanner(input)) {

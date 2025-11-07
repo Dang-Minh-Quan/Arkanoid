@@ -43,6 +43,10 @@ public class MainMenuController {
   private Button ButtonNextLevel;
   @FXML
   private Button ButtonPlayAgain;
+  @FXML
+  private Button ButtonMute;
+  @FXML
+  private Button ButtonUnmute;
 
   public MainMedia media;
 
@@ -67,7 +71,7 @@ public class MainMenuController {
 
   @FXML
   protected void NewGame(ActionEvent event) throws IOException {
-      media = MainMedia.getInstance();
+    media = MainMedia.getInstance();
     media.playPressButton();
     reset();
     saveProgress();
@@ -112,7 +116,7 @@ public class MainMenuController {
 
   @FXML
   protected void OpenScoreboard(ActionEvent event) throws IOException {
-      media = MainMedia.getInstance();
+    media = MainMedia.getInstance();
     media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -206,4 +210,34 @@ public class MainMenuController {
     loadCurrentLevel(stage);
   }
 
+  private boolean Muted=false;
+  /**
+   * Tắt âm thanh game.
+   */
+  @FXML
+  public void Mute() {
+    if(!Muted) {
+      ButtonUnmute.setVisible(false);
+      ButtonUnmute.setDisable(true);
+      ButtonMute.setVisible(true);
+      ButtonMute.setDisable(false);
+      MainMedia.getInstance().muteAllMedia();
+      Muted=true;
+    }
+  }
+
+  /**
+   * Bật âm thanh game.
+   */
+  @FXML
+  public void Unmute() {
+    if(Muted) {
+      ButtonUnmute.setVisible(true);
+      ButtonUnmute.setDisable(false);
+      ButtonMute.setVisible(false);
+      ButtonMute.setDisable(true);
+      MainMedia.getInstance().unmuteAllMedia();
+      Muted = false;
+    }
+  }
 }

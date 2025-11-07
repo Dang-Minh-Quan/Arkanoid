@@ -51,8 +51,8 @@ public class Render {
         renderBullet(gc, bullets);
         renderHUD(gc);
         if(blind==true){
-            Image background = image.getBackground();
-            gc.drawImage(background, 0, 0, WIDTH, ROW*HEIGHTBrick);
+            Image SquidInk = image.getSquidInk();
+            gc.drawImage(SquidInk, 0, 0, WIDTH, ROW*HEIGHTBrick);
         }
     }
 

@@ -5,8 +5,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -34,10 +32,39 @@ public class MainMedia {
     private final ScheduledExecutorService soundThread = Executors.newScheduledThreadPool(2);
     private volatile boolean isLoaded = false;
     private static AudioClip PressButton;
+    public static boolean Muted = false;
 
     public MainMedia() {
         LoadMedia();
     }
+
+    public void muteAllMedia() {
+      if (!Muted) {
+        GameplayMusic.setVolume(0.0);
+        MenuMusic.setVolume(0.0);
+        BackGround.setVolume(0.0);
+        destroyBrick.setVolume(0.0);
+        PressButton.setVolume(0.0);
+
+        Muted = true;
+      }
+    }
+
+  public void unmuteAllMedia() {
+    if (Muted) {
+      GameplayMusic.setVolume(0.5);
+      MenuMusic.setVolume(1.0);
+      BackGround.setVolume(1.0);
+      destroyBrick.setVolume(1.0);
+      PressButton.setVolume(1.0);
+
+      Muted = false;
+    }
+  }
+
+  public static boolean isMuted() {
+    return Muted;
+  }
 
     public void playGamePlayMusic() {
         if (isLoaded && GameplayMusic != null) {

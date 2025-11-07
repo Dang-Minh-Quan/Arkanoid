@@ -10,7 +10,7 @@ public class Specifications {
   public static final int COL = 9;
   public static final int ROW = 10;
   public static final int vxOriginal = 10;
-  public static final int LevelMax = 3;
+  public static final int LevelMax = 4;
   public static final int paddleWidthOriginal = 100;
   public static final int paddleHeightOriginal = 20;
   public static final int spvxOriginal = 6;
@@ -22,7 +22,7 @@ public class Specifications {
   public static int speedPU = 2;
   public static int RADIUSPU = HEIGHTBrick / 2;
   public static int PU = 6;
-  public static final int probability = 1;
+  public static final int probability = 4;
   public static final int TailLength = 40;
   public static final int HEIGHTBar = 150;
   public static final int ballRadiusOriginal = 10;
