@@ -64,7 +64,7 @@ public class Brick extends BaseClass {
                     if (type == -1) {
                         numBrick = numBrick + 1;
                     }
-                    if(type==-1||type==2||type == 4){
+                    if (type == -1 || type == 2 || type == 4) {
                         type = 1;
                     }
                     boom(render, media, powerUps, brick,powerUpManager);
@@ -106,6 +106,7 @@ public class Brick extends BaseClass {
                 brick[brickRow+a[i]][brickCol+b[i]].BallHit(ball,render,media,powerUps,brick,powerUpManager);
             }
         }
+        Update();
     }
 
 
@@ -142,4 +143,5 @@ public class Brick extends BaseClass {
         }
         return brick;
     }
+
 }

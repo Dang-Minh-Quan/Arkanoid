@@ -17,17 +17,17 @@ public class Ball extends BaseClass {
     private int[] TailY = new int[TailLength];
     private boolean collidedWithPaddle = false;
 
-  public Ball() {
-    super(null, 0, WIDTH / 2, HEIGHT - 60, 0, -spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
-    ball = new Circle(x, y, width, Color.BLUE);
-    for (int i = 0; i < TailLength; i++) {
-      TailX[i] =  x;
-      TailY[i] =  y;
-      double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
-      Color ColorTail = new Color(1, 1, 1, density);
-      Tail[i] = new Circle(x, y, width - i / 6, ColorTail);
+    public Ball() {
+        super(null, 0, WIDTH / 2, HEIGHT - 60, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        ball = new Circle(x, y, width, Color.BLUE);
+        for (int i = 0; i < TailLength; i++) {
+            TailX[i] = x;
+            TailY[i] = y;
+            double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
+            Color ColorTail = new Color(1, 1, 1, density);
+            Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
+        }
     }
-  }
 
     protected Ball(int x,int y){
         super(null, 0, x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
@@ -87,7 +87,6 @@ public class Ball extends BaseClass {
   public int checkWallCollision( AtomicBoolean gameRestarted) {
     if(type!=2) {
         if (y >= HEIGHT - height) {
-            //gameRestarted.set(true);
             return -1;
         }
     }
@@ -106,39 +105,39 @@ public class Ball extends BaseClass {
     return 0;
   }
 
-  public int checkPaddleCollision(Paddle paddle) {
-    double ballX = x;
-    double ballY = y;
-    double radius = width;
-    double paddleLeft = paddle.x;
-    double paddleRight = paddleLeft + paddle.width;
-    double paddleTop = paddle.y;
-    double paddleBottom = paddleTop + paddle.height;
+    public int checkPaddleCollision(Paddle paddle) {
+        double ballX = x;
+        double ballY = y;
+        double radius = width;
+        double paddleLeft = paddle.x;
+        double paddleRight = paddleLeft + paddle.width;
+        double paddleTop = paddle.y;
+        double paddleBottom = paddleTop + paddle.height;
 
-    boolean collisionX = ballX + radius >= paddleLeft && ballX - radius <= paddleRight;
-    boolean collisionY = ballY + radius >= paddleTop && ballY - radius <= paddleBottom;
+        boolean collisionX = ballX + radius >= paddleLeft && ballX - radius <= paddleRight;
+        boolean collisionY = ballY + radius >= paddleTop && ballY - radius <= paddleBottom;
 
-    if (!collisionX || !collisionY) {
-      return -1;
+        if (!collisionX || !collisionY) {
+            return -1;
+        }
+        if (ballX <= paddleLeft && !collisionY) {
+            return 2;
+        } else if (ballX >= paddleRight && !collisionY) {
+            return 3;
+        }
+        return 1;
     }
-    if (ballX <= paddleLeft && !collisionY) {
-      return 2;
-    } else if (ballX >= paddleRight && !collisionY) {
-      return 3;
-    }
-    return 1;
-  }
 
-  public boolean isReadyForPaddleCollision(int collisionState) {
-    if (collisionState != -1 && !collidedWithPaddle) {
-      collidedWithPaddle = true;
-      return true;
+    public boolean isReadyForPaddleCollision(int collisionState) {
+        if (collisionState != -1 && !collidedWithPaddle) {
+            collidedWithPaddle = true;
+            return true;
+        }
+        if (collisionState == -1) {
+            collidedWithPaddle = false;
+        }
+        return false;
     }
-    if (collisionState == -1) {
-      collidedWithPaddle = false;
-    }
-    return false;
-  }
 
   public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render,
       List<PowerUp> powerUps, PowerUpManager powerUpManager) {
@@ -163,6 +162,22 @@ public class Ball extends BaseClass {
         && (brickCol + 1) * WIDTHBrick - width <= x) {
       right = true;
     }
+        if (vy <= 0 && brickRow > 0 && brickRow <= ROW
+                && (brickRow) * HEIGHTBrick + width >= y) {
+            above = true;
+        }
+        if (vy >= 0 && brickRow < ROW - 1
+                && (brickRow + 1) * HEIGHTBrick - width <= y) {
+            below = true;
+        }
+        if (vx <= 0 && brickCol > 0 && brickRow < ROW
+                && (brickCol) * WIDTHBrick + width >= x) {
+            left = true;
+        }
+        if (vx >= 0 && brickCol < COL - 1 && brickRow < ROW
+                && (brickCol + 1) * WIDTHBrick - width <= x) {
+            right = true;
+        }
 
     if (above == true) {
       if (brick[brickRow - 1][brickCol].type != 0) {

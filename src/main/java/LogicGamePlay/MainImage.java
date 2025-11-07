@@ -14,7 +14,7 @@ public class MainImage {
     }
 
     private Image brick1, brick2, brick3, brick4, brickBroken;
-    private Image paddle, paddle1, ball, ball1, background, explosion, bar, powerUp;
+    private Image paddle, paddle1, ball, ball1, ballpower, bullet, background, explosion, bar, powerUp;
 
     private MainImage() {
         loadImages();
@@ -32,7 +32,10 @@ public class MainImage {
         paddle1 = new Image(getClass().getResourceAsStream("/Interface/Image/paddle1.png"), 100, 30, false, false);
         ball = new Image(getClass().getResourceAsStream("/Interface/Image/ball.png"), 30, 30, false, false);
         ball1 = new Image(getClass().getResourceAsStream("/Interface/Image/ball1.png"), 30, 30, false, false);
-
+        ballpower = new Image(getClass().getResourceAsStream("/Interface/Image/ballpower.png"),
+                30, 30, false, false);
+        bullet = new Image(getClass().getResourceAsStream("/Interface/Image/bullet.png"),
+                10, 10, false, false);
         explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"), 256, 256, true, false);
         powerUp = new Image(getClass().getResourceAsStream("/Interface/Image/PowerUp.png"), 128 * 8, 128 * 8, true, false);
         bar = new Image(getClass().getResourceAsStream("/Interface/Image/bar.png"), Specifications.WIDTH, Specifications.HEIGHTBar, false, false);
@@ -51,4 +54,11 @@ public class MainImage {
     public Image getExplosion() { return explosion; }
     public Image getPowerUp() { return powerUp; }
     public Image getBar() { return bar; }
+    public Image getBallpower() {
+        return ballpower;
+    }
+    public Image getBullet() {
+        return bullet;
+    }
+
 }

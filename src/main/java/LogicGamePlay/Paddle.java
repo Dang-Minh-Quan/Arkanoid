@@ -5,8 +5,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static LogicGamePlay.Specifications.*;
 

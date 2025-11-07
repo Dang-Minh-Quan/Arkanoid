@@ -34,6 +34,7 @@ public class Specifications {
   public static boolean blind=false;
   public static int timeButter = 60;
 
+
     public static void reset() {
         Level.set(1);
         winLevel = false;
