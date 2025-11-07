@@ -90,6 +90,9 @@ public class Paddle extends BaseClass {
         if (type == 1) {
             image = newImage.getPaddle1();
         }
+        if (type == 2) {
+            image = newImage.getPaddle2();
+        }
     }
 
     public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {

@@ -103,7 +103,7 @@ public class MainMedia {
             MenuMusic = new MediaPlayer((media));
             MenuMusic.setVolume(1);
             MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            media = new Media(getClass().getResource("/Interface/media/BackGround2.mp4").toExternalForm());
+            media = new Media(getClass().getResource("/Interface/media/BackGround.mp4").toExternalForm());
             BackGround = new MediaPlayer(media);
             BackGround.setCycleCount(MediaPlayer.INDEFINITE);
             BackGroundView = new MediaView(BackGround);

@@ -94,10 +94,10 @@ public class Render {
         Image img;
         switch (paddle.type) {
             case 1:
-                img = image.getPaddle();
+                img = image.getPaddle1();
                 break;
             case 2:
-                img = image.getPaddle1();
+                img = image.getPaddle2();
                 break;   // paddle gun
             default:
                 img = image.getPaddle();
