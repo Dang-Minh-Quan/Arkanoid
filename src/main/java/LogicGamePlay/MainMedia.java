@@ -31,6 +31,7 @@ public class MainMedia {
     private AudioClip destroyBrick;
     private AudioClip GameOver;
     private AudioClip Win;
+    private AudioClip PowerUp;
     private final ScheduledExecutorService soundThread = Executors.newScheduledThreadPool(2);
     private volatile boolean isLoaded = false;
     private static AudioClip PressButton;
@@ -116,7 +117,14 @@ public class MainMedia {
         }
     }
 
-    public void playPressButton() {
+  public void playPowerUp() {
+    if (isLoaded && destroyBrick != null) {
+      PowerUp.play();
+    }
+  }
+
+
+  public void playPressButton() {
         if (isLoaded && destroyBrick != null) {
             PressButton.play();
         }
@@ -134,32 +142,34 @@ public class MainMedia {
     }
   }
 
-    public void LoadMedia() {
-        if (!isLoaded) {
-            media = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
-            GameplayMusic = new MediaPlayer((media));
-            GameplayMusic.setVolume(0.1);
-            GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            media = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
-            MenuMusic = new MediaPlayer((media));
-            MenuMusic.setVolume(0.3);
-            MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            media = new Media(getClass().getResource("/Interface/media/BackGround.mp4").toExternalForm());
-            BackGround = new MediaPlayer(media);
-            BackGround.setCycleCount(MediaPlayer.INDEFINITE);
-            BackGroundView = new MediaView(BackGround);
-            BackGroundView.setFitWidth(WIDTH);
-            BackGroundView.setFitHeight(HEIGHT + HEIGHTBar);
-            BackGroundView.setPreserveRatio(false);
-            destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
-            PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
-            GameOver = new AudioClip(getClass().getResource("/Interface/media/GameOver.mp3").toExternalForm());
-            Win = new AudioClip(getClass().getResource("/Interface/media/Win.mp3").toExternalForm());
-            destroyBrick.setVolume(1);
-            PressButton.setVolume(1);
-            GameOver.setVolume(3);
-            Win.setVolume(2);
-            isLoaded = true;
-        }
+  public void LoadMedia() {
+    if (!isLoaded) {
+      media = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
+      GameplayMusic = new MediaPlayer((media));
+      GameplayMusic.setVolume(0.1);
+      GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
+      media = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
+      MenuMusic = new MediaPlayer((media));
+      MenuMusic.setVolume(0.3);
+      MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
+      media = new Media(getClass().getResource("/Interface/media/BackGround.mp4").toExternalForm());
+      BackGround = new MediaPlayer(media);
+      BackGround.setCycleCount(MediaPlayer.INDEFINITE);
+      BackGroundView = new MediaView(BackGround);
+      BackGroundView.setFitWidth(WIDTH);
+      BackGroundView.setFitHeight(HEIGHT + HEIGHTBar);
+      BackGroundView.setPreserveRatio(false);
+      destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
+      PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
+      GameOver = new AudioClip(getClass().getResource("/Interface/media/GameOver.mp3").toExternalForm());
+      Win = new AudioClip(getClass().getResource("/Interface/media/Win.mp3").toExternalForm());
+      PowerUp = new AudioClip(getClass().getResource("/Interface/media/PowerUp.mp3").toExternalForm());
+      destroyBrick.setVolume(1);
+      PressButton.setVolume(1);
+      GameOver.setVolume(3);
+      Win.setVolume(2);
+      PowerUp.setVolume(2);
+      isLoaded = true;
     }
+  }
 }

@@ -103,50 +103,58 @@ public class PowerUp extends AnimationClass {
     }
 
 
+    public MainMedia media;
     public void Activate(List<Ball> balls, Paddle paddle) {
+      media=MainMedia.getInstance();
         switch (type) {
             case "blind":
-                blind = true;
-                break;
+              blind = true;
+              break;
             case "ball_immortal":
-                for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = "immortal";
-                }
-                break;
+              media.playPowerUp();
+              for (int i = 0; i < balls.size(); i++) {
+                  balls.get(i).type = "immortal";
+              }
+              break;
             case "paddle_long":
-                if(paddle.type != "long") {
-                    paddle.type = "long";
-                    paddle.Update();
-                    int xx = paddleWidthOriginal / 2;
-                    if (paddle.width + paddle.x + xx > WIDTH) {
-                        xx = xx + (paddle.width + paddle.x + paddleWidthOriginal / 2 - WIDTH);
-                    } else {
-                        if (paddle.x - xx < 0) {
-                            xx = xx - (paddle.x - paddleWidthOriginal / 2);
-                        }
-                    }
-                    paddle.setPaddle(paddleWidthOriginal * 2, paddle.x - xx);
-                }
-                break;
+              media.playPowerUp();
+              if(paddle.type != "long") {
+                  paddle.type = "long";
+                  paddle.Update();
+                  int xx = paddleWidthOriginal / 2;
+                  if (paddle.width + paddle.x + xx > WIDTH) {
+                      xx = xx + (paddle.width + paddle.x + paddleWidthOriginal / 2 - WIDTH);
+                  } else {
+                      if (paddle.x - xx < 0) {
+                          xx = xx - (paddle.x - paddleWidthOriginal / 2);
+                      }
+                  }
+                  paddle.setPaddle(paddleWidthOriginal * 2, paddle.x - xx);
+              }
+              break;
             case "ball_add":
-                Ball newBall = new Ball();
-                balls.add(newBall);
-                break;
+              media.playPowerUp();
+              Ball newBall = new Ball();
+              balls.add(newBall);
+              break;
             case "ball_boom":
-                for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = "boom";
-                }
-                break;
+              media.playPowerUp();
+              for (int i = 0; i < balls.size(); i++) {
+                  balls.get(i).type = "boom";
+              }
+              break;
             case "bonus_point":
-                score.addAndGet(10);
-                break;
+              media.playPowerUp();
+              score.addAndGet(10);
+              break;
             case "paddle_shoot":
-                if(paddle.type == "long"){
-                    paddle.setPaddle(paddleWidthOriginal, paddle.x + paddleWidthOriginal / 2);
-                }
-                paddle.type = "shoot";
-                paddle.Update();
-                break;
+              media.playPowerUp();
+              if(paddle.type == "long"){
+                  paddle.setPaddle(paddleWidthOriginal, paddle.x + paddleWidthOriginal / 2);
+              }
+              paddle.type = "shoot";
+              paddle.Update();
+              break;
         }
     }
 
