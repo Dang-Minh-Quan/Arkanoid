@@ -6,6 +6,6 @@ public class ExplosiveBall extends Ball {
         super(x, y);
         this.type = "explosive";
         this.image = mainImage.getExplosiveBall();
-        colorTail(1,0,0);
+        colorTail(1,159 / 255.0,0);
     }
 }

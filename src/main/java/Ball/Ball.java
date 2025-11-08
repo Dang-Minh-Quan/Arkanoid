@@ -31,12 +31,14 @@ public abstract class Ball extends BaseClass {
         super(null, "normal", x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
         mainImage = MainImage.getInstance();
-    }
-
-    public void colorTail(int x, int y, int z) {
         for (int i = 0; i < TailLength; i++) {
             TailX[i] = x;
             TailY[i] = y;
+        }
+    }
+
+    public void colorTail(double x, double y, double z) {
+        for (int i = 0; i < TailLength; i++) {
             double density = Math.max(0, 1 - 0.5 - (double) i / (double) TailLength / 2);
             Color ColorTail = new Color(x, y, z, density);
             Tail[i] = new Circle(x, y, width - i / 4, ColorTail);
@@ -51,8 +53,8 @@ public abstract class Ball extends BaseClass {
         UpdateTail();
     }
 
-    public void setTail(Ball ball){
-        for(int i=0;i<TailLength;i++){
+    public void setTail(Ball ball) {
+        for (int i = 0; i < TailLength; i++) {
             this.TailX[i] = ball.TailX[i];
             this.TailY[i] = ball.TailY[i];
             Tail[i].setCenterX(TailX[i]);
@@ -74,7 +76,7 @@ public abstract class Ball extends BaseClass {
         UpdateNodeTail(TailX0, TailY0, TailX1, TailY1);
     }
 
-    protected void UpdateNodeTail(int TailX0, int TailY0,int TailX1,int TailY1) {
+    protected void UpdateNodeTail(int TailX0, int TailY0, int TailX1, int TailY1) {
         for (int i = TailLength - 1; i > 1; i--) {
             TailX[i] = TailX[i - 2];
             TailY[i] = TailY[i - 2];

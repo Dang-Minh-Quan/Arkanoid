@@ -22,9 +22,10 @@ public class UnbreakableBrick extends Brick {
         switch (ball.type){
             case "explosive":
                 numBrick++;
+                destroyBrick(render, media, powerUps);
                 boom(render, media, powerUps, brick, powerUpManager);
                 break;
-            case "infinty":
+            case "infinity":
                 numBrick++;
                 destroyBrick(render, media, powerUps);
                 break;

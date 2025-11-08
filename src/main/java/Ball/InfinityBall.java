@@ -15,7 +15,7 @@ public class InfinityBall extends Ball {
         super(x, y);
         this.image = mainImage.getInfinityBall();
         this.type = "infinity";
-        colorTail(0,0,1);
+        colorTail(233 / 255.0,1,129 / 255.0);
     }
 
     @Override
