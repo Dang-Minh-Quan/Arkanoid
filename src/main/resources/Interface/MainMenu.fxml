@@ -50,7 +50,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="ButtonMute" layoutX="428.0" layoutY="641.0" mnemonicParsing="false" onAction="#Unmute" prefHeight="58.0" prefWidth="65.0">
+      <Button fx:id="ButtonMute" layoutX="428.0" layoutY="641.0" mnemonicParsing="false" onAction="#Unmute" prefHeight="58.0" prefWidth="65.0" visible="false">
          <graphic>
             <ImageView fitHeight="51.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -59,7 +59,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="ButtonUnmute" layoutX="428.0" layoutY="641.0" mnemonicParsing="false" onAction="#Mute" prefHeight="58.0" prefWidth="65.0">
+      <Button fx:id="ButtonUnmute" focusTraversable="false" layoutX="428.0" layoutY="641.0" mnemonicParsing="false" onAction="#Mute" prefHeight="58.0" prefWidth="65.0">
          <graphic>
             <ImageView fitHeight="51.0" fitWidth="50.0" onDragDetected="#Mute" pickOnBounds="true" preserveRatio="true">
                <image>

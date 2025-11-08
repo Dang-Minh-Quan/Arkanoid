@@ -49,6 +49,7 @@ public class MainMenuController {
   private Button ButtonUnmute;
 
   public MainMedia media;
+  //public boolean Muted;
 
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
@@ -138,26 +139,6 @@ public class MainMenuController {
     System.exit(0);
   }
 
-  @FXML
-  protected void BackToMenu (ActionEvent event) throws IOException {
-      media = MainMedia.getInstance();
-    if(!GamePlayController.WinGameCheck) {
-      media.playMenuMusic();
-    }
-    GamePlayController.WinGameCheck=false;
-    media.playPressButton();
-    GamePlayController.GameOverCheck = false;
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
-
-    System.out.println("Clicked Menu");
-  }
-
-
   public void loadNextLevel(Stage stage) throws IOException {
     Level.incrementAndGet();
     saveProgress();
@@ -210,20 +191,35 @@ public class MainMenuController {
     loadCurrentLevel(stage);
   }
 
-  private boolean Muted=false;
+  @FXML
+  public void initialize() {
+    try {
+      if (MainMedia.isMuted()) {
+        ButtonUnmute.setVisible(false);
+        ButtonUnmute.setDisable(true);
+        ButtonMute.setVisible(true);
+        ButtonMute.setDisable(false);
+      } else {
+        ButtonUnmute.setVisible(true);
+        ButtonUnmute.setDisable(false);
+        ButtonMute.setVisible(false);
+        ButtonMute.setDisable(true);
+      }
+    } catch (NullPointerException e) {
+      System.err.println("Warning: Buttons not initialized correctly in FXML load.");
+    }
+  }
+
   /**
    * Tắt âm thanh game.
    */
   @FXML
   public void Mute() {
-    if(!Muted) {
       ButtonUnmute.setVisible(false);
       ButtonUnmute.setDisable(true);
       ButtonMute.setVisible(true);
       ButtonMute.setDisable(false);
       MainMedia.getInstance().muteAllMedia();
-      Muted=true;
-    }
   }
 
   /**
@@ -231,13 +227,29 @@ public class MainMenuController {
    */
   @FXML
   public void Unmute() {
-    if(Muted) {
       ButtonUnmute.setVisible(true);
       ButtonUnmute.setDisable(false);
       ButtonMute.setVisible(false);
       ButtonMute.setDisable(true);
       MainMedia.getInstance().unmuteAllMedia();
-      Muted = false;
+  }
+
+  @FXML
+  protected void BackToMenu (ActionEvent event) throws IOException {
+    media = MainMedia.getInstance();
+    if(!GamePlayController.WinGameCheck) {
+      media.playMenuMusic();
     }
+    GamePlayController.WinGameCheck=false;
+    media.playPressButton();
+    GamePlayController.GameOverCheck = false;
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
+
+    System.out.println(" Clicked Menu");
   }
 }
