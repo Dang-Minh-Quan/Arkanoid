@@ -14,7 +14,7 @@ public class Specifications {
     public static final int LevelMax = 3;
     public static final int paddleWidthOriginal = 100;
     public static final int paddleHeightOriginal = 20;
-    public static final int spvxOriginal = 6;
+    public static final int spvxOriginal = 10;
     public static int numBrick = 0;
     public static int HEIGHT = 550;
     public static int WIDTH = 500;

@@ -5,6 +5,7 @@ import LogicGamePlay.*;
 import Brick.*;
 import Media.MainMedia;
 import Paddle.*;
+import PowerUp.*;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,7 +20,6 @@ import javafx.scene.canvas.GraphicsContext;
 import static LogicGamePlay.Specifications.*;
 
 public abstract class Ball extends BaseClass {
-    protected GameObject gameObject;
     protected MainImage mainImage;
     protected Circle ball;
     protected Circle[] Tail = new Circle[TailLength];

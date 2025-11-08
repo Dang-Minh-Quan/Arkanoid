@@ -4,7 +4,7 @@ import Ball.*;
 import Paddle.*;
 import Brick.*;
 import Image.*;
-import PowerUp.PowerUp;
+import PowerUp.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;

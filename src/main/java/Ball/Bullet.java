@@ -3,7 +3,7 @@ package Ball;
 import LogicGamePlay.*;
 import Brick.*;
 import Media.*;
-import PowerUp.PowerUp;
+import PowerUp.*;
 
 import java.util.List;
 

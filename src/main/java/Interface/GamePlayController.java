@@ -106,13 +106,13 @@ public class GamePlayController extends MainMenuController {
         PauseMenu.toFront();
         media.ViewBackGrounnd();
         Canvas canvas = new Canvas(WIDTH, HEIGHT + HEIGHTBar);
-        gameLayer.getChildren().addAll(media.getBackGroundView(),canvas);
+        gameLayer.getChildren().addAll(media.getBackGroundView(), canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         gameObject = new GameObject();
         powerUps = new ArrayList<>();
         paddle = new AtomicReference<>(gameObject.createPaddle(WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal"));
-        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal/2, HEIGHT - paddleHeightOriginal,"normal");
+        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal");
         balls = new ArrayList<>();
         balls.add(ball);
         brick = new Brick[ROW][COL];
@@ -178,7 +178,7 @@ public class GamePlayController extends MainMenuController {
     }
 
     @FXML
-    protected void Restart(ActionEvent event) throws IOException  {
+    protected void Restart(ActionEvent event) throws IOException {
         super.PlayAgain(event);
         PauseMenu.setVisible(false);
         ButtonPause.setVisible(true);
@@ -272,7 +272,7 @@ public class GamePlayController extends MainMenuController {
     }
 
     @FXML
-    protected void BackToMenu (ActionEvent event) throws IOException {
+    protected void BackToMenu(ActionEvent event) throws IOException {
         super.BackToMenu(event);
     }
 }

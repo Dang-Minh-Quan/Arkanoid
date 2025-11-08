@@ -23,7 +23,7 @@ public class PowerUp extends AnimationClass {
     private Circle HitBoxPowerUp;
     private GameObject gameObject = new GameObject();
     int TimePowerUp = TimePowerUpOriginal;
-    boolean checkActivate = false;
+    public boolean checkActivate = false;
 
     public PowerUp(String type) {
         super(type);
