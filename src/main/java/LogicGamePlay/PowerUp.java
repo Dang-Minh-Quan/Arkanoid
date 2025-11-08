@@ -145,7 +145,7 @@ public class PowerUp extends AnimationClass {
               break;
             case "bonus_point":
               media.playPowerUp();
-              score.addAndGet(10);
+              score.addAndGet(50);
               break;
             case "paddle_shoot":
               media.playPowerUp();

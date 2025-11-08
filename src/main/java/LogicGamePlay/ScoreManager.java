@@ -1,6 +1,5 @@
-package Interface;
+package LogicGamePlay;
 
-import LogicGamePlay.HighScoreList;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;

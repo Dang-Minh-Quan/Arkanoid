@@ -1,12 +1,10 @@
 package Interface;
 
 import LogicGamePlay.MainMedia;
+import LogicGamePlay.ScoreManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -92,24 +90,11 @@ public class SaveScoreController extends MainMenuController {
 
   @FXML
   protected void BackToScoreBoard(ActionEvent event) throws IOException {
-//    media.playMenuMusic();
-//    Parent root = FXMLLoader.load(getClass().getResource("/Interface/ScoreBoard.fxml"));
-//    Scene scene = new Scene(root);
-//    stage.setScene(scene);
-//    stage.centerOnScreen();
-//    stage.show();
     super.OpenScoreboard(event);
   }
 
   @FXML
-  //@Override
   protected void BackToMenu (ActionEvent event) throws IOException {
-//    media.playMenuMusic();
-//    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-//    Scene scene = new Scene(root);
-//    stage.setScene(scene);
-//    stage.centerOnScreen();
-//    stage.show();
     super.BackToMenu(event);
   }
 }
