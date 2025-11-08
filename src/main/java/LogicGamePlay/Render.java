@@ -4,7 +4,7 @@ import Ball.*;
 import Paddle.*;
 import Brick.*;
 import Image.*;
-import PowerUp.PowerUp;
+import PowerUp.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -57,8 +57,8 @@ public class Render {
         renderBullet(gc, bullets);
         renderHUD(gc);
         if (blind == true) {
-            Image background = image.getBackground();
-            gc.drawImage(background, 0, 0, WIDTH, ROW * HEIGHTBrick);
+            Image Ink = image.getSquidInk();
+            gc.drawImage(Ink, 0, 0, WIDTH, ROW * HEIGHTBrick);
         }
     }
 
@@ -87,7 +87,7 @@ public class Render {
                     continue;
                 }
 
-                if (b.type == "non" || b.image == null) {
+                if (b.type == "null" || b.image == null) {
                     continue;
                 }
 
@@ -98,17 +98,7 @@ public class Render {
 
     private void renderPaddle(GraphicsContext gc, AtomicReference<Paddle> paddle) {
         Image img;
-        switch (paddle.get().type) {
-            case "long":
-                img = image.getLongPaddle();
-                break;
-            case "shoot":
-                img = image.getGunPaddle();
-                break;
-            default:
-                img = image.getNormalPaddle();
-                break;
-        }
+        img = paddle.get().image;
         gc.drawImage(img, paddle.get().x, paddle.get().y, paddle.get().width, paddle.get().height);
     }
 

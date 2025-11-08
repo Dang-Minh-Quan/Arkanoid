@@ -21,25 +21,37 @@ public class PowerUpManager {
         switch (powerUp.type) {
             case "ball_immortal", "ball_boom":
                 activeBall++;
+                break;
             case "paddle_long", "paddle_shoot":
                 activePaddle++;
+                break;
         }
-        Sheduler.schedule(() -> {
-            switch (powerUp.type) {
-                case "ball_immortal", "ball_boom":
-                    activeBall--;
-                    if (activeBall == 0) {
+        if(powerUp.TimePowerUp == 0){
+            powerUp.StopPowerUp(balls, paddle);
+            activePowerUp.remove(powerUp);
+        } else {
+            Sheduler.schedule(() -> {
+                switch (powerUp.type) {
+                    case "ball_immortal", "ball_boom":
+                        activeBall--;
+                        if (activeBall == 0) {
+                            powerUp.StopPowerUp(balls, paddle);
+                            activePowerUp.remove(powerUp);
+                        }
+                        break;
+                    case "paddle_long", "paddle_shoot":
+                        activePaddle--;
+                        if (activePaddle == 0) {
+                            powerUp.StopPowerUp(balls, paddle);
+                            activePowerUp.remove(powerUp);
+                        }
+                        break;
+                    default:
                         powerUp.StopPowerUp(balls, paddle);
                         activePowerUp.remove(powerUp);
-                    }
-                case "paddle_long", "paddle_shoot":
-                    activePaddle--;
-                    if (activePaddle == 0) {
-                        powerUp.StopPowerUp(balls, paddle);
-                        activePowerUp.remove(powerUp);
-                    }
-            }
-        }, powerUp.TimePowerUp, TimeUnit.SECONDS);
+                }
+            }, powerUp.TimePowerUp, TimeUnit.SECONDS);
+        }
     }
 
     public void stop(AtomicReference<Paddle> paddle, List<Ball> balls) {

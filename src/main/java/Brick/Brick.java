@@ -9,7 +9,7 @@ import Image.MainImage;
 import LogicGamePlay.*;
 import Ball.*;
 import Media.MainMedia;
-import PowerUp.PowerUp;
+import PowerUp.*;
 
 
 public abstract class Brick extends BaseClass {

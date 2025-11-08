@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import PowerUp.PowerUp;
+import PowerUp.*;
 import javafx.application.Platform;
 
 import static LogicGamePlay.Specifications.*;
@@ -118,7 +118,6 @@ public class Update {
             }
         }
     }
-    // phan nao bi loi do v hung
 
     private void updatePaddle(MainMedia media, AtomicReference<Paddle> paddle,
                               Brick[][] brick, Ball ball, AtomicBoolean gameRestarted,
@@ -144,7 +143,6 @@ public class Update {
             return;
         }
 
-        updateBall(media, ball, brick, paddle, gameRestarted, powerUps, render);
 
         int nextPaddleX = (int) paddle.get().getPaddle().getX();
         if (paddle.get().isMoveLeft()) {
@@ -223,6 +221,7 @@ public class Update {
             if (i == 0) updatePaddle(media, paddle, brick, balls.get(i), gameRestarted, powerUps, bullets, render);
             if (!updateBall(media, balls.get(i), brick, paddle, gameRestarted, powerUps, render)) {
                 balls.remove(i);
+                i--;
             }
             if (balls.size() == 0) {
                 Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal/2, HEIGHT - paddleHeightOriginal,"normal");
