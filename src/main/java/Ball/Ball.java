@@ -1,7 +1,9 @@
 package Ball;
 
+import Image.MainImage;
 import LogicGamePlay.*;
 import Brick.*;
+import Media.MainMedia;
 import Paddle.*;
 
 import java.util.List;
@@ -9,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import LogicGamePlay.BaseClass;
-import javafx.scene.layout.Pane;
+import PowerUp.PowerUp;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.canvas.GraphicsContext;

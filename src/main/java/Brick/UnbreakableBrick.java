@@ -1,8 +1,8 @@
 package Brick;
 import Ball.Ball;
-import LogicGamePlay.MainMedia;
-import LogicGamePlay.PowerUp;
-import LogicGamePlay.PowerUpManager;
+import Media.*;
+import PowerUp.PowerUp;
+import PowerUp.PowerUpManager;
 import LogicGamePlay.Render;
 
 import java.util.List;

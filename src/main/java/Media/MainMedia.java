@@ -1,4 +1,4 @@
-package LogicGamePlay;
+package Media;
 
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;

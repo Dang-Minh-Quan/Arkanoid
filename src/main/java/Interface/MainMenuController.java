@@ -7,7 +7,7 @@ import static LogicGamePlay.Specifications.HEIGHT;
 import static LogicGamePlay.Specifications.HEIGHTBar;
 import static LogicGamePlay.Specifications.WIDTH;
 
-import LogicGamePlay.MainMedia;
+import Media.*;
 import LogicGamePlay.Specifications;
 import java.io.IOException;
 import javafx.event.ActionEvent;

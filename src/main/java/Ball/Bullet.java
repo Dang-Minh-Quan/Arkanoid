@@ -1,9 +1,9 @@
 package Ball;
 
 import LogicGamePlay.*;
-import LogicGamePlay.*;
 import Brick.*;
-import Paddle.*;
+import Media.*;
+import PowerUp.PowerUp;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class Bullet extends Ball{
 
     @Override
     public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render,
-                                   List<PowerUp> powerUps,PowerUpManager powerUpManager) {
+                                   List<PowerUp> powerUps, PowerUpManager powerUpManager) {
         return super.checkBrickCollision(media, brick, render, powerUps,powerUpManager);
     }
 

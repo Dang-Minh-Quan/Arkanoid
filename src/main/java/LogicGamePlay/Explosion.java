@@ -2,6 +2,8 @@ package LogicGamePlay;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import Image.*;
+
 
 import static LogicGamePlay.Specifications.*;
 

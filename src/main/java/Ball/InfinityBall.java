@@ -1,11 +1,9 @@
 package Ball;
-// gio sao lam cai Design Pattern. doc duoc khong
-// duoc, de di hoi may nhom khac xem
 
 import Brick.Brick;
-import LogicGamePlay.MainMedia;
-import LogicGamePlay.PowerUp;
-import LogicGamePlay.PowerUpManager;
+import Media.*;
+import PowerUp.PowerUp;
+import PowerUp.PowerUpManager;
 import LogicGamePlay.Render;
 
 import java.util.List;

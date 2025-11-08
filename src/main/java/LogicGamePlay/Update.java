@@ -2,14 +2,16 @@ package LogicGamePlay;
 
 import Interface.GamePlayController;
 import Ball.*;
+import Media.MainMedia;
 import Paddle.*;
 import Brick.*;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import PowerUp.PowerUp;
 import javafx.application.Platform;
 
 import static LogicGamePlay.Specifications.*;

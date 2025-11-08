@@ -1,7 +1,5 @@
 package Ball;
 
-
-
 public class NormalBall extends Ball {
 
     public NormalBall(int x, int y) {
