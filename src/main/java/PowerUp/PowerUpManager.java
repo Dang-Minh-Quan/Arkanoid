@@ -1,9 +1,7 @@
-package LogicGamePlay;
+package PowerUp;
 
-import LogicGamePlay.*;
 import Ball.*;
 import Paddle.*;
-import Brick.*;
 
 import java.util.List;
 import java.util.concurrent.*;

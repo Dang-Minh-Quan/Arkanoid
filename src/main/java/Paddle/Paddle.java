@@ -1,4 +1,5 @@
 package Paddle;
+import Image.MainImage;
 import LogicGamePlay.*;
 import Ball.*;
 
@@ -82,30 +83,5 @@ public abstract class Paddle extends BaseClass {
 
     @Override
     public void Update() {
-    }
-
-    public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {
-        scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case LEFT -> setMoveLeft(true);
-                case A -> setMoveLeft(true);
-                case RIGHT -> setMoveRight(true);
-                case D -> setMoveRight(true);
-                case SPACE -> {
-                    if (gameRestarted.get()) {
-                        gameRestarted.set(false);
-                    }
-                }
-            }
-        });
-
-        scene.setOnKeyReleased(event -> {
-            switch (event.getCode()) {
-                case LEFT -> setMoveLeft(false);
-                case A -> setMoveLeft(false);
-                case RIGHT -> setMoveRight(false);
-                case D -> setMoveRight(false);
-            }
-        });
     }
 }

@@ -1,6 +1,7 @@
-package LogicGamePlay;
+package Image;
 
 
+import LogicGamePlay.Specifications;
 import javafx.scene.image.Image;
 
 public class MainImage {

@@ -1,27 +1,25 @@
 package Interface;
 
 
+import Image.MainImage;
 import LogicGamePlay.*;
 import Ball.*;
 import Brick.*;
+import Media.MainMedia;
 import Paddle.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import PowerUp.PowerUp;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -78,7 +76,7 @@ public class GamePlayController extends MainMenuController {
 
 
     private AnimationTimer mainGame;
-
+    private InputController input;
     private ScheduledExecutorService gameThread;
     private GameObject gameObject;
     private List<Ball> balls;
@@ -117,10 +115,6 @@ public class GamePlayController extends MainMenuController {
         Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal/2, HEIGHT - paddleHeightOriginal,"normal");
         balls = new ArrayList<>();
         balls.add(ball);
-//        if (paddle == null) {
-//            System.err.println("LỖI: Không thể tạo paddle!");
-//            return;
-//        }
         brick = new Brick[ROW][COL];
         bullets = new ArrayList<>();
 
@@ -146,7 +140,7 @@ public class GamePlayController extends MainMenuController {
         };
 
         Platform.runLater(() -> {
-            paddle.get().controllerPaddle(GamePlay.getScene(), gameRestarted);
+            input = new InputController(GamePlay.getScene(), paddle, gameRestarted);
             GamePlay.requestFocus();
             ButtonPause.toFront();
             mainGame.start();

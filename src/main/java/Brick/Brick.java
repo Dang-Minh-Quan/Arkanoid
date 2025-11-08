@@ -1,14 +1,15 @@
 package Brick;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static LogicGamePlay.Specifications.*;
 
+import Image.MainImage;
 import LogicGamePlay.*;
 import Ball.*;
-import Paddle.*;
+import Media.MainMedia;
+import PowerUp.PowerUp;
 
 
 public abstract class Brick extends BaseClass {
