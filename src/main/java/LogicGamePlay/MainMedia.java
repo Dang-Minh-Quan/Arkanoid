@@ -29,6 +29,8 @@ public class MainMedia {
     private MediaPlayer BackGround;
     private MediaView BackGroundView;
     private AudioClip destroyBrick;
+    private AudioClip GameOver;
+    private AudioClip Win;
     private final ScheduledExecutorService soundThread = Executors.newScheduledThreadPool(2);
     private volatile boolean isLoaded = false;
     private static AudioClip PressButton;
@@ -120,15 +122,27 @@ public class MainMedia {
         }
     }
 
+  public void playGameOver() {
+    if (isLoaded && destroyBrick != null) {
+      GameOver.play();
+    }
+  }
+
+  public void playWin() {
+    if (isLoaded && destroyBrick != null) {
+      Win.play();
+    }
+  }
+
     public void LoadMedia() {
         if (!isLoaded) {
             media = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
             GameplayMusic = new MediaPlayer((media));
-            GameplayMusic.setVolume(0.5);
+            GameplayMusic.setVolume(0.1);
             GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
             media = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
             MenuMusic = new MediaPlayer((media));
-            MenuMusic.setVolume(1);
+            MenuMusic.setVolume(0.3);
             MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
             media = new Media(getClass().getResource("/Interface/media/BackGround.mp4").toExternalForm());
             BackGround = new MediaPlayer(media);
@@ -139,8 +153,12 @@ public class MainMedia {
             BackGroundView.setPreserveRatio(false);
             destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
             PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
+            GameOver = new AudioClip(getClass().getResource("/Interface/media/GameOver.mp3").toExternalForm());
+            Win = new AudioClip(getClass().getResource("/Interface/media/Win.mp3").toExternalForm());
             destroyBrick.setVolume(1);
             PressButton.setVolume(1);
+            GameOver.setVolume(3);
+            Win.setVolume(2);
             isLoaded = true;
         }
     }

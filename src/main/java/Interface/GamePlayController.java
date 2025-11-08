@@ -182,6 +182,7 @@ public class GamePlayController extends MainMenuController {
     public static boolean GameOverCheck = false;
 
     public void GameOver() {
+      media.playGameOver();
         try {
             if (heartCount.get() > 0 || GameOverCheck) return;
             GameOverCheck = true;
@@ -211,6 +212,7 @@ public class GamePlayController extends MainMenuController {
     static boolean WinGameCheck = false;
 
     public void Win() {
+      media.playWin();
         try {
             if (WinCheck) return;
             WinCheck = true;
