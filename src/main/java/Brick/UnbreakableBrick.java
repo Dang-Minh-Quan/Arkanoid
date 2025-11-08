@@ -7,6 +7,8 @@ import LogicGamePlay.Render;
 
 import java.util.List;
 
+import static LogicGamePlay.Specifications.numBrick;
+
 public class UnbreakableBrick extends Brick {
     public UnbreakableBrick (int x, int y) {
         super(x, y);
@@ -17,5 +19,15 @@ public class UnbreakableBrick extends Brick {
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
+        switch (ball.type){
+            case "explosive":
+                numBrick++;
+                boom(render, media, powerUps, brick, powerUpManager);
+                break;
+            case "infinty":
+                numBrick++;
+                destroyBrick(render, media, powerUps);
+                break;
+        }
     }
 }

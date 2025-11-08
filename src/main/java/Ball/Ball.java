@@ -107,16 +107,11 @@ public abstract class Ball extends BaseClass {
     }
 
     public int checkWallCollision(AtomicBoolean gameRestarted) {
-        if (type != "immortal") {
-            if (y >= HEIGHT - height) {
-                return -1;
-            }
+        if (y >= HEIGHT - height) {
+            return -1;
         }
         boolean check1 = x <= width || x >= WIDTH - width;
         boolean check2 = y <= height;
-        if (type == "immortal") {
-            check2 = y <= height || y >= HEIGHT - height;
-        }
         if (check1 && check2) {
             return 1;
         } else if (check1) {

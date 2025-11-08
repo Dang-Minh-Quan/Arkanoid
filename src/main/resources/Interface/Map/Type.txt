@@ -1,0 +1,27 @@
+Brick
+-1 hard
+0 non
+1 basic
+2 solid
+3 broken
+4 boom
+5 blind
+
+Pu
+-1 blind
+0 ball_immortal
+1 paddle_shoot
+2 ball_add
+3 ball_boom
+4 bonus_point
+5 paddle_long
+
+Ball
+0 basic
+1 boom
+2 immortal
+
+Paddle
+0 basic
+1 long
+2 shoot

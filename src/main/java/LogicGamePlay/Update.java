@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import PowerUp.PowerUp;
 import javafx.application.Platform;
 
 import static LogicGamePlay.Specifications.*;
@@ -118,7 +119,6 @@ public class Update {
             }
         }
     }
-    // phan nao bi loi do v hung
 
     private void updatePaddle(MainMedia media, AtomicReference<Paddle> paddle,
                               Brick[][] brick, Ball ball, AtomicBoolean gameRestarted,
@@ -143,6 +143,7 @@ public class Update {
             paddle.get().setPaddle(paddle.get().width, nextPaddleX);
             return;
         }
+
 
         int nextPaddleX = (int) paddle.get().getPaddle().getX();
         if (paddle.get().isMoveLeft()) {

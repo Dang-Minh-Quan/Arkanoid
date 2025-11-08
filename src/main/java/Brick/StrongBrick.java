@@ -23,14 +23,19 @@ public class StrongBrick extends Brick {
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
         switch (ball.type) {
-            case "normal", "infinity", "bullet":
+            case "normal", "bullet":
                 switch (type) {
                     case "broken":
                         destroyBrick(render, media, powerUps);
+                        break;
                     case "strong":
                         BrokenBrick();
                         type = "broken";
+                        break;
                 }
+                break;
+            case "infinity":
+                destroyBrick(render, media, powerUps);
                 break;
             case "explosive":
                 type = "broken";

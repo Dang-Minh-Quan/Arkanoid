@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class ScoreManager {
-    private static final String FILE_NAME = "highscores.txt";
-    private List<HighScoreList> highScores;
-    private final int NumOfHighScore = 9;
+  private static final String FILE_NAME = "highscores.txt";
+  private List<HighScoreList> highScores;
+  private final int NumOfHighScore = 1;
 
     public ScoreManager() {
         highScores = loadScores();

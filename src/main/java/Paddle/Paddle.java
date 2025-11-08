@@ -42,19 +42,7 @@ public abstract class Paddle extends BaseClass {
         paddle.setX(x);
     }
 
-    public void paddleBullet(List<Bullet> bullets){
-        if(type == "shoot") {
-            if (checkBullet <= 0) {
-                Bullet bullet1 = new Bullet(x + ballRadiusOriginal, y);
-                Bullet bullet2 = new Bullet(x + width - ballRadiusOriginal, y);
-                bullets.add(bullet1);
-                bullets.add(bullet2);
-                checkBullet = timeButter;
-            } else {
-                checkBullet--;
-            }
-        }
-    }
+    public void paddleBullet(List<Bullet> bullets){}
 
     public boolean isMoveLeft() {
         return moveLeft;

@@ -2,6 +2,7 @@ package PowerUp;
 
 import LogicGamePlay.*;
 import Ball.*;
+import Media.MainMedia;
 import Paddle.*;
 
 import java.util.List;
@@ -18,28 +19,31 @@ import static LogicGamePlay.Specifications.*;
 
 public class PowerUp extends AnimationClass {
     private boolean active = true;
-
+    private MainMedia media;
     private Image image;
     private Circle HitBoxPowerUp;
     private GameObject gameObject = new GameObject();
     int TimePowerUp = TimePowerUpOriginal;
-    public boolean checkActivate = false;
+    public boolean checkActivate;
 
     public PowerUp(String type) {
         super(type);
+        checkTimePowerUp(type);
         gameObject = new GameObject();
     }
 
     public PowerUp(Image spriteSheet, int x, int y) {
         super(spriteSheet, x, y, 0, speedPU, RADIUSPU, RADIUSPU, 4, 4, 5);
         this.image = spriteSheet;
+        checkActivate = false;
         int randomType = (int) (Math.random() * PU) % PU;
+        randomType = 2;
         switch (randomType) {
             case 0:
                 type = "ball_immortal";
                 break;
             case 1:
-                type = "paddle_shoot";
+                type = "paddle_long";
                 break;
             case 2:
                 type = "ball_add";
@@ -51,10 +55,37 @@ public class PowerUp extends AnimationClass {
                 type = "bonus_point";
                 break;
             case 5:
-                type = "paddle_long";
+                type = "paddle_shoot";
                 break;
         }
+        checkTimePowerUp(type);
         HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
+    }
+
+    private void checkTimePowerUp(String type) {
+        switch (type) {
+            case "blind":
+                TimePowerUp = 1;
+                break;
+            case "ball_immortal":
+                TimePowerUp = TimePowerUpOriginal;
+                break;
+            case "paddle_shoot":
+                TimePowerUp = TimePowerUpOriginal;
+                break;
+            case "ball_add":
+                TimePowerUp = 0;
+                break;
+            case "ball_boom":
+                TimePowerUp = TimePowerUpOriginal;
+                break;
+            case "bonus_point":
+                TimePowerUp = 0;
+                break;
+            case "paddle_long":
+                TimePowerUp = TimePowerUpOriginal;
+                break;
+        }
     }
 
     public void update() {
@@ -71,7 +102,7 @@ public class PowerUp extends AnimationClass {
                 break;
             case "ball_immortal", "ball_boom":
                 for (int i = 0; i < balls.size(); i++) {
-                    Ball newball = gameObject.replaceBall(balls.get(i),"normal");
+                    Ball newball = gameObject.replaceBall(balls.get(i), "normal");
                     balls.set(i, newball);
                 }
                 break;
@@ -87,7 +118,6 @@ public class PowerUp extends AnimationClass {
         HitBoxPowerUp.setCenterY(y);
         if (checkActivate == false) {
             if (Shape.intersect(HitBoxPowerUp, paddle.get().getPaddle()).getBoundsInLocal().getWidth() > 0) {
-                Activate(balls, paddle);
                 return 1;
             }
             if (y == HEIGHT + RADIUSPU) {
@@ -128,11 +158,13 @@ public class PowerUp extends AnimationClass {
                 break;
             case "ball_boom":
                 for (int i = 0; i < balls.size(); i++) {
-                    Ball newball = gameObject.replaceBall(balls.get(i),"explosive");
+                    Ball newball = gameObject.replaceBall(balls.get(i), "explosive");
                     balls.set(i, newball);
                 }
                 break;
             case "bonus_point":
+                media = MainMedia.getInstance();
+                media.playPowerUp();
                 score.addAndGet(10);
                 break;
             case "paddle_shoot":
