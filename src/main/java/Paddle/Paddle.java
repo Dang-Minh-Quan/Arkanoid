@@ -1,27 +1,25 @@
-package LogicGamePlay;
+package Paddle;
+import LogicGamePlay.*;
+import Ball.*;
 
 import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Rectangle;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static LogicGamePlay.Specifications.*;
 
 public abstract class Paddle extends BaseClass {
-    private Rectangle paddle;
-    private boolean moveLeft;
-    private boolean moveRight;
-    private int checkBullet = timeButter;
+    protected Rectangle paddle;
+    protected boolean moveLeft;
+    protected boolean moveRight;
+    protected int checkBullet = timeButter;
+    protected MainImage mainImage;
 
-    public Paddle() {
-        super(null, "basic", WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - 20, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
-        MainImage newImage = MainImage.getInstance();
-        image = newImage.getPaddle();
+    public Paddle(int x, int y) {
+        super(null, "normal", x, y, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
+        mainImage = MainImage.getInstance();
         paddle = new Rectangle(x, y, width, height);
         moveLeft = false;
         moveRight = false;
@@ -82,17 +80,8 @@ public abstract class Paddle extends BaseClass {
         return next;
     }
 
+    @Override
     public void Update() {
-        MainImage newImage = MainImage.getInstance();
-        if (type == "basic") {
-            image = newImage.getPaddle();
-        }
-        if (type == "long") {
-            image = newImage.getPaddle1();
-        }
-        if (type == "shoot") {
-            image = newImage.getPaddle2();
-        }
     }
 
     public void controllerPaddle(Scene scene, AtomicBoolean gameRestarted) {

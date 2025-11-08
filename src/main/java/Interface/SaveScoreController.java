@@ -18,95 +18,95 @@ import java.io.IOException;
 
 public class SaveScoreController {
 
-  @FXML
-  private Pane SaveHighScore;
-  @FXML
-  private TextField nameInput;
-  @FXML
-  private Label ScoreLabel;
+    @FXML
+    private Pane SaveHighScore;
+    @FXML
+    private TextField nameInput;
+    @FXML
+    private Label ScoreLabel;
 
-  MainMedia media = MainMedia.getInstance();
-  private int finalScore;
-  private Stage stage;
-  private ScoreManager scoreManager = new ScoreManager();
-  private boolean scoreSaved = false;
+    MainMedia media = MainMedia.getInstance();
+    private int finalScore;
+    private Stage stage;
+    private ScoreManager scoreManager = new ScoreManager();
+    private boolean scoreSaved = false;
 
-  private void loadAndApplyFont() {
-    Font scoreFont = Font.loadFont(
-        getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
-        20
-    );
+    private void loadAndApplyFont() {
+        Font scoreFont = Font.loadFont(
+                getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
+                20
+        );
 
-    Font inputFont = Font.loadFont(
-        getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
-        16
-    );
-  }
+        Font inputFont = Font.loadFont(
+                getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
+                16
+        );
+    }
 
-  public void setFinalScore(int score, Stage stage) {
-    this.finalScore = score;
-    this.stage = stage;
-    this.scoreSaved = false;
+    public void setFinalScore(int score, Stage stage) {
+        this.finalScore = score;
+        this.stage = stage;
+        this.scoreSaved = false;
 
-    loadAndApplyFont();
-    ScoreLabel.setText("YOUR SCORE: " + String.valueOf(score));
+        loadAndApplyFont();
+        ScoreLabel.setText("YOUR SCORE: " + String.valueOf(score));
 
-    if (scoreManager.isTopScore(finalScore)) {
-      SaveHighScore.setVisible(true);
+        if (scoreManager.isTopScore(finalScore)) {
+            SaveHighScore.setVisible(true);
 
-      Platform.runLater(() -> {
-        nameInput.requestFocus();
-      });
+            Platform.runLater(() -> {
+                nameInput.requestFocus();
+            });
 
-      nameInput.setOnKeyPressed(event -> {
-        if (event.getCode() == KeyCode.ENTER) {
-          try {
-            SaveScore(new ActionEvent(nameInput, null));
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
+            nameInput.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                    try {
+                        SaveScore(new ActionEvent(nameInput, null));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } else {
+            SaveHighScore.setVisible(false);
         }
-      });
-
-    } else {
-      SaveHighScore.setVisible(false);
-    }
-  }
-
-  @FXML
-  private void SaveScore(ActionEvent event) throws IOException {
-    if (scoreSaved) return;
-
-    String playerName = nameInput.getText().trim();
-    if (playerName.isEmpty()) {
-      playerName = "Player";
-    } else if(playerName.length()>9) {
-      playerName = playerName.substring(0,9) + "...";
     }
 
-    scoreManager.addScore(playerName, finalScore);
-    scoreSaved = true;
+    @FXML
+    private void SaveScore(ActionEvent event) throws IOException {
+        if (scoreSaved) return;
 
-    BackToScoreBoard();
-  }
+        String playerName = nameInput.getText().trim();
+        if (playerName.isEmpty()) {
+            playerName = "Player";
+        } else if(playerName.length()>9) {
+            playerName = playerName.substring(0,9) + "...";
+        }
 
-  @FXML
-  protected void BackToScoreBoard() throws IOException {
-    media.playMenuMusic();
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/ScoreBoard.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
-  }
+        scoreManager.addScore(playerName, finalScore);
+        scoreSaved = true;
 
-  @FXML
-  protected void BackToMenu() throws IOException {
-    media.playMenuMusic();
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
-  }
+        BackToScoreBoard();
+    }
+
+    @FXML
+    protected void BackToScoreBoard() throws IOException {
+        media.playMenuMusic();
+        Parent root = FXMLLoader.load(getClass().getResource("/Interface/ScoreBoard.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+    @FXML
+    protected void BackToMenu() throws IOException {
+        media.playMenuMusic();
+        Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
 }

@@ -2,6 +2,9 @@ package Interface;
 
 
 import LogicGamePlay.*;
+import Ball.*;
+import Brick.*;
+import Paddle.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -79,7 +83,7 @@ public class GamePlayController extends MainMenuController {
     private GameObject gameObject;
     private List<Ball> balls;
     private List<Bullet> bullets;
-    private Paddle paddle;
+    private AtomicReference<Paddle> paddle;
     private Brick[][] brick;
     private Update update;
     private Render render;
@@ -108,11 +112,15 @@ public class GamePlayController extends MainMenuController {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         gameObject = new GameObject();
-        Ball ball = gameObject.createBall("normal ball");
+        powerUps = new ArrayList<>();
+        paddle = new AtomicReference<>(gameObject.createPaddle(WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal"));
+        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal/2, HEIGHT - paddleHeightOriginal,"normal");
         balls = new ArrayList<>();
         balls.add(ball);
-        powerUps = new ArrayList<>();
-        paddle = gameObject.createPaddle("normal paddle");
+//        if (paddle == null) {
+//            System.err.println("LỖI: Không thể tạo paddle!");
+//            return;
+//        }
         brick = new Brick[ROW][COL];
         bullets = new ArrayList<>();
 
@@ -125,7 +133,7 @@ public class GamePlayController extends MainMenuController {
         media.playGamePlayMusic();
 
         mainGame = new AnimationTimer() {
-        long LastUpdate = 0;
+            long LastUpdate = 0;
 
             @Override
             public void handle(long now) {
@@ -138,7 +146,7 @@ public class GamePlayController extends MainMenuController {
         };
 
         Platform.runLater(() -> {
-            paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
+            paddle.get().controllerPaddle(GamePlay.getScene(), gameRestarted);
             GamePlay.requestFocus();
             ButtonPause.toFront();
             mainGame.start();

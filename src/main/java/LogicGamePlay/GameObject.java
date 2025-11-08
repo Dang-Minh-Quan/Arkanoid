@@ -1,32 +1,67 @@
 package LogicGamePlay;
 
+import Ball.*;
+import Brick.*;
+import Paddle.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+
+import static LogicGamePlay.Specifications.TailLength;
+
 public class GameObject {
-    public Ball createBall(String type) {
-        if (type.equals("normal ball")) {
-            return new NormalBall();
+    public Ball createBall(int x, int y, String type) {
+        if (type == null) {
+            return new NormalBall(x, y);
         }
-        return null;
+        if (type.equals("infinity")) {
+            return new InfinityBall(x, y);
+        }
+        if (type.equals("explosive")) {
+            return new ExplosiveBall(x, y);
+        }
+        return new NormalBall(x, y);
     }
 
-    public Paddle createPaddle(String type) {
-        if (type.equals("normal paddle")) {
-            return new LongPaddle();
-        } else if (type.equals("long paddle")) {
-            return new NormalPaddle();
+    public Paddle createPaddle(int x, int y, String type) {
+        if (type == null) {
+            return new NormalPaddle(x, y);
         }
-        return null;
+        if (type.equals("long")) {
+            return new LongPaddle(x, y);
+        }
+        if (type.equals("gun")) {
+            return new GunPaddle(x, y);
+        }
+        return new NormalPaddle(x, y);
     }
 
     public Brick createBrick(int row, int col, String type) {
-        if (type.equals("normal brick")) {
-            return new NormalBirck(row, col);
-        } else if (type.equals("strong brick")) {
-            return new StrongBirck(row, col);
-        } else if (type.equals("unbreakable brick")) {
+        if (type == null) {
+            return new NormalBrick(row, col);
+        }
+        if (type.equals("null")) {
+            return new NullBrick(row, col);
+        }
+        if (type.equals("strong")) {
+            return new StrongBrick(row, col);
+        }
+        if (type.equals("unbreakable")) {
             return new UnbreakableBrick(row, col);
-        } else if (type.equals("explosive brick")) {
+        }
+        if (type.equals("explosive")) {
             return new ExplosiveBrick(row, col);
         }
-        return null;
+        if (type.equals("blind")) {
+            return new BlindBrick(row, col);
+        }
+        return new NormalBrick(row, col);
+    }
+
+    public Ball replaceBall(Ball ball,String type){
+        Ball newball = createBall(ball.x, ball.y, type);
+        newball.vx = ball.vx;
+        newball.vy = ball.vy;
+        newball.setTail(ball);
+        return newball;
     }
 }

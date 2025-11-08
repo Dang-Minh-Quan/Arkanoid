@@ -1,7 +1,13 @@
 package LogicGamePlay;
 
+import LogicGamePlay.*;
+import Ball.*;
+import Paddle.*;
+import Brick.*;
+
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PowerUpManager {
     private final ConcurrentLinkedQueue<PowerUp> activePowerUp =
@@ -11,39 +17,39 @@ public class PowerUpManager {
 
     private final ScheduledExecutorService Sheduler = Executors.newScheduledThreadPool(2);
 
-    public void applyPowerUp(PowerUp powerUp,Paddle paddle,List<Ball> balls){
-        powerUp.Activate(balls,paddle);
+    public void applyPowerUp(PowerUp powerUp, AtomicReference<Paddle> paddle, List<Ball> balls) {
+        powerUp.Activate(balls, paddle);
         activePowerUp.add(powerUp);
-        switch (powerUp.type){
+        switch (powerUp.type) {
             case "ball_immortal", "ball_boom":
                 activeBall++;
-            case "paddle_long","paddle_shoot":
+            case "paddle_long", "paddle_shoot":
                 activePaddle++;
         }
-        Sheduler.schedule(()->{
-            switch (powerUp.type){
+        Sheduler.schedule(() -> {
+            switch (powerUp.type) {
                 case "ball_immortal", "ball_boom":
                     activeBall--;
-                    if(activeBall == 0){
-                        powerUp.StopPowerUp(balls,paddle);
+                    if (activeBall == 0) {
+                        powerUp.StopPowerUp(balls, paddle);
                         activePowerUp.remove(powerUp);
                     }
-                case "paddle_long","paddle_shoot":
+                case "paddle_long", "paddle_shoot":
                     activePaddle--;
-                    if(activePaddle == 0){
-                        powerUp.StopPowerUp(balls,paddle);
+                    if (activePaddle == 0) {
+                        powerUp.StopPowerUp(balls, paddle);
                         activePowerUp.remove(powerUp);
                     }
             }
-        },powerUp.TimePowerUp, TimeUnit.SECONDS);
+        }, powerUp.TimePowerUp, TimeUnit.SECONDS);
     }
 
-    public void stop(Paddle paddle,List<Ball> balls){
+    public void stop(AtomicReference<Paddle> paddle, List<Ball> balls) {
         activePaddle = 0;
         activeBall = 0;
-        for (int j = -1;j < 6;j++){
+        for (int j = -1; j < 6; j++) {
             String k = new String();
-            switch (j){
+            switch (j) {
                 case -1:
                     k = "blind";
                     break;
@@ -67,12 +73,12 @@ public class PowerUpManager {
                     break;
             }
             PowerUp powerUp = new PowerUp(k);
-            powerUp.StopPowerUp(balls,paddle);
+            powerUp.StopPowerUp(balls, paddle);
         }
         activePowerUp.clear();
     }
 
-    public void shutDown(){
+    public void shutDown() {
         Sheduler.shutdown();
     }
 }

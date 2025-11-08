@@ -1,13 +1,19 @@
-package LogicGamePlay;
+package Ball;
 
-import javafx.scene.shape.Rectangle;
+import LogicGamePlay.*;
+import LogicGamePlay.*;
+import Brick.*;
+import Paddle.*;
 
 import java.util.List;
 
 public class Bullet extends Ball{
 
+
     public Bullet(int x, int y){
-        super(x,y);
+        super(x, y);
+        this.image = mainImage.getBullet();
+        this.type = "bullet";
         vy = -vy;
     }
 
@@ -25,6 +31,5 @@ public class Bullet extends Ball{
         y = dy;
         ball.setCenterY(y);
     }
-
 
 }

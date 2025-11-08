@@ -1,5 +1,10 @@
 package LogicGamePlay;
 
+import LogicGamePlay.*;
+import Ball.*;
+import Paddle.*;
+import Brick.*;
+
 import java.util.List;
 
 import Interface.GamePlayController;
@@ -10,6 +15,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static LogicGamePlay.Specifications.*;
 
@@ -31,7 +37,7 @@ public class PowerUp extends AnimationClass {
         super(spriteSheet, x, y, 0, speedPU, RADIUSPU, RADIUSPU, 4, 4, 5);
         this.image = spriteSheet;
         int randomType = (int) (Math.random() * PU) % PU;
-        switch (randomType){
+        switch (randomType) {
             case 0:
                 type = "ball_immortal";
                 break;
@@ -61,39 +67,29 @@ public class PowerUp extends AnimationClass {
         Update();
     }
 
-    public void StopPowerUp(List<Ball> balls, Paddle paddle) {
+    public void StopPowerUp(List<Ball> balls, AtomicReference<Paddle> paddle) {
         switch (type) {
             case "blind":
                 blind = false;
                 break;
-            case "ball_immortal":
+            case "ball_immortal", "ball_boom":
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = "basic";
+                    Ball newball = gameObject.replaceBall(balls.get(i),"normal");
+                    balls.set(i, newball);
                 }
                 break;
-            case "paddle_shoot":
-                paddle.type = "basic";
-                paddle.Update();
-                paddle.setPaddle(paddleWidthOriginal, paddle.x + paddleWidthOriginal / 2);
-                break;
-            case "ball_boom":
-                for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = "basic";
-                }
-                break;
-            case "paddle_long":
-                paddle.type = "basic";
-                paddle.Update();
+            case "paddle_shoot", "paddle_long":
+                paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "normal"));
                 break;
         }
         TimePowerUp--;
     }
 
-    public int UpdatePU(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps) {
+    public int UpdatePU(List<Ball> balls, AtomicReference<Paddle> paddle, List<PowerUp> powerUps) {
         y = y + vy;
         HitBoxPowerUp.setCenterY(y);
         if (checkActivate == false) {
-            if (Shape.intersect(HitBoxPowerUp, paddle.getPaddle()).getBoundsInLocal().getWidth() > 0) {
+            if (Shape.intersect(HitBoxPowerUp, paddle.get().getPaddle()).getBoundsInLocal().getWidth() > 0) {
                 Activate(balls, paddle);
                 return 1;
             }
@@ -105,49 +101,45 @@ public class PowerUp extends AnimationClass {
     }
 
 
-    public void Activate(List<Ball> balls, Paddle paddle) {
+    public void Activate(List<Ball> balls, AtomicReference<Paddle> paddle) {
         switch (type) {
             case "blind":
                 blind = true;
                 break;
             case "ball_immortal":
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = "immortal";
+                    Ball newball = gameObject.replaceBall(balls.get(i), "infinity");
+                    balls.set(i, newball);
                 }
                 break;
             case "paddle_long":
-                if(paddle.type != "long") {
-                    paddle.type = "long";
-                    paddle.Update();
+                if (paddle.get().type != "long") {
                     int xx = paddleWidthOriginal / 2;
-                    if (paddle.width + paddle.x + xx > WIDTH) {
-                        xx = xx + (paddle.width + paddle.x + paddleWidthOriginal / 2 - WIDTH);
+                    if (paddle.get().width + paddle.get().x + xx > WIDTH) {
+                        xx = xx + (paddle.get().width + paddle.get().x + paddleWidthOriginal / 2 - WIDTH);
                     } else {
-                        if (paddle.x - xx < 0) {
-                            xx = xx - (paddle.x - paddleWidthOriginal / 2);
+                        if (paddle.get().x - xx < 0) {
+                            xx = xx - (paddle.get().x - paddleWidthOriginal / 2);
                         }
                     }
-                    paddle.setPaddle(paddleWidthOriginal * 2, paddle.x - xx);
+                    paddle.set(gameObject.createPaddle(paddle.get().x - xx, paddle.get().y, "long"));
                 }
                 break;
             case "ball_add":
-                Ball newBall = gameObject.createBall("normal ball");
+                Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal ball");
                 balls.add(newBall);
                 break;
             case "ball_boom":
                 for (int i = 0; i < balls.size(); i++) {
-                    balls.get(i).type = "boom";
+                    Ball newball = gameObject.replaceBall(balls.get(i),"explosive");
+                    balls.set(i, newball);
                 }
                 break;
             case "bonus_point":
                 score.addAndGet(10);
                 break;
             case "paddle_shoot":
-                if(paddle.type == "long"){
-                    paddle.setPaddle(paddleWidthOriginal, paddle.x + paddleWidthOriginal / 2);
-                }
-                paddle.type = "shoot";
-                paddle.Update();
+                paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "gun"));
                 break;
         }
     }

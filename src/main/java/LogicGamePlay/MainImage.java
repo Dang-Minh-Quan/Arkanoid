@@ -1,5 +1,6 @@
 package LogicGamePlay;
 
+
 import javafx.scene.image.Image;
 
 public class MainImage {
@@ -13,8 +14,8 @@ public class MainImage {
         return instance;
     }
 
-    private Image brick1, brick2, brick3, brick4, brickBroken;
-    private Image paddle, paddle1, paddle2, ball, ball1, ballpower, bullet,
+    private Image normalBrick, unbreakableBrick, strongBrick, explosiveBrick, brokenBrick, blindBrick;
+    private Image normalPaddle, longPaddle, gunPaddle, normalBall, infinityBall, explosiveBall, bullet,
             background, explosion, bar, powerUp;
 
     private MainImage() {
@@ -23,29 +24,31 @@ public class MainImage {
 
     private void loadImages() {
         background = new Image(getClass().getResourceAsStream("/Interface/Image/background.png"));
-        brick1 = new Image(getClass().getResourceAsStream("/Interface/Image/brick1.png"),
+        normalBrick= new Image(getClass().getResourceAsStream("/Interface/Image/Brick/normalBrick.png"),
                 60, 30, false, false);
-        brick2 = new Image(getClass().getResourceAsStream("/Interface/Image/brick2.png"),
+        unbreakableBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/unbreakableBrick.png"),
                 60, 30, false, false);
-        brick3 = new Image(getClass().getResourceAsStream("/Interface/Image/brick3.png"),
+        strongBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/strongBrick.png"),
                 60, 30, false, false);
-        brick4 = new Image(getClass().getResourceAsStream("/Interface/Image/brick4.png"),
+        explosiveBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/explosionBrick.png"),
                 60, 30, false, false);
-        brickBroken = new Image(getClass().getResourceAsStream("/Interface/Image/brickBroken.png"),
+        brokenBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/brokenBrick.png"),
                 60, 30, false, false);
-        paddle = new Image(getClass().getResourceAsStream("/Interface/Image/paddle.png"),
+        blindBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/blindBrick.png"),
+                60, 30, false, false);
+        normalPaddle = new Image(getClass().getResourceAsStream("/Interface/Image/Paddle/normalPaddle.png"),
                 100, 30, false, false);
-        paddle1 = new Image(getClass().getResourceAsStream("/Interface/Image/paddle1.png"),
+        longPaddle = new Image(getClass().getResourceAsStream("/Interface/Image/Paddle/longPaddle.png"),
                 100, 30, false, false);
-        paddle2 = new Image(getClass().getResourceAsStream("/Interface/Image/paddle2.png"),
+        gunPaddle = new Image(getClass().getResourceAsStream("/Interface/Image/Paddle/gunPaddle.png"),
                 100, 30, false, false);
-        ball = new Image(getClass().getResourceAsStream("/Interface/Image/ball.png"),
+        normalBall = new Image(getClass().getResourceAsStream("/Interface/Image/Ball/normalBall.png"),
                 30, 30, false, false);
-        ball1 = new Image(getClass().getResourceAsStream("/Interface/Image/ball1.png"),
+        infinityBall = new Image(getClass().getResourceAsStream("/Interface/Image/Ball/infinityBall.png"),
                 30, 30, false, false);
-        ballpower = new Image(getClass().getResourceAsStream("/Interface/Image/ballpower.png"),
+        explosiveBall = new Image(getClass().getResourceAsStream("/Interface/Image/Ball/explosionBall.png"),
                 30, 30, false, false);
-        bullet = new Image(getClass().getResourceAsStream("/Interface/Image/bullet.png"),
+        bullet = new Image(getClass().getResourceAsStream("/Interface/Image/Ball/bullet.png"),
                 10, 10, false, false);
         explosion = new Image(getClass().getResourceAsStream("/Interface/Image/explosion.png"),
                 256, 256, true, false);
@@ -55,21 +58,73 @@ public class MainImage {
                 Specifications.WIDTH, Specifications.HEIGHTBar, false, false);
     }
 
-    public Image getBrick1() { return brick1; }
-    public Image getBrick2() { return brick2; }
-    public Image getBrick3() { return brick3; }
-    public Image getBrick4() { return brick4; }
-    public Image getBrickBroken() { return brickBroken; }
-    public Image getPaddle() { return paddle; }
-    public Image getPaddle1() { return paddle1; }
-    public Image getPaddle2() { return paddle2; }
-    public Image getBall() { return ball; }
-    public Image getBall1() { return ball1; }
-    public Image getBackground() { return background; }
-    public Image getExplosion() { return explosion; }
-    public Image getPowerUp() { return powerUp; }
-    public Image getBar() { return bar; }
-    public Image getBallpower() { return ballpower; }
-    public Image getBullet() { return bullet; }
+    public Image getBackground() {
+        return background;
+    }
+
+    public Image getExplosion() {
+        return explosion;
+    }
+
+    public Image getPowerUp() {
+        return powerUp;
+    }
+
+    public Image getBar() {
+        return bar;
+    }
+
+    public Image getBullet() {
+        return bullet;
+    }
+
+    public Image getNormalBrick() {
+        return normalBrick;
+    }
+
+    public Image getUnbreakableBrick() {
+        return unbreakableBrick;
+    }
+
+    public Image getStrongBrick() {
+        return strongBrick;
+    }
+
+    public Image getBrokenBrick() {
+        return brokenBrick;
+    }
+
+    public Image getExplosionBrick() {
+        return explosiveBrick;
+    }
+
+    public Image getBlindBrick() {
+        return blindBrick;
+    }
+
+    public Image getNormalPaddle() {
+        return normalPaddle;
+    }
+
+    public Image getLongPaddle() {
+        return longPaddle;
+    }
+
+    public Image getGunPaddle() {
+        return gunPaddle;
+    }
+
+    public Image getNormalBall() {
+        return normalBall;
+    }
+
+    public Image getInfinityBall() {
+        return infinityBall;
+    }
+
+    public Image getExplosiveBall() {
+        return explosiveBall;
+    }
+
 
 }

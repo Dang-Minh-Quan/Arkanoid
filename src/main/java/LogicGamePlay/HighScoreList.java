@@ -8,20 +8,20 @@ public class HighScoreList implements Serializable, Comparable<HighScoreList> {
     private int score;
 
     public HighScoreList(String name, int score) {
-      this.name = name;
-      this.score = score;
+        this.name = name;
+        this.score = score;
     }
 
     public String getName() {
-      return name;
+        return name;
     }
 
     public int getScore() {
-      return score;
+        return score;
     }
 
     @Override
     public int compareTo(HighScoreList other) {
-      return Integer.compare(other.score, this.score);
+        return Integer.compare(other.score, this.score);
     }
 }
