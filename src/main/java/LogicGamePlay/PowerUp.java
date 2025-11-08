@@ -136,8 +136,9 @@ public class PowerUp extends AnimationClass {
                 }
                 break;
             case "bonus_point":
-                score.addAndGet(10);
-                break;
+              media.playPowerUp();
+              score.addAndGet(10);
+              break;
             case "paddle_shoot":
                 paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "gun"));
                 break;

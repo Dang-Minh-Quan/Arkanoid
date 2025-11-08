@@ -56,22 +56,25 @@ public class ScoreBoardController extends MainMenuController {
         }
     }
 
-    @FXML
-    protected void Reset(ActionEvent event) {
-        scoreManager.resetScores();
-        displayScores(); // Cập nhật lại giao diện sau khi reset
-        System.out.println("ScoreBoard Reset.");
-    }
+  @FXML
+  protected void Reset(ActionEvent event) {
+    media = MainMedia.getInstance();
+    media.playPressButton();
+    scoreManager.resetScores();
+    displayScores(); // Cập nhật lại giao diện sau khi reset
+    System.out.println("ScoreBoard Reset.");
+  }
 
-    @FXML
-    protected void BackToMenu(ActionEvent event) throws IOException {
-        media = MainMedia.getInstance();
-        media.playPressButton();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-    }
+  @FXML
+  @Override
+  protected void BackToMenu(ActionEvent event) throws IOException {
+    media = MainMedia.getInstance();
+    media.playPressButton();
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
+  }
 }

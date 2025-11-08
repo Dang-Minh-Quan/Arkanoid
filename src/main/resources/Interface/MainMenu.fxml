@@ -50,6 +50,24 @@
             </ImageView>
          </graphic>
       </Button>
+      <Button fx:id="ButtonMute" layoutX="428.0" layoutY="641.0" mnemonicParsing="false" onAction="#Unmute" prefHeight="58.0" prefWidth="65.0" visible="false">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Image/Mute.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="ButtonUnmute" focusTraversable="false" layoutX="428.0" layoutY="641.0" mnemonicParsing="false" onAction="#Mute" prefHeight="58.0" prefWidth="65.0">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="50.0" onDragDetected="#Mute" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Image/Unmute.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
       <Pane fx:id="SelectionMenu" layoutX="86.0" layoutY="275.0" prefHeight="200.0" prefWidth="342.0" visible="false">
          <children>
             <ImageView fitHeight="700.0" fitWidth="506.0" layoutX="-91.0" layoutY="-275.0" pickOnBounds="true">

@@ -43,8 +43,13 @@ public class MainMenuController {
   private Button ButtonNextLevel;
   @FXML
   private Button ButtonPlayAgain;
+  @FXML
+  private Button ButtonMute;
+  @FXML
+  private Button ButtonUnmute;
 
   public MainMedia media;
+  //public boolean Muted;
 
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
@@ -67,7 +72,7 @@ public class MainMenuController {
 
   @FXML
   protected void NewGame(ActionEvent event) throws IOException {
-      media = MainMedia.getInstance();
+    media = MainMedia.getInstance();
     media.playPressButton();
     reset();
     saveProgress();
@@ -112,7 +117,7 @@ public class MainMenuController {
 
   @FXML
   protected void OpenScoreboard(ActionEvent event) throws IOException {
-      media = MainMedia.getInstance();
+    media = MainMedia.getInstance();
     media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
@@ -133,26 +138,6 @@ public class MainMenuController {
     System.out.println("Clicked Exit");
     System.exit(0);
   }
-
-  @FXML
-  protected void BackToMenu (ActionEvent event) throws IOException {
-      media = MainMedia.getInstance();
-    if(!GamePlayController.WinGameCheck) {
-      media.playMenuMusic();
-    }
-    GamePlayController.WinGameCheck=false;
-    media.playPressButton();
-    GamePlayController.GameOverCheck = false;
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.centerOnScreen();
-    stage.show();
-
-    System.out.println("Clicked Menu");
-  }
-
 
   public void loadNextLevel(Stage stage) throws IOException {
     Level.incrementAndGet();
@@ -206,4 +191,65 @@ public class MainMenuController {
     loadCurrentLevel(stage);
   }
 
+  @FXML
+  public void initialize() {
+    try {
+      if (MainMedia.isMuted()) {
+        ButtonUnmute.setVisible(false);
+        ButtonUnmute.setDisable(true);
+        ButtonMute.setVisible(true);
+        ButtonMute.setDisable(false);
+      } else {
+        ButtonUnmute.setVisible(true);
+        ButtonUnmute.setDisable(false);
+        ButtonMute.setVisible(false);
+        ButtonMute.setDisable(true);
+      }
+    } catch (NullPointerException e) {
+      System.err.println("Warning: Buttons not initialized correctly in FXML load.");
+    }
+  }
+
+  /**
+   * Tắt âm thanh game.
+   */
+  @FXML
+  public void Mute() {
+      ButtonUnmute.setVisible(false);
+      ButtonUnmute.setDisable(true);
+      ButtonMute.setVisible(true);
+      ButtonMute.setDisable(false);
+      MainMedia.getInstance().muteAllMedia();
+  }
+
+  /**
+   * Bật âm thanh game.
+   */
+  @FXML
+  public void Unmute() {
+      ButtonUnmute.setVisible(true);
+      ButtonUnmute.setDisable(false);
+      ButtonMute.setVisible(false);
+      ButtonMute.setDisable(true);
+      MainMedia.getInstance().unmuteAllMedia();
+  }
+
+  @FXML
+  protected void BackToMenu (ActionEvent event) throws IOException {
+    media = MainMedia.getInstance();
+    if(!GamePlayController.WinGameCheck) {
+      media.playMenuMusic();
+    }
+    GamePlayController.WinGameCheck=false;
+    media.playPressButton();
+    GamePlayController.GameOverCheck = false;
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("/Interface/MainMenu.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.centerOnScreen();
+    stage.show();
+
+    System.out.println(" Clicked Menu");
+  }
 }
