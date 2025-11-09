@@ -91,7 +91,12 @@ public class GamePlayController extends MainMenuController {
     //private ScoreManager scoreManager = new ScoreManager();
     List<PowerUp> powerUps;
 
-    public void start(Stage stage) throws IOException {
+  /**
+   * Vòng lặp game chính.
+   * @param stage
+   * @throws IOException
+   */
+  public void start(Stage stage) throws IOException {
         image = MainImage.getInstance();
         media = MainMedia.getInstance();
 
@@ -112,7 +117,7 @@ public class GamePlayController extends MainMenuController {
         gameObject = new GameObject();
         powerUps = new ArrayList<>();
         paddle = new AtomicReference<>(gameObject.createPaddle(WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal"));
-        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal - 1, "explosive");
+        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal - 1, "normal");
         balls = new ArrayList<>();
         balls.add(ball);
         brick = new Brick[ROW][COL];
@@ -129,6 +134,10 @@ public class GamePlayController extends MainMenuController {
         mainGame = new AnimationTimer() {
             long LastUpdate = 0;
 
+          /**
+           * Vận hành trò chơi.
+           * @param now
+           */
             @Override
             public void handle(long now) {
                 if (now - LastUpdate >= 16_000_000) {
@@ -140,7 +149,7 @@ public class GamePlayController extends MainMenuController {
         };
 
         Platform.runLater(() -> {
-            input = new InputController(GamePlay.getScene(), paddle, gameRestarted);
+            input = new InputController(GamePlay.getScene(), paddle, gameRestarted,this);
             GamePlay.requestFocus();
             ButtonPause.toFront();
             mainGame.start();
@@ -155,8 +164,11 @@ public class GamePlayController extends MainMenuController {
         });
     }
 
-    @FXML
-    protected void Pause(ActionEvent event) {
+  /**
+   * Tạm dừng trò chơi.
+   */
+  @FXML
+    protected void Pause() {
       media.playPressButton();
       if (mainGame != null) {
           mainGame.stop();
@@ -166,8 +178,11 @@ public class GamePlayController extends MainMenuController {
       System.out.println("Game Paused");
     }
 
-    @FXML
-    protected void Resume(ActionEvent event) {
+  /**
+   * Tiếp tục trò chơi.
+   */
+  @FXML
+    protected void Resume() {
       media.playPressButton();
       if (mainGame != null) {
           mainGame.start();
@@ -179,7 +194,12 @@ public class GamePlayController extends MainMenuController {
       System.out.println("Game Resumed");
     }
 
-    @FXML
+  /**
+   * Chơi lại màn chơi hiện tại.
+   * @param event
+   * @throws IOException
+   */
+  @FXML
     protected void Restart(ActionEvent event) throws IOException  {
       super.PlayAgain(event);
       PauseMenu.setVisible(false);
@@ -191,6 +211,9 @@ public class GamePlayController extends MainMenuController {
 
     public static boolean GameOverCheck = false;
 
+  /**
+   * Thua cuộc.
+   */
     public void GameOver() {
       media.playGameOver();
         try {
@@ -203,12 +226,9 @@ public class GamePlayController extends MainMenuController {
             }
 
             Stage stage = (Stage) GamePlay.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GameOver.fxml"));
+            Parent root = loader.load();
             SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
 
             //GameOverCheck = false;
             System.out.println("You Lose!");
@@ -221,6 +241,9 @@ public class GamePlayController extends MainMenuController {
     boolean WinCheck = false;
     static boolean WinGameCheck = false;
 
+  /**
+   * Thắng màn chơi/phá đảo trò chơi.
+   */
     public void Win() {
       media.playWin();
         try {
@@ -252,21 +275,14 @@ public class GamePlayController extends MainMenuController {
                 }
 
                 SwitchScene.fade(stage, root);
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
 
                 System.out.println("Congratulations! Game Completed. Loading WinGame Scene.");
                 return;
             }
 
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/WinLevel.fxml"));
+            Parent root = loader.load();
             SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
 
             System.out.println("Win!");
         } catch (IOException e) {
@@ -275,7 +291,12 @@ public class GamePlayController extends MainMenuController {
         }
     }
 
-    @FXML
+  /**
+   * Trở về sảnh.
+   * @param event
+   * @throws IOException
+   */
+  @FXML
     protected void BackToMenu(ActionEvent event) throws IOException {
         super.BackToMenu(event);
     }

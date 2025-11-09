@@ -1,11 +1,11 @@
 Brick
--1 hard
 0 non
 1 basic
 2 solid
 3 broken
 4 boom
 5 blind
+6 hard
 
 Pu
 -1 blind

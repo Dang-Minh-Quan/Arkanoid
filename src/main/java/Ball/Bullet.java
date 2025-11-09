@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Bullet extends Ball{
 
-
     public Bullet(int x, int y){
         super(x, y);
         this.image = mainImage.getBullet();

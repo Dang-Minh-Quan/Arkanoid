@@ -1,6 +1,5 @@
-package Interface;
+package LogicGamePlay;
 
-import LogicGamePlay.HighScoreList;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,13 +8,17 @@ import java.util.List;
 public class ScoreManager {
   private static final String FILE_NAME = "highscores.txt";
   private List<HighScoreList> highScores;
-  private final int NumOfHighScore = 1;
+  private final int NumOfHighScore = 9;
 
     public ScoreManager() {
         highScores = loadScores();
     }
 
-    private List<HighScoreList> loadScores() {
+  /**
+   * Đọc từ file dữ liệu bảng điểm trả về danh sách bảng điểm.
+   * @return
+   */
+  private List<HighScoreList> loadScores() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
             Object obj = ois.readObject();
             if (obj instanceof List) {
@@ -29,7 +32,10 @@ public class ScoreManager {
         return new ArrayList<>();
     }
 
-    private void saveScores() {
+  /**
+   * Ghi bảng điểm được lưu vào file.
+   */
+  private void saveScores() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
             oos.writeObject(highScores);
         } catch (IOException e) {
@@ -37,7 +43,12 @@ public class ScoreManager {
         }
     }
 
-    public void addScore(String name, int score) {
+  /**
+   * Thêm điểm cao vào bảng điểm.
+   * @param name
+   * @param score
+   */
+  public void addScore(String name, int score) {
         highScores.add(new HighScoreList(name, score));
         Collections.sort(highScores);
         while (highScores.size() > NumOfHighScore) {
@@ -46,18 +57,30 @@ public class ScoreManager {
         saveScores();
     }
 
-    public boolean isTopScore(int currentScore) {
+  /**
+   * Sắp xếp danh sách bảng điểm theo thứ tự.
+   * @param currentScore
+   * @return
+   */
+  public boolean isTopScore(int currentScore) {
         if (highScores.size() < NumOfHighScore) {
             return true;
         }
         return currentScore > highScores.get(highScores.size() - 1).getScore();
     }
 
-    public List<HighScoreList> getHighScores() {
+  /**
+   * Lấy điểm cao.
+   * @return
+   */
+  public List<HighScoreList> getHighScores() {
         return highScores;
     }
 
-    public void resetScores() {
+  /**
+   * Xóa bảng xếp hạng điểm.
+   */
+  public void resetScores() {
         highScores.clear();
         saveScores();
     }

@@ -48,6 +48,9 @@ public class MainMedia {
         BackGround.setVolume(0.0);
         destroyBrick.setVolume(0.0);
         PressButton.setVolume(0.0);
+        PowerUp.setVolume(0.0);
+        Win.setVolume(0.0);
+        GameOver.setVolume(0.0);
 
         Muted = true;
       }
@@ -55,11 +58,14 @@ public class MainMedia {
 
   public void unmuteAllMedia() {
     if (Muted) {
-      GameplayMusic.setVolume(0.5);
-      MenuMusic.setVolume(1.0);
+      GameplayMusic.setVolume(0.1);
+      MenuMusic.setVolume(0.3);
       BackGround.setVolume(1.0);
       destroyBrick.setVolume(1.0);
       PressButton.setVolume(1.0);
+      PowerUp.setVolume(2.0);
+      Win.setVolume(2.0);
+      GameOver.setVolume(3.0);
 
       Muted = false;
     }
