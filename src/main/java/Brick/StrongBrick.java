@@ -22,24 +22,26 @@ public class StrongBrick extends Brick {
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
-        switch (ball.type) {
-            case "normal", "bullet":
-                switch (type) {
-                    case "broken":
-                        destroyBrick(render, media, powerUps);
-                        break;
-                    case "strong":
-                        BrokenBrick();
-                        type = "broken";
-                        break;
-                }
-                break;
-            case "infinity":
-                destroyBrick(render, media, powerUps);
-                break;
-            case "explosive":
-                type = "broken";
-                boom(render, media, powerUps, brick, powerUpManager);
+        if(type != "null") {
+            switch (ball.type) {
+                case "normal", "bullet":
+                    switch (type) {
+                        case "broken":
+                            destroyBrick(render, media, powerUps);
+                            break;
+                        case "strong":
+                            BrokenBrick();
+                            type = "broken";
+                            break;
+                    }
+                    break;
+                case "infinity":
+                    destroyBrick(render, media, powerUps);
+                    break;
+                case "explosive":
+                    type = "broken";
+                    boom(render, media, powerUps, brick, powerUpManager);
+            }
         }
     }
 }
