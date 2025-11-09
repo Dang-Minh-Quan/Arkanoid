@@ -18,12 +18,14 @@ public class NormalBrick extends Brick {
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
-        switch (ball.type) {
-            case "normal", "infinity", "bullet":
-                destroyBrick(render, media, powerUps);
-                break;
-            case "explosive":
-                boom(render, media, powerUps, brick, powerUpManager);
+        if(type != "null") {
+            switch (ball.type) {
+                case "normal", "infinity", "bullet":
+                    destroyBrick(render, media, powerUps);
+                    break;
+                case "explosive":
+                    boom(render, media, powerUps, brick, powerUpManager);
+            }
         }
     }
 }

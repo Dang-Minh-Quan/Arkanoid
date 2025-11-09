@@ -64,7 +64,7 @@ public class PowerUp extends AnimationClass {
     private void checkTimePowerUp(String type) {
         switch (type) {
             case "blind":
-                TimePowerUp = 2;
+                TimePowerUp = 6;
                 break;
             case "ball_immortal":
                 TimePowerUp = TimePowerUpOriginal;
