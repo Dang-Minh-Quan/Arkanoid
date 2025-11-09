@@ -23,10 +23,10 @@ public class Update {
     private PowerUpManager powerUpManager;
     private GameObject gameObject;
 
-    public Update(GamePlayController controller) {
+    public Update(GamePlayController controller, Render render) {
         this.controller = controller;
         gameObject = new GameObject();
-        powerUpManager = new PowerUpManager();
+        powerUpManager = new PowerUpManager(render);
     }
 
     public void updateGame(MainMedia media, List<Ball> balls,

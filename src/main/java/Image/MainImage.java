@@ -17,7 +17,7 @@ public class MainImage {
 
     private Image normalBrick, unbreakableBrick, strongBrick, explosiveBrick, brokenBrick, blindBrick;
     private Image normalPaddle, longPaddle, gunPaddle, normalBall, infinityBall, explosiveBall, bullet,
-            background, explosion, bar, powerUp, squidInk;
+            background, explosion, bar, powerUp, squidInk, bonusPoints;
 
     private MainImage() {
         loadImages();
@@ -59,6 +59,8 @@ public class MainImage {
                 Specifications.WIDTH, Specifications.HEIGHTBar, false, false);
         squidInk = new Image(getClass().getResourceAsStream("/Interface/Image/SquidInk.png"),
                 256, 256, true, false);
+        bonusPoints = new Image(getClass().getResourceAsStream("/Interface/Image/BonusPoints.png"),
+                80, 50, true, false);
     }
 
     public Image getBackground() {
@@ -129,5 +131,11 @@ public class MainImage {
         return explosiveBall;
     }
 
-    public Image getSquidInk(){return squidInk;}
+    public Image getSquidInk() {
+        return squidInk;
+    }
+    public Image getBonusPoints() {
+        return bonusPoints;
+    }
+
 }
