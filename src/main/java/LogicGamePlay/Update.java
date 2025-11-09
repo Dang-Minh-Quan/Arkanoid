@@ -48,6 +48,7 @@ public class Update {
                 bullets.remove(i);
                 i--;
             }
+            if (i < 0) break;
             if (bullets.get(i).checkBrickCollision(media, brick, render, powerUps, powerUpManager) != 0) {
                 bullets.remove(i);
                 i--;

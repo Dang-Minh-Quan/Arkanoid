@@ -112,7 +112,7 @@ public class GamePlayController extends MainMenuController {
         gameObject = new GameObject();
         powerUps = new ArrayList<>();
         paddle = new AtomicReference<>(gameObject.createPaddle(WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal"));
-        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal - 1, "normal");
+        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal - 1, "explosive");
         balls = new ArrayList<>();
         balls.add(ball);
         brick = new Brick[ROW][COL];
