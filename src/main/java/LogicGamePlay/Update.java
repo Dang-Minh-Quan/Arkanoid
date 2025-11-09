@@ -46,9 +46,11 @@ public class Update {
             bullets.get(i).setBullet(bullets.get(i).y + bullets.get(i).vy);
             if (bullets.get(i).checkBullet()) {
                 bullets.remove(i);
+                i--;
             }
             if (bullets.get(i).checkBrickCollision(media, brick, render, powerUps, powerUpManager) != 0) {
                 bullets.remove(i);
+                i--;
             }
         }
     }
@@ -59,9 +61,11 @@ public class Update {
                 case 1:
                     powerUpManager.applyPowerUp(powerUps.get(i), paddle, balls);
                     powerUps.remove(i);
+                    i--;
                     break;
                 case 2:
                     powerUps.remove(i);
+                    i--;
                     break;
             }
         }
@@ -125,7 +129,7 @@ public class Update {
                               List<PowerUp> powerUps, List<Bullet> bullets, Render render) {
         paddle.get().paddleBullet(bullets);
         if (heartCount.get() == 0) {
-            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal);
+            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal - 1);
             Platform.runLater(() -> controller.GameOver());
             return;
         }
@@ -139,7 +143,7 @@ public class Update {
                 nextPaddleX += paddle.get().vx;
             }
             nextPaddleX = paddle.get().ClampPosition(nextPaddleX);
-            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal);
+            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal - 1);
             paddle.get().setPaddle(paddle.get().width, nextPaddleX);
             return;
         }

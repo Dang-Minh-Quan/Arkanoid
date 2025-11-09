@@ -14,7 +14,6 @@ public class Bullet extends Ball{
         super(x, y);
         this.image = mainImage.getBullet();
         this.type = "bullet";
-        vy = -vy;
     }
 
     @Override
