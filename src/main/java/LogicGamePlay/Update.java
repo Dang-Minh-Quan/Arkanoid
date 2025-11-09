@@ -176,11 +176,14 @@ public class Update {
             case 1:
                 ball.vx = -ball.vx;
                 ball.vy = -ball.vy;
+                media.playImPact();
                 break;
             case 2:
+                media.playImPact();
                 ball.vx = -ball.vx;
                 break;
             case 3:
+                media.playImPact();
                 ball.vy = -ball.vy;
                 break;
         }
@@ -200,10 +203,12 @@ public class Update {
                         ball.vx = -(int) (spvxOriginal * Math.sin(baseAngle));
                     }
                     ball.vy = -(int) Math.abs(spvxOriginal * Math.cos(baseAngle));
+                    media.playImPact();
                     break;
                 case 2:
                 case 3:
                     ball.vx = -ball.vx;
+                    media.playImPact();
                     break;
             }
         }

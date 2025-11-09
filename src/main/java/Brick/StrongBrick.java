@@ -30,6 +30,7 @@ public class StrongBrick extends Brick {
                             destroyBrick(render, media, powerUps);
                             break;
                         case "strong":
+                            media.playImPact();
                             BrokenBrick();
                             type = "broken";
                             break;
