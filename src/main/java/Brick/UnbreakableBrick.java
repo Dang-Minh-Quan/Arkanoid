@@ -30,6 +30,8 @@ public class UnbreakableBrick extends Brick {
                     numBrick++;
                     destroyBrick(render, media, powerUps);
                     break;
+                default:
+                    media.playImPact();
             }
         }
     }
