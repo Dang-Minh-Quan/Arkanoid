@@ -23,11 +23,18 @@ import static LogicGamePlay.Specifications.*;
 public class Render {
     private long lastTime = 0;
     private final List<Explosion> explosions = new ArrayList<>();
-    private final MainImage image = MainImage.getInstance();
+    private final MainImage image;
     private Font pixelFont;
-    private long bonusTextTime = 0;
+    private Image bonusImage;
+    private long bonusImageStartTime = 0;
     private double bonusX = 0;
     private double bonusY = 0;
+    private double bonusDuration = 1;
+
+    public Render() {
+        image = MainImage.getInstance();
+        bonusImage = image.getBonusPoints();
+    }
 
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
@@ -37,11 +44,12 @@ public class Render {
         powerUps.add(new PowerUp(image.getPowerUp(), x, y));
     }
 
-    public void addBonusText(double x, double y) {
+    public void showBonusImage(double x, double y) {
         bonusX = x;
         bonusY = y;
-        bonusTextTime = System.currentTimeMillis();
+        bonusImageStartTime = System.currentTimeMillis();
     }
+
 
     private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {
         for (PowerUp p : powerUps) {
@@ -56,7 +64,6 @@ public class Render {
     public void renderGame(GraphicsContext gc, List<Ball> balls, AtomicReference<Paddle> paddle,
                            Brick[][] brick, List<PowerUp> powerUps, List<Bullet> bullets) {
         gc.clearRect(0, 0, WIDTH, HEIGHT);
-        //renderBackGround(gc);
         renderBrick(gc, brick);
         renderExplosions(gc);
         renderBalls(gc, balls);
@@ -156,8 +163,14 @@ public class Render {
         gc.fillText(String.valueOf(livesValue), 210, HEIGHT + 85);
         gc.fillText(String.valueOf(levelValue), 330, HEIGHT + 85);
 
-        if (System.currentTimeMillis() - bonusTextTime < 700) {
-            gc.fillText("+50", bonusX, bonusY);
+        long elapsed = System.currentTimeMillis() - bonusImageStartTime;
+        if (elapsed < bonusDuration * 1000) {
+            double offsetY = elapsed * 0.03;
+            gc.drawImage(
+                    bonusImage,
+                    bonusX - bonusImage.getWidth() / 2,
+                    bonusY - offsetY - bonusImage.getHeight() / 2
+            );
         }
     }
 }

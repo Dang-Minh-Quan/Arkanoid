@@ -27,9 +27,9 @@ public class PowerUpManager {
         activePowerUp.add(powerUp);
 
         if ("bonus_point".equals(powerUp.type)) {
-            render.addBonusText(
-                    paddle.get().x + paddle.get().width / 2.0,
-                    paddle.get().y - 10.0
+            render.showBonusImage(
+                    paddle.get().x + paddle.get().width / 2,
+                    paddle.get().y - 10
             );
         }
 
