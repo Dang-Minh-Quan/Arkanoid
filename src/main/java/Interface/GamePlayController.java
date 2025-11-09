@@ -8,7 +8,6 @@ import Brick.*;
 import Media.MainMedia;
 import Paddle.*;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -227,12 +226,9 @@ public class GamePlayController extends MainMenuController {
             }
 
             Stage stage = (Stage) GamePlay.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GameOver.fxml"));
+            Parent root = loader.load();
             SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
 
             //GameOverCheck = false;
             System.out.println("You Lose!");
@@ -279,21 +275,14 @@ public class GamePlayController extends MainMenuController {
                 }
 
                 SwitchScene.fade(stage, root);
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
 
                 System.out.println("Congratulations! Game Completed. Loading WinGame Scene.");
                 return;
             }
 
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/WinLevel.fxml"));
+            Parent root = loader.load();
             SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
 
             System.out.println("Win!");
         } catch (IOException e) {

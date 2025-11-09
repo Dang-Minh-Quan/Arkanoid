@@ -15,15 +15,29 @@ public class SwitchScene {
   /**
    * hiệu ứng mờ dần.
    * @param stage
-   * @param root
+   * @param newRoot
    */
-    public static void fade(Stage stage, Parent root) {
-        Scene scene = new Scene(root);
-        FadeTransition fade = new FadeTransition(Duration.millis(700), root);
-        fade.setFromValue(0);
-        fade.setToValue(1);
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        fade.play();
-    }
+  public static void fade(Stage stage, Parent newRoot) {
+
+        Parent oldRoot = stage.getScene().getRoot();
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(150), oldRoot);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        fadeOut.setOnFinished(event -> {
+          Scene newScene = new Scene(newRoot);
+
+          stage.setScene(newScene);
+          stage.centerOnScreen();
+
+          FadeTransition fadeIn = new FadeTransition(Duration.millis(150), newRoot);
+          fadeIn.setFromValue(0.0);
+          fadeIn.setToValue(1.0);
+          fadeIn.play();
+
+        });
+
+        fadeOut.play();
+  }
 }
