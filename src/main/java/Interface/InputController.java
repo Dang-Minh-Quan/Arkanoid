@@ -8,9 +8,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class InputController {
     private final Scene scene;
+    private final GamePlayController GameState;
+    private boolean isPaused=false;
 
-    public InputController(Scene scene, AtomicReference<Paddle> newPaddle, AtomicBoolean gameRestarted) {
+  /**
+   * Nhận phím để điều khiển paddle và tạm dừng/tiếp tục trò chơi.
+   * @param scene
+   * @param newPaddle
+   * @param gameRestarted
+   * @param GameState
+   */
+    public InputController(Scene scene, AtomicReference<Paddle> newPaddle, AtomicBoolean gameRestarted,GamePlayController GameState) {
         this.scene = scene;
+        this.GameState = GameState;
 
         scene.setOnKeyPressed(event -> {
             Paddle paddle = newPaddle.get();
@@ -21,6 +31,15 @@ public class InputController {
                     if (gameRestarted.get()) {
                         gameRestarted.set(false);
                     }
+                }
+                case P -> {
+                  if(!isPaused) {
+                    GameState.Pause();
+                    isPaused = true;
+                  } else {
+                    GameState.Resume();
+                    isPaused = false;
+                  }
                 }
             }
         });

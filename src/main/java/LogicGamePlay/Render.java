@@ -133,7 +133,7 @@ public class Render {
         gc.setFill(Color.rgb(60, 30, 10, 0.9));
         pixelFont = Font.loadFont(
                 getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
-                30
+                24
         );
         gc.setFont(pixelFont);
         gc.setTextAlign(TextAlignment.CENTER);

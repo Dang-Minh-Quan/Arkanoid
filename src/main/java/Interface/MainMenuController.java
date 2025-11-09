@@ -51,6 +51,11 @@ public class MainMenuController {
   public MainMedia media;
   //public boolean Muted;
 
+  /**
+   * Nhấn nút Play bắt đầu lựa chọn chế độ chơi.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void StartGame(ActionEvent event) throws IOException {
       media = MainMedia.getInstance();
@@ -70,6 +75,11 @@ public class MainMenuController {
     System.out.println("Clicked Play");
   }
 
+  /**
+   * Bắt đầu game mới.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void NewGame(ActionEvent event) throws IOException {
     media = MainMedia.getInstance();
@@ -93,6 +103,11 @@ public class MainMenuController {
     System.out.println("Clicked New Game");
   }
 
+  /**
+   * Tiếp tục chơi level trước đó.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void ContinueGame(ActionEvent event) throws IOException {
       media = MainMedia.getInstance();
@@ -115,6 +130,11 @@ public class MainMenuController {
     System.out.println("Clicked Continue, loading current level");
   }
 
+  /**
+   * Mở bảng xếp hạng điểm.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void OpenScoreboard(ActionEvent event) throws IOException {
     media = MainMedia.getInstance();
@@ -131,6 +151,10 @@ public class MainMenuController {
     System.out.println("Clicked Scoreboard");
   }
 
+  /**
+   * Thoát Game.
+   * @param event
+   */
   @FXML
   protected void ExitGame(ActionEvent event) {
       media = MainMedia.getInstance();
@@ -139,6 +163,11 @@ public class MainMenuController {
     System.exit(0);
   }
 
+  /**
+   * Tải màn chơi tiếp theo.
+   * @param stage
+   * @throws IOException
+   */
   public void loadNextLevel(Stage stage) throws IOException {
     Level.incrementAndGet();
     saveProgress();
@@ -155,6 +184,11 @@ public class MainMenuController {
     gameController.start(stage);
   }
 
+  /**
+   * Chơi màn chơi tiếp theo.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void NextLevel(ActionEvent event) throws IOException {
       media = MainMedia.getInstance();
@@ -163,7 +197,12 @@ public class MainMenuController {
     loadNextLevel(stage);
   }
 
-  public void loadCurrentLevel(Stage stage) throws IOException {
+  /**
+   * Tải level hiện tại.
+   * @param stage
+   * @throws IOException
+   */
+  protected void loadCurrentLevel(Stage stage) throws IOException {
     loadProgress();
     winLevel = false;
     numBrick = 0;
@@ -183,6 +222,11 @@ public class MainMenuController {
     System.out.println("Reloading Level " + Specifications.Level.get());
   }
 
+  /**
+   * Chơi lại màn đang chơi.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void PlayAgain(ActionEvent event) throws IOException {
       media = MainMedia.getInstance();
@@ -191,6 +235,9 @@ public class MainMenuController {
     loadCurrentLevel(stage);
   }
 
+  /**
+   * Nhận diện âm thanh.
+   */
   @FXML
   public void initialize() {
     try {
@@ -214,7 +261,7 @@ public class MainMenuController {
    * Tắt âm thanh game.
    */
   @FXML
-  public void Mute() {
+  private void Mute() {
       ButtonUnmute.setVisible(false);
       ButtonUnmute.setDisable(true);
       ButtonMute.setVisible(true);
@@ -226,7 +273,7 @@ public class MainMenuController {
    * Bật âm thanh game.
    */
   @FXML
-  public void Unmute() {
+  private void Unmute() {
       ButtonUnmute.setVisible(true);
       ButtonUnmute.setDisable(false);
       ButtonMute.setVisible(false);

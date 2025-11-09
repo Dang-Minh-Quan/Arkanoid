@@ -91,7 +91,12 @@ public class GamePlayController extends MainMenuController {
     //private ScoreManager scoreManager = new ScoreManager();
     List<PowerUp> powerUps;
 
-    public void start(Stage stage) throws IOException {
+  /**
+   * Vòng lặp game chính.
+   * @param stage
+   * @throws IOException
+   */
+  public void start(Stage stage) throws IOException {
         image = MainImage.getInstance();
         media = MainMedia.getInstance();
 
@@ -112,7 +117,7 @@ public class GamePlayController extends MainMenuController {
         gameObject = new GameObject();
         powerUps = new ArrayList<>();
         paddle = new AtomicReference<>(gameObject.createPaddle(WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal"));
-        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal - 1, "explosive");
+        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal - 1, "normal");
         balls = new ArrayList<>();
         balls.add(ball);
         brick = new Brick[ROW][COL];
@@ -129,6 +134,10 @@ public class GamePlayController extends MainMenuController {
         mainGame = new AnimationTimer() {
             long LastUpdate = 0;
 
+          /**
+           * Vận hành trò chơi.
+           * @param now
+           */
             @Override
             public void handle(long now) {
                 if (now - LastUpdate >= 16_000_000) {

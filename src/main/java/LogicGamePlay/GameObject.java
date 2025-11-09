@@ -3,10 +3,6 @@ package LogicGamePlay;
 import Ball.*;
 import Brick.*;
 import Paddle.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
-import static LogicGamePlay.Specifications.TailLength;
 
 public class GameObject {
     public Ball createBall(int x, int y, String type) {
