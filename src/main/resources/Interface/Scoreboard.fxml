@@ -14,7 +14,7 @@
          </image>
       </ImageView>
       <VBox fx:id="ScoreBoard" layoutX="140.0" layoutY="238.0" prefHeight="299.0" prefWidth="244.0" />
-      <Button focusTraversable="false" layoutX="331.0" layoutY="570.0" mnemonicParsing="false" onAction="#Reset" prefHeight="70.0" prefWidth="152.0">
+      <Button focusTraversable="false" layoutX="1.0" layoutY="615.0" mnemonicParsing="false" onAction="#Reset" prefHeight="70.0" prefWidth="152.0">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="150.0" pickOnBounds="true">
                <image>
@@ -22,7 +22,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="ButtonBack" focusTraversable="false" layoutX="331.0" layoutY="630.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="70.0" prefWidth="168.0">
+      <Button fx:id="ButtonBack" focusTraversable="false" layoutX="332.0" layoutY="615.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="70.0" prefWidth="168.0">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="150.0" pickOnBounds="true">
                <image>

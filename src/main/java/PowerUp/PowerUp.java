@@ -133,12 +133,16 @@ public class PowerUp extends AnimationClass {
                 blind = true;
                 break;
             case "ball_immortal":
+              media = MainMedia.getInstance();
+              media.playPowerUp();
                 for (int i = 0; i < balls.size(); i++) {
                     Ball newball = gameObject.replaceBall(balls.get(i), "infinity");
                     balls.set(i, newball);
                 }
                 break;
             case "paddle_long":
+              media = MainMedia.getInstance();
+              media.playPowerUp();
                 if (paddle.get().type != "long") {
                     int xx = paddleWidthOriginal / 2;
                     if (paddle.get().width + paddle.get().x + xx > WIDTH) {
@@ -152,10 +156,14 @@ public class PowerUp extends AnimationClass {
                 }
                 break;
             case "ball_add":
+              media = MainMedia.getInstance();
+              media.playPowerUp();
                 Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal ball");
                 balls.add(newBall);
                 break;
             case "ball_boom":
+              media = MainMedia.getInstance();
+              media.playPowerUp();
                 for (int i = 0; i < balls.size(); i++) {
                     Ball newball = gameObject.replaceBall(balls.get(i), "explosive");
                     balls.set(i, newball);
@@ -164,9 +172,11 @@ public class PowerUp extends AnimationClass {
             case "bonus_point":
                 media = MainMedia.getInstance();
                 media.playPowerUp();
-                score.addAndGet(10);
+                score.addAndGet(50);
                 break;
             case "paddle_shoot":
+              media = MainMedia.getInstance();
+              media.playPowerUp();
                 paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "gun"));
                 break;
         }

@@ -28,7 +28,7 @@ public abstract class Ball extends BaseClass {
     protected boolean collidedWithPaddle = false;
 
     public Ball(int x, int y) {
-        super(null, "normal", x, y, 0, spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
+        super(null, "normal", x, y, 0, - spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
         mainImage = MainImage.getInstance();
         for (int i = 0; i < TailLength; i++) {

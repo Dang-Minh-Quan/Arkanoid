@@ -8,6 +8,7 @@ import Brick.*;
 import Media.MainMedia;
 import Paddle.*;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
@@ -112,7 +113,7 @@ public class GamePlayController extends MainMenuController {
         gameObject = new GameObject();
         powerUps = new ArrayList<>();
         paddle = new AtomicReference<>(gameObject.createPaddle(WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal"));
-        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal");
+        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal - 1, "normal");
         balls = new ArrayList<>();
         balls.add(ball);
         brick = new Brick[ROW][COL];
@@ -140,7 +141,7 @@ public class GamePlayController extends MainMenuController {
         };
 
         Platform.runLater(() -> {
-            input = new InputController(GamePlay.getScene(), paddle, gameRestarted);
+            input = new InputController(GamePlay.getScene(), paddle, gameRestarted,this);
             GamePlay.requestFocus();
             ButtonPause.toFront();
             mainGame.start();
@@ -156,7 +157,7 @@ public class GamePlayController extends MainMenuController {
     }
 
     @FXML
-    protected void Pause(ActionEvent event) {
+    protected void Pause() {
       media.playPressButton();
       if (mainGame != null) {
           mainGame.stop();
@@ -167,7 +168,7 @@ public class GamePlayController extends MainMenuController {
     }
 
     @FXML
-    protected void Resume(ActionEvent event) {
+    protected void Resume() {
       media.playPressButton();
       if (mainGame != null) {
           mainGame.start();

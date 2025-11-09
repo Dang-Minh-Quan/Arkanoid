@@ -125,7 +125,7 @@ public class Update {
                               List<PowerUp> powerUps, List<Bullet> bullets, Render render) {
         paddle.get().paddleBullet(bullets);
         if (heartCount.get() == 0) {
-            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal);
+            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal - 1);
             Platform.runLater(() -> controller.GameOver());
             return;
         }
@@ -139,7 +139,7 @@ public class Update {
                 nextPaddleX += paddle.get().vx;
             }
             nextPaddleX = paddle.get().ClampPosition(nextPaddleX);
-            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal);
+            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal - 1);
             paddle.get().setPaddle(paddle.get().width, nextPaddleX);
             return;
         }
