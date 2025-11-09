@@ -25,6 +25,9 @@ public class Render {
     private final List<Explosion> explosions = new ArrayList<>();
     private final MainImage image = MainImage.getInstance();
     private Font pixelFont;
+    private long bonusTextTime = 0;
+    private double bonusX = 0;
+    private double bonusY = 0;
 
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
@@ -32,6 +35,12 @@ public class Render {
 
     public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
         powerUps.add(new PowerUp(image.getPowerUp(), x, y));
+    }
+
+    public void addBonusText(double x, double y) {
+        bonusX = x;
+        bonusY = y;
+        bonusTextTime = System.currentTimeMillis();
     }
 
     private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {
@@ -147,5 +156,8 @@ public class Render {
         gc.fillText(String.valueOf(livesValue), 210, HEIGHT + 85);
         gc.fillText(String.valueOf(levelValue), 330, HEIGHT + 85);
 
+        if (System.currentTimeMillis() - bonusTextTime < 700) {
+            gc.fillText("+50", bonusX, bonusY);
+        }
     }
 }

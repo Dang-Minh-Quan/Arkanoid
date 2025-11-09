@@ -99,7 +99,6 @@ public class GamePlayController extends MainMenuController {
         if (mainGame != null) {
             mainGame.stop();
             mainGame = null;
-            //System.out.println(Specifications.Level.get());
         }
 
         gameLayer.toBack();
@@ -119,11 +118,10 @@ public class GamePlayController extends MainMenuController {
         brick = new Brick[ROW][COL];
         bullets = new ArrayList<>();
 
-        update = new Update(this);
         render = new Render();
+        update = new Update(this, render);
         update.initializeLevel(paddle, balls, brick);
         AtomicBoolean gameRestarted = new AtomicBoolean(true);
-        //System.out.println(numBrick);
 
         media.playGamePlayMusic();
 

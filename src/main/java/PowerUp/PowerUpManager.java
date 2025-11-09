@@ -2,6 +2,7 @@ package PowerUp;
 
 import Ball.*;
 import Paddle.*;
+import LogicGamePlay.Render;
 
 import java.util.List;
 import java.util.concurrent.*;
@@ -15,9 +16,23 @@ public class PowerUpManager {
 
     private final ScheduledExecutorService Sheduler = Executors.newScheduledThreadPool(2);
 
+    private final Render render;
+
+    public PowerUpManager(Render render) {
+        this.render = render;
+    }
+
     public void applyPowerUp(PowerUp powerUp, AtomicReference<Paddle> paddle, List<Ball> balls) {
         powerUp.Activate(balls, paddle);
         activePowerUp.add(powerUp);
+
+        if ("bonus_point".equals(powerUp.type)) {
+            render.addBonusText(
+                    paddle.get().x + paddle.get().width / 2.0,
+                    paddle.get().y - 10.0
+            );
+        }
+
         switch (powerUp.type) {
             case "ball_immortal", "ball_boom":
                 activeBall++;

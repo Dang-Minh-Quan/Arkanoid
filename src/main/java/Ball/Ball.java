@@ -98,7 +98,7 @@ public abstract class Ball extends BaseClass {
             Color c = (Color) Tail[i].getFill();
             gc.setFill(c);
             gc.fillOval(TailX[i] - Tail[i].getRadius(),
-                    TailY[i] - Tail[i].getRadius(),
+                    TailY[i] - Tail[i].getRadius() - 2.5,
                     Tail[i].getRadius() * 2,
                     Tail[i].getRadius() * 2);
         }
