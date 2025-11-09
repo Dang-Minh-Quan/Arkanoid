@@ -11,6 +11,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class SwitchScene {
+
+  /**
+   * hiệu ứng mờ dần.
+   * @param stage
+   * @param root
+   */
     public static void fade(Stage stage, Parent root) {
         Scene scene = new Scene(root);
         FadeTransition fade = new FadeTransition(Duration.millis(700), root);

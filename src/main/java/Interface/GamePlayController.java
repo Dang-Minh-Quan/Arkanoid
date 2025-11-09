@@ -92,7 +92,12 @@ public class GamePlayController extends MainMenuController {
     //private ScoreManager scoreManager = new ScoreManager();
     List<PowerUp> powerUps;
 
-    public void start(Stage stage) throws IOException {
+  /**
+   * Vòng lặp game chính.
+   * @param stage
+   * @throws IOException
+   */
+  public void start(Stage stage) throws IOException {
         image = MainImage.getInstance();
         media = MainMedia.getInstance();
 
@@ -130,6 +135,10 @@ public class GamePlayController extends MainMenuController {
         mainGame = new AnimationTimer() {
             long LastUpdate = 0;
 
+          /**
+           * Vận hành trò chơi.
+           * @param now
+           */
             @Override
             public void handle(long now) {
                 if (now - LastUpdate >= 16_000_000) {
@@ -156,7 +165,10 @@ public class GamePlayController extends MainMenuController {
         });
     }
 
-    @FXML
+  /**
+   * Tạm dừng trò chơi.
+   */
+  @FXML
     protected void Pause() {
       media.playPressButton();
       if (mainGame != null) {
@@ -167,7 +179,10 @@ public class GamePlayController extends MainMenuController {
       System.out.println("Game Paused");
     }
 
-    @FXML
+  /**
+   * Tiếp tục trò chơi.
+   */
+  @FXML
     protected void Resume() {
       media.playPressButton();
       if (mainGame != null) {
@@ -180,7 +195,12 @@ public class GamePlayController extends MainMenuController {
       System.out.println("Game Resumed");
     }
 
-    @FXML
+  /**
+   * Chơi lại màn chơi hiện tại.
+   * @param event
+   * @throws IOException
+   */
+  @FXML
     protected void Restart(ActionEvent event) throws IOException  {
       super.PlayAgain(event);
       PauseMenu.setVisible(false);
@@ -192,6 +212,9 @@ public class GamePlayController extends MainMenuController {
 
     public static boolean GameOverCheck = false;
 
+  /**
+   * Thua cuộc.
+   */
     public void GameOver() {
       media.playGameOver();
         try {
@@ -222,6 +245,9 @@ public class GamePlayController extends MainMenuController {
     boolean WinCheck = false;
     static boolean WinGameCheck = false;
 
+  /**
+   * Thắng màn chơi/phá đảo trò chơi.
+   */
     public void Win() {
       media.playWin();
         try {
@@ -276,7 +302,12 @@ public class GamePlayController extends MainMenuController {
         }
     }
 
-    @FXML
+  /**
+   * Trở về sảnh.
+   * @param event
+   * @throws IOException
+   */
+  @FXML
     protected void BackToMenu(ActionEvent event) throws IOException {
         super.BackToMenu(event);
     }

@@ -30,6 +30,9 @@ public class ScoreBoardController extends MainMenuController {
 
   private static Font customFont = null;
 
+  /**
+   * Áp dụng phông chữ và khởi tạo khoảng cách giữa các dòng.
+   */
   @FXML
   public void initialize() {
     if (customFont == null) {
@@ -43,6 +46,9 @@ public class ScoreBoardController extends MainMenuController {
     ButtonBack.toFront();
   }
 
+  /**
+   * Hiển thị bảng xếp hạng.
+   */
   private void displayScores() {
     ScoreBoard.getChildren().clear();
     List<HighScoreList> scores = scoreManager.getHighScores();
@@ -58,6 +64,10 @@ public class ScoreBoardController extends MainMenuController {
     }
   }
 
+  /**
+   * Xóa bảng xếp hạng.
+   * @param event
+   */
   @FXML
   protected void Reset(ActionEvent event) {
     media = MainMedia.getInstance();
@@ -67,6 +77,11 @@ public class ScoreBoardController extends MainMenuController {
     System.out.println("ScoreBoard Reset.");
   }
 
+  /**
+   * Trở về sảnh.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   @Override
   protected void BackToMenu(ActionEvent event) throws IOException {

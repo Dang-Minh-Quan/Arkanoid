@@ -27,12 +27,14 @@ public class SaveScoreController extends MainMenuController {
   @FXML
   private Label ScoreLabel;
 
-  MainMedia media = MainMedia.getInstance();
   private int finalScore;
   private Stage stage;
   private ScoreManager scoreManager = new ScoreManager();
   private boolean scoreSaved = false;
 
+  /**
+   * Áp dụng phông chữ.
+   */
   private void loadAndApplyFont() {
     Font scoreFont = Font.loadFont(
         getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
@@ -45,6 +47,12 @@ public class SaveScoreController extends MainMenuController {
     );
   }
 
+  /**
+   * Lưu điểm của người chơi và kiểm tra điểm cao,
+   * nếu có, cho người chơi nhập tên.
+   * @param score
+   * @param stage
+   */
   public void setFinalScore(int score, Stage stage) {
     this.finalScore = score;
     this.stage = stage;
@@ -75,6 +83,11 @@ public class SaveScoreController extends MainMenuController {
     }
   }
 
+  /**
+   * Thực hiện nhận tên được lưu và thêm vào danh sách điểm cao.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   private void SaveScore(ActionEvent event) throws IOException {
     if (scoreSaved) return;
@@ -92,11 +105,21 @@ public class SaveScoreController extends MainMenuController {
     BackToScoreBoard(event);
   }
 
+  /**
+   * Trở về bảng xếp hạng.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void BackToScoreBoard(ActionEvent event) throws IOException {
     super.OpenScoreboard(event);
   }
 
+  /**
+   * Trở về sảnh.
+   * @param event
+   * @throws IOException
+   */
   @FXML
   protected void BackToMenu (ActionEvent event) throws IOException {
     super.BackToMenu(event);

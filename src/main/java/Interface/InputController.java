@@ -11,6 +11,13 @@ public class InputController {
     private final GamePlayController GameState;
     private boolean isPaused=false;
 
+  /**
+   * Nhận phím để điều khiển paddle và tạm dừng/tiếp tục trò chơi.
+   * @param scene
+   * @param newPaddle
+   * @param gameRestarted
+   * @param GameState
+   */
     public InputController(Scene scene, AtomicReference<Paddle> newPaddle, AtomicBoolean gameRestarted,GamePlayController GameState) {
         this.scene = scene;
         this.GameState = GameState;
