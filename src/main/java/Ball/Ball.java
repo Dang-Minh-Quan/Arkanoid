@@ -78,8 +78,8 @@ public abstract class Ball extends BaseClass {
 
     protected void UpdateNodeTail(int TailX0, int TailY0, int TailX1, int TailY1) {
         for (int i = TailLength - 1; i > 1; i--) {
-            TailX[i] = TailX[i - 2];
-            TailY[i] = TailY[i - 2];
+            TailX[i] = TailX[i - 1];
+            TailY[i] = TailY[i - 1];
             Tail[i].setCenterX(TailX[i]);
             Tail[i].setCenterY(TailY[i]);
         }
@@ -98,7 +98,7 @@ public abstract class Ball extends BaseClass {
             Color c = (Color) Tail[i].getFill();
             gc.setFill(c);
             gc.fillOval(TailX[i] - Tail[i].getRadius(),
-                    TailY[i] - Tail[i].getRadius() - 2.5,
+                    TailY[i] - Tail[i].getRadius() - 2.6,
                     Tail[i].getRadius() * 2,
                     Tail[i].getRadius() * 2);
         }
