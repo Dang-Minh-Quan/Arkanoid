@@ -6,6 +6,6 @@ public class NormalBall extends Ball {
         super(x, y);
         this.image = mainImage.getNormalBall();
         this.type = "normal";
-        colorTail(1,1,1);
+        colorTail(175 / 255.0,255 / 255.0,255 / 255.0);
     }
 }

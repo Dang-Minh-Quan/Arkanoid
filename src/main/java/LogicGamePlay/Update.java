@@ -5,13 +5,14 @@ import Ball.*;
 import Media.MainMedia;
 import Paddle.*;
 import Brick.*;
+import PowerUp.*;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import PowerUp.*;
+import PowerUp.PowerUp;
 import javafx.application.Platform;
 
 import static LogicGamePlay.Specifications.*;
@@ -45,9 +46,12 @@ public class Update {
             bullets.get(i).setBullet(bullets.get(i).y + bullets.get(i).vy);
             if (bullets.get(i).checkBullet()) {
                 bullets.remove(i);
+                i--;
             }
-            if (bullets.get(i).checkBrickCollision(media, brick, render, powerUps,powerUpManager) != 0) {
+            if (i < 0) break;
+            if (bullets.get(i).checkBrickCollision(media, brick, render, powerUps, powerUpManager) != 0) {
                 bullets.remove(i);
+                i--;
             }
         }
     }
@@ -58,9 +62,11 @@ public class Update {
                 case 1:
                     powerUpManager.applyPowerUp(powerUps.get(i), paddle, balls);
                     powerUps.remove(i);
+                    i--;
                     break;
                 case 2:
                     powerUps.remove(i);
+                    i--;
                     break;
             }
         }
@@ -124,7 +130,7 @@ public class Update {
                               List<PowerUp> powerUps, List<Bullet> bullets, Render render) {
         paddle.get().paddleBullet(bullets);
         if (heartCount.get() == 0) {
-            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - 60);
+            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal - 1);
             Platform.runLater(() -> controller.GameOver());
             return;
         }
@@ -138,7 +144,7 @@ public class Update {
                 nextPaddleX += paddle.get().vx;
             }
             nextPaddleX = paddle.get().ClampPosition(nextPaddleX);
-            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - 70);
+            ball.setBall(paddle.get().x + paddle.get().width / 2, HEIGHT - paddleHeightOriginal - 1);
             paddle.get().setPaddle(paddle.get().width, nextPaddleX);
             return;
         }
@@ -206,7 +212,7 @@ public class Update {
                     break;
             }
         }
-        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps,powerUpManager);
+        int collisionResult = ball.checkBrickCollision(media, brick, render, powerUps, powerUpManager);
         if (collisionResult != 0) {
             if (collisionResult == 1) {
                 ball.vx = -ball.vx;
@@ -229,7 +235,7 @@ public class Update {
                 i--;
             }
             if (balls.size() == 0) {
-                Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal/2, HEIGHT - paddleHeightOriginal,"normal");
+                Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal");
                 balls.add(ball);
                 gameRestarted.set(true);
                 heartCount.set(heartCount.get() - 1);

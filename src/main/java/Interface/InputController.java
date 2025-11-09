@@ -17,7 +17,11 @@ public class InputController {
             switch (event.getCode()) {
                 case LEFT, A -> paddle.setMoveLeft(true);
                 case RIGHT, D -> paddle.setMoveRight(true);
-                case SPACE -> gameRestarted.set(false);
+                case SPACE -> {
+                    if (gameRestarted.get()) {
+                        gameRestarted.set(false);
+                    }
+                }
             }
         });
 

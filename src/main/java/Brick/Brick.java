@@ -56,7 +56,7 @@ public abstract class Brick extends BaseClass {
                      Brick[][] brick, PowerUpManager powerUpManager) {
         int[] a = {0, 0, 0, 1, 1, 1, -1, -1, -1};
         int[] b = {0, 1, -1, 1, -1, 0, 1, -1, 0};
-        Ball ball = gameObject.createBall(0, 0, "normal type");
+        Ball ball = gameObject.createBall(0, 0, "normal");
         int brickCol = x / WIDTHBrick;
         int brickRow = y / HEIGHTBrick;
         for (int i = 0; i <= 8; i++) {
@@ -69,22 +69,22 @@ public abstract class Brick extends BaseClass {
 
 
     public void Update() {
-        if (type == "non") {
+        if (type == "null") {
             image = null;
         }
-        if (type == "basic") {
+        if (type == "normal") {
             image = mainImage.getNormalBrick();
         }
-        if (type == "solid") {
+        if (type == "strong") {
             image = mainImage.getStrongBrick();
         }
         if (type == "broken") {
             image = mainImage.getBrokenBrick();
         }
-        if (type == "boom") {
+        if (type == "explosive") {
             image = mainImage.getExplosionBrick();
         }
-        if (type == "hard") {
+        if (type == "unbreakable") {
             image = mainImage.getUnbreakableBrick();
         }
     }
