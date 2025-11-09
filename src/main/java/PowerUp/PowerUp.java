@@ -37,7 +37,7 @@ public class PowerUp extends AnimationClass {
         this.image = spriteSheet;
         checkActivate = false;
         int randomType = (int) (Math.random() * PU) % PU;
-        randomType = 2;
+        randomType = 3;
         switch (randomType) {
             case 0:
                 type = "ball_immortal";
@@ -65,7 +65,7 @@ public class PowerUp extends AnimationClass {
     private void checkTimePowerUp(String type) {
         switch (type) {
             case "blind":
-                TimePowerUp = 1;
+                TimePowerUp = 6;
                 break;
             case "ball_immortal":
                 TimePowerUp = TimePowerUpOriginal;

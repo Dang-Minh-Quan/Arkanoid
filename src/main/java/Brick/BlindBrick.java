@@ -20,17 +20,19 @@ public class BlindBrick extends  Brick {
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
-        switch (ball.type) {
-            case "normal", "infinity", "bullet":
-                destroyBrick(render, media, powerUps);
-                break;
-            case "explosive":
-                boom(render, media, powerUps, brick, powerUpManager);
+        if(type != "null") {
+            switch (ball.type) {
+                case "normal", "infinity", "bullet":
+                    destroyBrick(render, media, powerUps);
+                    break;
+                case "explosive":
+                    boom(render, media, powerUps, brick, powerUpManager);
+            }
+            PowerUp powerUp = new PowerUp("blind");
+            AtomicReference<Paddle> paddle = new AtomicReference<>();
+            List<Ball> balls = new ArrayList<>();
+            powerUpManager.applyPowerUp(powerUp, paddle, balls);
         }
-        PowerUp powerUp = new PowerUp("blind");
-        AtomicReference<Paddle> paddle = new AtomicReference<>();
-        List<Ball> balls = new ArrayList<>();
-        powerUpManager.applyPowerUp(powerUp,paddle,balls);
     }
 }
 

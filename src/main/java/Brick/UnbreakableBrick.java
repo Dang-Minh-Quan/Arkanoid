@@ -19,15 +19,17 @@ public class UnbreakableBrick extends Brick {
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
-        switch (ball.type){
-            case "explosive":
-                numBrick++;
-                boom(render, media, powerUps, brick, powerUpManager);
-                break;
-            case "infinty":
-                numBrick++;
-                destroyBrick(render, media, powerUps);
-                break;
+        if(type != "null") {
+            switch (ball.type) {
+                case "explosive":
+                    numBrick++;
+                    boom(render, media, powerUps, brick, powerUpManager);
+                    break;
+                case "infinity":
+                    numBrick++;
+                    destroyBrick(render, media, powerUps);
+                    break;
+            }
         }
     }
 }

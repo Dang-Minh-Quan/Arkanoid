@@ -21,11 +21,13 @@ public class ExplosiveBrick extends Brick {
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
-        if(detonation == true){
-            destroyBrick(render, media, powerUps);
-        } else {
-            detonation = true;
-            boom(render, media, powerUps, brick, powerUpManager);
+        if(type != "null") {
+            if (detonation == true) {
+                destroyBrick(render, media, powerUps);
+            } else {
+                detonation = true;
+                boom(render, media, powerUps, brick, powerUpManager);
+            }
         }
     }
 }
