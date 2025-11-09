@@ -1,5 +1,10 @@
 package LogicGamePlay;
 
+import Ball.*;
+import Paddle.*;
+import Brick.*;
+import Image.*;
+import PowerUp.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -11,6 +16,7 @@ import javafx.geometry.VPos;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static LogicGamePlay.Specifications.*;
 
@@ -38,11 +44,11 @@ public class Render {
         powerUps.removeIf(p -> !p.isActive());
     }
 
-    public void renderGame(GraphicsContext gc,List<Ball> balls, Paddle paddle,
-                           Brick[][] brick,List<PowerUp>powerUps,List<Bullet> bullets) {
-        gc.clearRect(0,0,WIDTH, HEIGHT);
+    public void renderGame(GraphicsContext gc, List<Ball> balls, AtomicReference<Paddle> paddle,
+                           Brick[][] brick, List<PowerUp> powerUps, List<Bullet> bullets) {
+        gc.clearRect(0, 0, WIDTH, HEIGHT);
         //renderBackGround(gc);
-        renderBrick(gc,brick);
+        renderBrick(gc, brick);
         renderExplosions(gc);
         renderBalls(gc, balls);
         renderPowerUp(gc, powerUps);
@@ -50,16 +56,16 @@ public class Render {
         renderBackBar(gc);
         renderBullet(gc, bullets);
         renderHUD(gc);
-        if(blind==true){
-            Image SquidInk = image.getSquidInk();
-            gc.drawImage(SquidInk, 0, 0, WIDTH, ROW*HEIGHTBrick);
+        if (blind == true) {
+            Image Ink = image.getSquidInk();
+            gc.drawImage(Ink, 0, 0, WIDTH, ROW * HEIGHTBrick);
         }
     }
 
-    private void renderBullet(GraphicsContext gc,List<Bullet> bullets){
+    private void renderBullet(GraphicsContext gc, List<Bullet> bullets) {
         for (Bullet b : bullets) {
-            Image bulletImange = image.getBullet();
-            gc.drawImage(bulletImange, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
+            Image bulletImage = image.getBullet();
+            gc.drawImage(bulletImage, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
         }
     }
 
@@ -81,7 +87,7 @@ public class Render {
                     continue;
                 }
 
-                if (b.type == "non" || b.image == null) {
+                if (b.type == "null" || b.image == null) {
                     continue;
                 }
 
@@ -90,38 +96,16 @@ public class Render {
         }
     }
 
-    private void renderPaddle(GraphicsContext gc, Paddle paddle) {
+    private void renderPaddle(GraphicsContext gc, AtomicReference<Paddle> paddle) {
         Image img;
-        switch (paddle.type) {
-            case "long":
-                img = image.getPaddle1();
-                break;
-            case "shoot":
-                img = image.getPaddle2();
-                break;   // paddle gun
-            default:
-                img = image.getPaddle();
-                break;
-        }
-
-        gc.drawImage(img, paddle.x, paddle.y, paddle.width, paddle.height);
+        img = paddle.get().image;
+        gc.drawImage(img, paddle.get().x, paddle.get().y, paddle.get().width, paddle.get().height);
     }
 
     private void renderBalls(GraphicsContext gc, List<Ball> balls) {
         for (Ball b : balls) {
             Image img;
-            switch (b.type) {
-                case "boom":
-                    img = image.getBall1();
-                    break;
-                case "immortal":
-                    img = image.getBallpower();
-                    break;
-                default:
-                    img = image.getBall();
-                    break;
-            }
-
+            img = b.image;
             b.RenderTail(gc);
             gc.drawImage(img, b.x - b.width, b.y - b.width, b.width * 2, b.width * 2);
         }

@@ -1,24 +1,25 @@
 package Interface;
 
 
+import Image.MainImage;
 import LogicGamePlay.*;
+import Ball.*;
+import Brick.*;
+import Media.MainMedia;
+import Paddle.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import PowerUp.PowerUp;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -74,13 +76,17 @@ public class GamePlayController extends MainMenuController {
 
 
     private AnimationTimer mainGame;
+    private InputController input;
+    private ScheduledExecutorService gameThread;
+    private GameObject gameObject;
     private List<Ball> balls;
     private List<Bullet> bullets;
-    private Paddle paddle;
+    private AtomicReference<Paddle> paddle;
     private Brick[][] brick;
     private Update update;
     private Render render;
     private MainImage image;
+    private MainMedia media;
     private int FinalScore;
     //private ScoreManager scoreManager = new ScoreManager();
     List<PowerUp> powerUps;
@@ -88,9 +94,11 @@ public class GamePlayController extends MainMenuController {
     public void start(Stage stage) throws IOException {
         image = MainImage.getInstance();
         media = MainMedia.getInstance();
+
         if (mainGame != null) {
             mainGame.stop();
             mainGame = null;
+            //System.out.println(Specifications.Level.get());
         }
 
         gameLayer.toBack();
@@ -98,14 +106,15 @@ public class GamePlayController extends MainMenuController {
         PauseMenu.toFront();
         media.ViewBackGrounnd();
         Canvas canvas = new Canvas(WIDTH, HEIGHT + HEIGHTBar);
-        gameLayer.getChildren().addAll(media.getBackGroundView(),canvas);
+        gameLayer.getChildren().addAll(media.getBackGroundView(), canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        Ball ball = new Ball();
+        gameObject = new GameObject();
+        powerUps = new ArrayList<>();
+        paddle = new AtomicReference<>(gameObject.createPaddle(WIDTH / 2 - paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal"));
+        Ball ball = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal");
         balls = new ArrayList<>();
         balls.add(ball);
-        powerUps = new ArrayList<>();
-        paddle = new Paddle();
         brick = new Brick[ROW][COL];
         bullets = new ArrayList<>();
 
@@ -113,24 +122,25 @@ public class GamePlayController extends MainMenuController {
         render = new Render();
         update.initializeLevel(paddle, balls, brick);
         AtomicBoolean gameRestarted = new AtomicBoolean(true);
+        //System.out.println(numBrick);
 
         media.playGamePlayMusic();
 
         mainGame = new AnimationTimer() {
-        long LastUpdate = 0;
+            long LastUpdate = 0;
 
-         @Override
-        public void handle(long now) {
-        if (now - LastUpdate >= 16_000_000) {
-            update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, bullets,render);
-            render.renderGame(gc, balls, paddle, brick, powerUps,bullets);
-            LastUpdate = now;
-        }
-      }
-    };
+            @Override
+            public void handle(long now) {
+                if (now - LastUpdate >= 16_000_000) {
+                    update.updateGame(media, balls, paddle, brick, Level, gameRestarted, powerUps, bullets, render);
+                    render.renderGame(gc, balls, paddle, brick, powerUps, bullets);
+                    LastUpdate = now;
+                }
+            }
+        };
 
         Platform.runLater(() -> {
-            paddle.controllerPaddle(GamePlay.getScene(), gameRestarted);
+            input = new InputController(GamePlay.getScene(), paddle, gameRestarted);
             GamePlay.requestFocus();
             ButtonPause.toFront();
             mainGame.start();
@@ -266,7 +276,7 @@ public class GamePlayController extends MainMenuController {
     }
 
     @FXML
-    protected void BackToMenu (ActionEvent event) throws IOException {
+    protected void BackToMenu(ActionEvent event) throws IOException {
         super.BackToMenu(event);
     }
 }

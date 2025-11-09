@@ -1,6 +1,7 @@
 package Interface;
 
 import LogicGamePlay.HighScoreList;
+import Media.*;
 import LogicGamePlay.MainMedia;
 import LogicGamePlay.ScoreManager;
 import javafx.event.ActionEvent;
@@ -25,7 +26,7 @@ public class ScoreBoardController extends MainMenuController {
   @FXML
   private VBox ScoreBoard;
 
-  private ScoreManager scoreManager = new ScoreManager();
+    private ScoreManager scoreManager = new ScoreManager();
 
   private static Font customFont = null;
 

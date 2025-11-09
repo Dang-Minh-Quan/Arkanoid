@@ -11,13 +11,13 @@ public class Map {
         String path = new String();
         switch (Level) {
             case 1:
-                path= "/Interface/Map/Level1.txt";
+                path = "/Interface/Map/Level1.txt";
                 break;
             case 2:
-                path= "/Interface/Map/Level2.txt";
+                path = "/Interface/Map/Level2.txt";
                 break;
             case 3:
-                path= "/Interface/Map/Level3.txt";
+                path = "/Interface/Map/Level3.txt";
                 break;
             case 4:
               path= "/Interface/Map/Level4.txt";
@@ -28,27 +28,24 @@ public class Map {
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
                     int k = sc.nextInt();
-                    switch (k){
+                    switch (k) {
                         case 0:
-                            a[i][j] = "non";
+                            a[i][j] = "null";
                             break;
                         case 1:
-                            a[i][j] = "basic";
+                            a[i][j] = "normal";
                             break;
-                        case 2:
-                            a[i][j] = "solid";
-                            break;
-                        case 3:
-                            a[i][j] = "broken";
+                        case 2, 3:
+                            a[i][j] = "strong";
                             break;
                         case 4:
-                            a[i][j] = "boom";
+                            a[i][j] = "explosive";
                             break;
                         case 5:
                             a[i][j] = "blind";
                             break;
                         case 6:
-                            a[i][j] = "hard";
+                            a[i][j] = "unbreakable";
                             break;
                     }
                 }
