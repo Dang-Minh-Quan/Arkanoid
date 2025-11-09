@@ -149,7 +149,7 @@ public class GamePlayController extends MainMenuController {
         };
 
         Platform.runLater(() -> {
-            input = new InputController(GamePlay.getScene(), paddle, gameRestarted);
+            input = new InputController(GamePlay.getScene(), paddle, gameRestarted,this);
             GamePlay.requestFocus();
             ButtonPause.toFront();
             mainGame.start();
@@ -165,7 +165,7 @@ public class GamePlayController extends MainMenuController {
     }
 
     @FXML
-    protected void Pause(ActionEvent event) {
+    protected void Pause() {
       media.playPressButton();
       if (mainGame != null) {
           mainGame.stop();
@@ -176,7 +176,7 @@ public class GamePlayController extends MainMenuController {
     }
 
     @FXML
-    protected void Resume(ActionEvent event) {
+    protected void Resume() {
       media.playPressButton();
       if (mainGame != null) {
           mainGame.start();
@@ -212,12 +212,9 @@ public class GamePlayController extends MainMenuController {
             }
 
             Stage stage = (Stage) GamePlay.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/GameOver.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GameOver.fxml"));
+            Parent root = loader.load();
             SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
 
             //GameOverCheck = false;
             System.out.println("You Lose!");
@@ -270,12 +267,9 @@ public class GamePlayController extends MainMenuController {
                 return;
             }
 
-            Parent root = FXMLLoader.load(getClass().getResource("/Interface/WinLevel.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/WinLevel.fxml"));
+            Parent root = loader.load();
             SwitchScene.fade(stage, root);
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
 
             System.out.println("Win!");
         } catch (IOException e) {

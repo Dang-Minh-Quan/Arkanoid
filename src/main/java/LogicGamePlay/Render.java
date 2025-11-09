@@ -104,6 +104,7 @@ public class Render {
 
     private void renderBalls(GraphicsContext gc, List<Ball> balls) {
         for (Ball b : balls) {
+            b.UpdateTail();
             Image img;
             img = b.image;
             b.RenderTail(gc);
