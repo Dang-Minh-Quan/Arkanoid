@@ -77,8 +77,8 @@ public abstract class Ball extends BaseClass {
 
     protected void UpdateNodeTail(int TailX0, int TailY0, int TailX1, int TailY1) {
         for (int i = TailLength - 1; i > 1; i--) {
-            TailX[i] = TailX[i - 1];
-            TailY[i] = TailY[i - 1];
+            TailX[i] = TailX[i - 2];
+            TailY[i] = TailY[i - 2];
             Tail[i].setCenterX(TailX[i]);
             Tail[i].setCenterY(TailY[i]);
         }
