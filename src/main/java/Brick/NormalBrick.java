@@ -24,6 +24,7 @@ public class NormalBrick extends Brick {
                     destroyBrick(render, media, powerUps);
                     break;
                 case "explosive":
+                    destroyBrick(render, media, powerUps);
                     boom(render, media, powerUps, brick, powerUpManager);
             }
         }

@@ -30,6 +30,7 @@ public class MainMedia {
     private MediaView BackGroundView;
     private AudioClip destroyBrick;
     private AudioClip GameOver;
+    private AudioClip imPact;
     private AudioClip Win;
     private AudioClip PowerUp;
     private final ScheduledExecutorService soundThread = Executors.newScheduledThreadPool(2);
@@ -52,6 +53,7 @@ public class MainMedia {
         Win.setVolume(0.0);
         GameOver.setVolume(0.0);
 
+        imPact.setVolume(0.0);
         Muted = true;
       }
     }
@@ -67,6 +69,7 @@ public class MainMedia {
       Win.setVolume(2.0);
       GameOver.setVolume(3.0);
 
+      imPact.setVolume(1.0);
       Muted = false;
     }
   }
@@ -124,26 +127,32 @@ public class MainMedia {
     }
 
   public void playPowerUp() {
-    if (isLoaded && destroyBrick != null) {
+    if (isLoaded && PowerUp != null) {
       PowerUp.play();
     }
   }
 
+    public void playImPact() {
+        if (isLoaded && imPact != null) {
+            imPact.play();
+        }
+    }
+
 
   public void playPressButton() {
-        if (isLoaded && destroyBrick != null) {
+        if (isLoaded && PressButton != null) {
             PressButton.play();
         }
     }
 
   public void playGameOver() {
-    if (isLoaded && destroyBrick != null) {
+    if (isLoaded && GameOver != null) {
       GameOver.play();
     }
   }
 
   public void playWin() {
-    if (isLoaded && destroyBrick != null) {
+    if (isLoaded && Win != null) {
       Win.play();
     }
   }
@@ -170,11 +179,13 @@ public class MainMedia {
       GameOver = new AudioClip(getClass().getResource("/Interface/media/GameOver.mp3").toExternalForm());
       Win = new AudioClip(getClass().getResource("/Interface/media/Win.mp3").toExternalForm());
       PowerUp = new AudioClip(getClass().getResource("/Interface/media/PowerUp.mp3").toExternalForm());
+      imPact = new AudioClip(getClass().getResource("/Interface/media/impact.mp3").toExternalForm());
       destroyBrick.setVolume(1);
       PressButton.setVolume(1);
       GameOver.setVolume(3);
       Win.setVolume(2);
       PowerUp.setVolume(2);
+      imPact.setVolume(1);
       isLoaded = true;
     }
   }

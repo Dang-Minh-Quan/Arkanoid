@@ -46,9 +46,12 @@ public class Update {
             bullets.get(i).setBullet(bullets.get(i).y + bullets.get(i).vy);
             if (bullets.get(i).checkBullet()) {
                 bullets.remove(i);
+                i--;
             }
+            if (i < 0) break;
             if (bullets.get(i).checkBrickCollision(media, brick, render, powerUps, powerUpManager) != 0) {
                 bullets.remove(i);
+                i--;
             }
         }
     }
@@ -59,9 +62,11 @@ public class Update {
                 case 1:
                     powerUpManager.applyPowerUp(powerUps.get(i), paddle, balls);
                     powerUps.remove(i);
+                    i--;
                     break;
                 case 2:
                     powerUps.remove(i);
+                    i--;
                     break;
             }
         }
@@ -171,11 +176,14 @@ public class Update {
             case 1:
                 ball.vx = -ball.vx;
                 ball.vy = -ball.vy;
+                media.playImPact();
                 break;
             case 2:
+                media.playImPact();
                 ball.vx = -ball.vx;
                 break;
             case 3:
+                media.playImPact();
                 ball.vy = -ball.vy;
                 break;
         }
@@ -195,10 +203,12 @@ public class Update {
                         ball.vx = -(int) (spvxOriginal * Math.sin(baseAngle));
                     }
                     ball.vy = -(int) Math.abs(spvxOriginal * Math.cos(baseAngle));
+                    media.playImPact();
                     break;
                 case 2:
                 case 3:
                     ball.vx = -ball.vx;
+                    media.playImPact();
                     break;
             }
         }

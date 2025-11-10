@@ -162,10 +162,7 @@ public class GamePlayController extends MainMenuController {
         });
     }
 
-  /**
-   * Tạm dừng trò chơi.
-   */
-  @FXML
+    @FXML
     protected void Pause() {
       media.playPressButton();
       if (mainGame != null) {
@@ -176,10 +173,7 @@ public class GamePlayController extends MainMenuController {
       System.out.println("Game Paused");
     }
 
-  /**
-   * Tiếp tục trò chơi.
-   */
-  @FXML
+    @FXML
     protected void Resume() {
       media.playPressButton();
       if (mainGame != null) {
@@ -192,12 +186,7 @@ public class GamePlayController extends MainMenuController {
       System.out.println("Game Resumed");
     }
 
-  /**
-   * Chơi lại màn chơi hiện tại.
-   * @param event
-   * @throws IOException
-   */
-  @FXML
+    @FXML
     protected void Restart(ActionEvent event) throws IOException  {
       super.PlayAgain(event);
       PauseMenu.setVisible(false);
@@ -209,9 +198,6 @@ public class GamePlayController extends MainMenuController {
 
     public static boolean GameOverCheck = false;
 
-  /**
-   * Thua cuộc.
-   */
     public void GameOver() {
       media.playGameOver();
         try {
@@ -239,9 +225,6 @@ public class GamePlayController extends MainMenuController {
     boolean WinCheck = false;
     static boolean WinGameCheck = false;
 
-  /**
-   * Thắng màn chơi/phá đảo trò chơi.
-   */
     public void Win() {
       media.playWin();
         try {
@@ -273,6 +256,10 @@ public class GamePlayController extends MainMenuController {
                 }
 
                 SwitchScene.fade(stage, root);
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.centerOnScreen();
+                stage.show();
 
                 System.out.println("Congratulations! Game Completed. Loading WinGame Scene.");
                 return;
@@ -289,12 +276,7 @@ public class GamePlayController extends MainMenuController {
         }
     }
 
-  /**
-   * Trở về sảnh.
-   * @param event
-   * @throws IOException
-   */
-  @FXML
+    @FXML
     protected void BackToMenu(ActionEvent event) throws IOException {
         super.BackToMenu(event);
     }

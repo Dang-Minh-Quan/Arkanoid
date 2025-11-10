@@ -50,7 +50,6 @@ public abstract class Ball extends BaseClass {
         y = dy;
         ball.setCenterX(x);
         ball.setCenterY(y);
-        UpdateTail();
     }
 
     public void setTail(Ball ball) {
