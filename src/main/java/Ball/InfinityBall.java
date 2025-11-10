@@ -10,7 +10,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class InfinityBall extends Ball {
-
+    /**
+     * khoi tao bong bat tu.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public InfinityBall(int x, int y) {
         super(x, y);
         this.image = mainImage.getInfinityBall();
@@ -26,9 +30,9 @@ public class InfinityBall extends Ball {
     }
 
     @Override
-    public int checkWallCollision(AtomicBoolean gameRestarted) {
-        int k = super.checkWallCollision(gameRestarted);
-        if(k == -1){
+    public int checkWallCollision() {
+        int k = super.checkWallCollision();
+        if (k == -1) {
             k = 3;
         }
         return k;

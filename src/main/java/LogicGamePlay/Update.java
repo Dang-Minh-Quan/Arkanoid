@@ -29,6 +29,12 @@ public class Update {
         powerUpManager = new PowerUpManager();
     }
 
+    /**
+     * cap nhat game.
+     * @param media tao am thanh.
+     * @param Level kiem tra va cap nhat khi thoa man.
+     * @param gameRestarted dung tro choi.
+     */
     public void updateGame(MainMedia media, List<Ball> balls,
                            AtomicReference<Paddle> paddle, Brick[][] brick,
                            AtomicInteger Level, AtomicBoolean gameRestarted,
@@ -39,6 +45,9 @@ public class Update {
         updateBrick(balls, paddle, Level, brick);
     }
 
+    /**
+     * cap nhat dan.
+     */
     private void updateBullet(MainMedia media, List<Bullet> bullets,
                               Brick[][] brick, List<PowerUp> powerUps,
                               Render render) {
@@ -56,6 +65,9 @@ public class Update {
         }
     }
 
+    /**
+     * cap nhat power up.
+     */
     private void updatePowerUp(List<Ball> balls, AtomicReference<Paddle> paddle, List<PowerUp> powerUps) {
         for (int i = 0; i < powerUps.size(); i++) {
             switch (powerUps.get(i).UpdatePU(balls, paddle, powerUps)) {
@@ -72,6 +84,9 @@ public class Update {
         }
     }
 
+    /**
+     * cap nhat brick.
+     */
     private void updateBrick(List<Ball> balls, AtomicReference<Paddle> paddle, AtomicInteger Level, Brick[][] brick) {
         if (numBrick <= 0) {
             if (winLevel == false) {
@@ -83,6 +98,9 @@ public class Update {
         }
     }
 
+    /**
+     * khoi tao map va hearts .
+     */
     public void initializeLevel(AtomicReference<Paddle> paddle, List<Ball> balls, Brick[][] brick) {
 //        System.out.println(Level);
         heartCount.set(3);
@@ -90,12 +108,14 @@ public class Update {
         builderLevel(balls, brick, paddle.get(), Level);
     }
 
+    /**
+     * khoi tao map.
+     */
     private void builderLevel(List<Ball> balls, Brick[][] brick, Paddle paddle, AtomicInteger Level) {
         Map map = new Map();
         if (Level.get() > LevelMax) {
 //            checkPlay = false;
         } else {
-            //ball.resert();
             String[][] a = map.builderMap(Level.get());
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
@@ -125,6 +145,9 @@ public class Update {
         }
     }
 
+    /**
+     * cap nhat paddle.
+     */
     private void updatePaddle(MainMedia media, AtomicReference<Paddle> paddle,
                               Brick[][] brick, Ball ball, AtomicBoolean gameRestarted,
                               List<PowerUp> powerUps, List<Bullet> bullets, Render render) {
@@ -162,7 +185,9 @@ public class Update {
 
     }
 
-
+    /**
+     * cap nhat tung bong.
+     */
     private boolean updateBall(MainMedia media, Ball ball,
                                Brick[][] brick, AtomicReference<Paddle> paddle,
                                AtomicBoolean gameRestarted, List<PowerUp> powerUps,
@@ -170,7 +195,7 @@ public class Update {
         int nextBallX = (int) ball.getBall().getCenterX() + (int) ball.vx;
         int nextBallY = (int) ball.getBall().getCenterY() + (int) ball.vy;
         ball.setBall(nextBallX, nextBallY);
-        switch (ball.checkWallCollision(gameRestarted)) {
+        switch (ball.checkWallCollision()) {
             case -1:
                 return false;
             case 1:
@@ -206,7 +231,6 @@ public class Update {
                     media.playImPact();
                     break;
                 case 2:
-                case 3:
                     ball.vx = -ball.vx;
                     media.playImPact();
                     break;
@@ -219,12 +243,13 @@ public class Update {
             } else if (collisionResult == 2) {
                 ball.vy = -ball.vy;
             }
-            //Brick b = ball.getLastHitBrick();
-            // if (b != null) b.BallHit(ball, render);
         }
         return true;
     }
 
+    /**
+     * cap nhat tat ca cac bong.
+     */
     private void updateBalls(MainMedia media, List<Ball> balls, List<Bullet> bullets,
                              Brick[][] brick, AtomicReference<Paddle> paddle, AtomicBoolean gameRestarted,
                              List<PowerUp> powerUps, Render render) {

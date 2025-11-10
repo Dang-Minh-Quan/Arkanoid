@@ -18,6 +18,11 @@ public abstract class Paddle extends BaseClass {
     protected int checkBullet = timeButter;
     protected MainImage mainImage;
 
+    /**
+     * khoi tao paddle.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public Paddle(int x, int y) {
         super(null, "normal", x, y, vxOriginal, 0, paddleWidthOriginal, paddleHeightOriginal);
         mainImage = MainImage.getInstance();
@@ -30,11 +35,20 @@ public abstract class Paddle extends BaseClass {
         return paddle;
     }
 
+    /**
+     * cap nhat vi tri paddle.
+     * @param x vi tri theo phuong x.
+     */
     public void setPaddle(int x) {
         this.x = x;
         paddle.setX(x);
     }
 
+    /**
+     * cap nhat vi tri, kich thuoc paddle.
+     * @param width chieu dai cua paddle.
+     * @param x vi tri theo phuong x.
+     */
     public void setPaddle(int width, int x) {
         this.width = width;
         this.x = x;
@@ -60,6 +74,10 @@ public abstract class Paddle extends BaseClass {
         this.moveRight = moveRight;
     }
 
+    /**
+     * kiem tra vi tri hop le cua paddle,
+     * @param next vi tri tiep theo cua paddle.
+     */
     public int ClampPosition(int next) {
         if (next < 0) {
             return 0;

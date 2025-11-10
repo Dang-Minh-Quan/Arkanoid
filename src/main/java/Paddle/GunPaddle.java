@@ -8,6 +8,11 @@ import static LogicGamePlay.Specifications.ballRadiusOriginal;
 import static LogicGamePlay.Specifications.timeButter;
 
 public class GunPaddle extends Paddle {
+    /**
+     * khoi tao paddle ban.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public GunPaddle(int x, int y) {
         super(x, y);
         this.image = mainImage.getGunPaddle();

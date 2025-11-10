@@ -9,6 +9,11 @@ import LogicGamePlay.Render;
 import java.util.List;
 
 public class StrongBrick extends Brick {
+    /**
+     * khoi tao brick cung.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public StrongBrick(int x, int y) {
         super(x, y);
         this.type = "strong";
