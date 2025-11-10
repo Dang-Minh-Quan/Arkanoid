@@ -7,6 +7,7 @@ import Media.MainMedia;
 import Paddle.*;
 import PowerUp.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -161,110 +162,55 @@ public abstract class Ball extends BaseClass {
                                    List<PowerUp> powerUps, PowerUpManager powerUpManager) {
         int brickCol = x / WIDTHBrick;
         int brickRow = y / HEIGHTBrick;
+        int reboundAngle = 0;
 
-        boolean above = false, below = false, left = false, right = false;
+        int[] Row = {0,0,1,0,-1,-1,1,1,-1};
+        int[] Col = {0,1,0,-1,0,1,-1,1,-1};
 
-        if (vy <= 0 && brickRow > 0 && brickRow <= ROW
-                && (brickRow) * HEIGHTBrick + width >= y) {
-            above = true;
+        for (int k = 0 ; k < 9 ;k++){
+            if(k >= 4 && reboundAngle !=0){
+                break;
+            }
+            int i = brickRow + Row[k];
+            int j = brickCol + Col[k];
+            if(i<0||i>=ROW||j<0||j>=COL){
+                continue;
+            }
+            if("null".equals(brick[i][j].type)){
+                continue;
+            }
+            if(BallCollidingWithBrick(brick[i][j])){
+                reboundAngle = reboundAngle+getCollisionDirection(brick[i][j]);
+                brick[i][j].BallHit(this, render, media, powerUps, brick, powerUpManager);
+            }
         }
-        if (vy >= 0 && brickRow < ROW - 1
-                && (brickRow + 1) * HEIGHTBrick - width <= y) {
-            below = true;
-        }
-        if (vx <= 0 && brickCol > 0 && brickRow < ROW
-                && (brickCol) * WIDTHBrick + width >= x) {
-            left = true;
-        }
-        if (vx >= 0 && brickCol < COL - 1 && brickRow < ROW
-                && (brickCol + 1) * WIDTHBrick - width <= x) {
-            right = true;
-        }
-        if (vy <= 0 && brickRow > 0 && brickRow <= ROW
-                && (brickRow) * HEIGHTBrick + width >= y) {
-            above = true;
-        }
-        if (vy >= 0 && brickRow < ROW - 1
-                && (brickRow + 1) * HEIGHTBrick - width <= y) {
-            below = true;
-        }
-        if (vx <= 0 && brickCol > 0 && brickRow < ROW
-                && (brickCol) * WIDTHBrick + width >= x) {
-            left = true;
-        }
-        if (vx >= 0 && brickCol < COL - 1 && brickRow < ROW
-                && (brickCol + 1) * WIDTHBrick - width <= x) {
-            right = true;
-        }
+        return reboundAngle;
+    }
 
-        if (above == true) {
-            if (brick[brickRow - 1][brickCol].type != "null") {
-                brick[brickRow - 1][brickCol].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 2;
-            }
+    private boolean BallCollidingWithBrick(Brick brick){
+        double closestX = Math.max( brick.x, Math.min(x,brick.x + brick.width));
+        double closestY = Math.max( brick.y, Math.min(y,brick.y + brick.height));
+
+        double distanceX = x - closestX;
+        double distanceY = y - closestY;
+        double distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+        return distanceSquared < (width * width);
+    }
+
+    private int getCollisionDirection(Brick brick) {
+        double ballCenterX = x;
+        double ballCenterY = y;
+        double brickCenterX = brick.x + brick.width / 2;
+        double brickCenterY = brick.y + brick.height / 2;
+
+        double dx = Math.abs(ballCenterX - brickCenterX);
+        double dy = Math.abs(ballCenterY - brickCenterY);
+
+        if (dx / brick.width > dy / brick.height) {
+            return 1;
+        } else {
+            return 2;
         }
-        if (below == true) {
-            if (brick[brickRow + 1][brickCol].type != "null") {
-                brick[brickRow + 1][brickCol].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 2;
-            }
-        }
-        if (left == true) {
-            if (brick[brickRow][brickCol - 1].type != "null") {
-                brick[brickRow][brickCol - 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 1;
-            }
-        }
-        if (right == true) {
-            if (brick[brickRow][brickCol + 1].type != "null") {
-                brick[brickRow][brickCol + 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                return 1;
-            }
-        }
-        if (above == true && left == true) {
-            if (brick[brickRow - 1][brickCol - 1].type != "null") {
-                brick[brickRow - 1][brickCol - 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
-                        (brickCol) * WIDTHBrick - (int) x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        if (below == true && left == true) {
-            if (brick[brickRow + 1][brickCol - 1].type != "null") {
-                brick[brickRow + 1][brickCol - 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow + 1) * HEIGHTBrick - (int) y) > Math.abs(
-                        (brickCol) * WIDTHBrick - (int) x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        if (above == true && right == true) {
-            if (brick[brickRow - 1][brickCol + 1].type != "null") {
-                brick[brickRow - 1][brickCol + 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow) * HEIGHTBrick - (int) y) > Math.abs(
-                        (brickCol + 1) * WIDTHBrick - (int) x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        if (below == true && right == true) {
-            if (brick[brickRow + 1][brickCol + 1].type != "null") {
-                brick[brickRow + 1][brickCol + 1].BallHit(this, render, media, powerUps, brick, powerUpManager);
-                if (Math.abs((brickRow + 1) * HEIGHTBrick - y) > Math.abs(
-                        (brickCol + 1) * WIDTHBrick - x)) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        }
-        return 0;
     }
 }

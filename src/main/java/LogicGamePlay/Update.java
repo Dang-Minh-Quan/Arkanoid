@@ -218,6 +218,9 @@ public class Update {
                 ball.vx = -ball.vx;
             } else if (collisionResult == 2) {
                 ball.vy = -ball.vy;
+            } else if (collisionResult == 3) {
+                ball.vx = -ball.vx;
+                ball.vy = -ball.vy;
             }
             //Brick b = ball.getLastHitBrick();
             // if (b != null) b.BallHit(ball, render);

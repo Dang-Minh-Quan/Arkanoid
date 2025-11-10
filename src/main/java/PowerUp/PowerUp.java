@@ -37,6 +37,7 @@ public class PowerUp extends AnimationClass {
         this.image = spriteSheet;
         checkActivate = false;
         int randomType = (int) (Math.random() * PU) % PU;
+        randomType = 5;
         switch (randomType) {
             case 0:
                 type = "ball_immortal";
