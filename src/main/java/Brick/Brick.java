@@ -20,8 +20,14 @@ public abstract class Brick extends BaseClass {
     protected GameObject gameObject;
     protected MainImage mainImage;
 
-    public Brick(int i, int j) {
-        super(null, j * WIDTHBrick, i * HEIGHTBrick, WIDTHBrick, HEIGHTBrick);
+    /**
+     * khoi tao brick.
+     *
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
+    public Brick(int x, int y) {
+        super(null, y * WIDTHBrick, x * HEIGHTBrick, WIDTHBrick, HEIGHTBrick);
         cracked = false;
         destroyed = false;
         exploded = false;
@@ -31,6 +37,11 @@ public abstract class Brick extends BaseClass {
 
     public abstract void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps, Brick[][] brick, PowerUpManager powerUpManager);
 
+    /**
+     * pha brick.
+     * @param render ve.
+     * @param media tao am thanh.
+     */
     public void destroyBrick(Render render, MainMedia media, List<PowerUp> powerUps) {
         if (exploded) return;
         exploded = true;
@@ -52,6 +63,12 @@ public abstract class Brick extends BaseClass {
         render.addExplosion(explosionX, explosionY);
     }
 
+    /**
+     * no brick.
+     * @param render ve.
+     * @param media tao am thanh.
+     * @param brick kiem tra va pha.
+\     */
     public void boom(Render render, MainMedia media, List<PowerUp> powerUps,
                      Brick[][] brick, PowerUpManager powerUpManager) {
         int[] a = {0, 0, 0, 1, 1, 1, -1, -1, -1};
@@ -67,7 +84,9 @@ public abstract class Brick extends BaseClass {
         Update();
     }
 
-
+    /**
+     * cap nhat anh brick.
+     */
     public void Update() {
         if (type == "null") {
             image = null;

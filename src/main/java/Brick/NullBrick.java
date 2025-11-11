@@ -9,6 +9,11 @@ import LogicGamePlay.Render;
 import java.util.List;
 
 public class NullBrick extends Brick {
+    /**
+     * khoi tao brick trong.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public NullBrick(int x, int y) {
         super(x, y);
         this.type = "null";

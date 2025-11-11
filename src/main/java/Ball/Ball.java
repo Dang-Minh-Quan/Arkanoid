@@ -27,6 +27,11 @@ public abstract class Ball extends BaseClass {
     protected int[] TailY = new int[TailLength];
     protected boolean collidedWithPaddle = false;
 
+    /**
+     * khoi tao ball.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public Ball(int x, int y) {
         super(null, "normal", x, y, 0, - spvxOriginal, ballRadiusOriginal, ballRadiusOriginal);
         ball = new Circle(x, y, width, Color.BLUE);
@@ -45,6 +50,11 @@ public abstract class Ball extends BaseClass {
         }
     }
 
+    /**
+     * cap nhat vi tri ball.
+     * @param dx vi tri theo phuong x.
+     * @param dy vi tri theo phuong y.
+     */
     public void setBall(int dx, int dy) {
         x = dx;
         y = dy;
@@ -107,7 +117,10 @@ public abstract class Ball extends BaseClass {
         return ball;
     }
 
-    public int checkWallCollision(AtomicBoolean gameRestarted) {
+    /**
+     * kiem tra va cham ball voi tuong.
+     */
+    public int checkWallCollision() {
         if (y >= HEIGHT - height) {
             return -1;
         }
@@ -123,6 +136,11 @@ public abstract class Ball extends BaseClass {
         return 0;
     }
 
+    /**
+     * kiem tra va cham ball voi paddle.
+     * @param paddle dung de kiem tra va cham.
+     * @return 1 neu va cham mat tren paddle, 2 neu va cham 2 canh ben paddle, -1 neu khong va cham.
+     */
     public int checkPaddleCollision(AtomicReference<Paddle> paddle) {
         double ballX = x;
         double ballY = y;
@@ -138,14 +156,17 @@ public abstract class Ball extends BaseClass {
         if (!collisionX || !collisionY) {
             return -1;
         }
-        if (ballX <= paddleLeft && !collisionY) {
-            return 2;
-        } else if (ballX >= paddleRight && !collisionY) {
-            return 3;
+        if (ballX >= paddleLeft - radius / 2 && ballX <= paddleRight + radius / 2) {
+            return 1;
         }
-        return 1;
+        return 2;
     }
 
+    /**
+     * kiem tra bong da va cham voi paddle hay chua.
+     * @param collisionState trang thai va cham -1 la chua, con lai la co.
+     * @return true khi co the va cham voi paddle.
+     */
     public boolean isReadyForPaddleCollision(int collisionState) {
         if (collisionState != -1 && !collidedWithPaddle) {
             collidedWithPaddle = true;
@@ -157,6 +178,13 @@ public abstract class Ball extends BaseClass {
         return false;
     }
 
+    /**
+     * kiem tra va cham ball voi brick.
+     * @param media tao am thanh.
+     * @param brick bricks can kiem tra.
+     * @param render ve.
+     * @return 1 neu va cham hai canh, 2 neu 2 mat tren duoi của brick.
+     */
     public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render,
                                    List<PowerUp> powerUps, PowerUpManager powerUpManager) {
         int brickCol = x / WIDTHBrick;

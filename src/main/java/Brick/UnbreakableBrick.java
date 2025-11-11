@@ -10,6 +10,11 @@ import java.util.List;
 import static LogicGamePlay.Specifications.numBrick;
 
 public class UnbreakableBrick extends Brick {
+    /**
+     * khoi tao brick khong the pha.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public UnbreakableBrick (int x, int y) {
         super(x, y);
         this.image = mainImage.getUnbreakableBrick();

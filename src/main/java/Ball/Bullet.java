@@ -7,9 +7,13 @@ import PowerUp.*;
 
 import java.util.List;
 
-public class Bullet extends Ball{
-
-    public Bullet(int x, int y){
+public class Bullet extends Ball {
+    /**
+     * khoi tao bullet.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
+    public Bullet(int x, int y) {
         super(x, y);
         this.image = mainImage.getBullet();
         this.type = "bullet";
@@ -18,11 +22,11 @@ public class Bullet extends Ball{
     @Override
     public int checkBrickCollision(MainMedia media, Brick[][] brick, Render render,
                                    List<PowerUp> powerUps, PowerUpManager powerUpManager) {
-        return super.checkBrickCollision(media, brick, render, powerUps,powerUpManager);
+        return super.checkBrickCollision(media, brick, render, powerUps, powerUpManager);
     }
 
-    public boolean checkBullet(){
-        return y<0;
+    public boolean checkBullet() {
+        return y < 0;
     }
 
     public void setBullet(int dy) {

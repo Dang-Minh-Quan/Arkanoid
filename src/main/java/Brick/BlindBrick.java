@@ -12,11 +12,17 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class BlindBrick extends  Brick {
+    /**
+     * khoi tao blind brick.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public BlindBrick(int x, int y) {
         super(x, y);
         this.image = mainImage.getBlindBrick();
         this.type = "blind";
     }
+
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
