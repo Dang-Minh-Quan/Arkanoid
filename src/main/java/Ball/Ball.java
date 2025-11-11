@@ -156,8 +156,8 @@ public abstract class Ball extends BaseClass {
         if (!collisionX || !collisionY) {
             return -1;
         }
-        if ((ballX < paddleLeft - radius / 2 && ballX + vx < paddleLeft - radius / 2)
-                || (ballX > paddleRight + radius / 2 && ballX + vx > paddleRight + radius / 2)) {
+        if ((ballX < paddleLeft - radius / 2 && ballX - vx < paddleLeft - radius / 2)
+                || (ballX > paddleRight + radius / 2 && ballX - vx > paddleRight + radius / 2)) {
             return 2;
         }
         return 1;
