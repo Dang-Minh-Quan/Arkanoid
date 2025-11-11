@@ -235,13 +235,5 @@ public class PowerUp extends AnimationClass {
         super.draw(gc);
     }
 
-    /**
-     * Kiểm tra xem power-up còn hoạt động hay không.
-     *
-     * @return true nếu power-up đang hoạt động, false nếu đã bị vô hiệu hóa
-     */
-    public boolean isActive() {
-        return active;
-    }
 }
 
