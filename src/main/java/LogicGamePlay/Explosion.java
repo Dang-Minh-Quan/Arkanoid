@@ -12,7 +12,11 @@ public class Explosion extends AnimationClass{
 
     private static final Image explosionImage = MainImage.getInstance().getExplosion();
 
-
+    /**
+     * hiện thị nổ tại vị trí (x,y).
+     * @param x
+     * @param y
+     */
     public Explosion(int x, int y) {
         super(explosionImage, x, y-WIDTHBrick/2,0,speedPU,
                 (WIDTHBrick+HEIGHTBrick)/2,
@@ -20,6 +24,9 @@ public class Explosion extends AnimationClass{
                 4,4,5);
     }
 
+    /**
+     * cập nhật trạng thái nổ.
+     */
     public void Update() {
         super.Update();
         if (currentFrame >= totalFrames - 1) {
@@ -27,6 +34,10 @@ public class Explosion extends AnimationClass{
         }
     }
 
+    /**
+     *
+     * @param gc GraphicsContext dùng để vẽ ảnh lên canvas
+     */
     public void draw(GraphicsContext gc) {
         if (toBeRemoved) return;
         super.draw(gc);

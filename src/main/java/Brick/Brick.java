@@ -20,6 +20,12 @@ public abstract class Brick extends BaseClass {
     protected GameObject gameObject;
     protected MainImage mainImage;
 
+    /**
+     * Khởi tạo một viên gạch tại vị trí hàng i, cột j trên bảng.
+     *
+     * @param i chỉ số hàng của gạch
+     * @param j chỉ số cột của gạch
+     */
     public Brick(int i, int j) {
         super(null, j * WIDTHBrick, i * HEIGHTBrick, WIDTHBrick, HEIGHTBrick);
         cracked = false;
@@ -29,8 +35,23 @@ public abstract class Brick extends BaseClass {
         mainImage = MainImage.getInstance();
     }
 
+    /**
+     * Hàm trừu tượng xử lý va chạm giữa bóng và gạch.
+     * @param ball
+     * @param render
+     * @param media
+     * @param powerUps
+     * @param brick
+     * @param powerUpManager
+     */
     public abstract void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps, Brick[][] brick, PowerUpManager powerUpManager);
 
+    /**
+     * xử lý logic khi gạch bị phá hủy.
+     * @param render
+     * @param media
+     * @param powerUps
+     */
     public void destroyBrick(Render render, MainMedia media, List<PowerUp> powerUps) {
         if (exploded) return;
         exploded = true;
@@ -46,12 +67,24 @@ public abstract class Brick extends BaseClass {
         media.playDestroyBrick();
     }
 
+    /**
+     * hiện explosion.
+     * @param render
+     */
     public void explosion(Render render) {
         int explosionX = (x + width / 2 - 32);
         int explosionY = (y + height / 2 - 32);
         render.addExplosion(explosionX, explosionY);
     }
 
+    /**
+     * hiệu ứng nổ lan truyền.
+     * @param render
+     * @param media
+     * @param powerUps
+     * @param brick
+     * @param powerUpManager
+     */
     public void boom(Render render, MainMedia media, List<PowerUp> powerUps,
                      Brick[][] brick, PowerUpManager powerUpManager) {
         int[] a = {0, 0, 0, 1, 1, 1, -1, -1, -1};
@@ -67,7 +100,9 @@ public abstract class Brick extends BaseClass {
         Update();
     }
 
-
+    /**
+     * load ảnh gạch theo type.
+     */
     public void Update() {
         if (type == "null") {
             image = null;
