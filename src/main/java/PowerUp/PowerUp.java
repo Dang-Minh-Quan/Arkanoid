@@ -234,6 +234,8 @@ public class PowerUp extends AnimationClass {
         if (!active || image == null) return;
         super.draw(gc);
     }
-
+    public boolean isActive() {
+        return active;
+    }
 }
 
