@@ -104,7 +104,6 @@ public class Render {
 
     private void renderBalls(GraphicsContext gc, List<Ball> balls) {
         for (Ball b : balls) {
-            System.out.println(b.vx + " " + b.vy);
             b.UpdateTail();
             Image img;
             img = b.image;

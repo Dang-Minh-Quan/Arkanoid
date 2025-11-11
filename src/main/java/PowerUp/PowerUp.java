@@ -40,7 +40,7 @@ public class PowerUp extends AnimationClass {
         randomType = 5;
         switch (randomType) {
             case 0:
-                type = "ball_immortal";
+                type = "ball_infinity";
                 break;
             case 1:
                 type = "paddle_long";
@@ -67,7 +67,7 @@ public class PowerUp extends AnimationClass {
             case "blind":
                 TimePowerUp = TimePowerUpOriginal/2;
                 break;
-            case "ball_immortal":
+            case "ball_infinity":
                 TimePowerUp = TimePowerUpOriginal/2;
                 break;
             case "paddle_shoot":
@@ -100,7 +100,7 @@ public class PowerUp extends AnimationClass {
             case "blind":
                 blind = false;
                 break;
-            case "ball_immortal", "ball_boom":
+            case "ball_infinity", "ball_boom":
                 for (int i = 0; i < balls.size(); i++) {
                     Ball newball = gameObject.replaceBall(balls.get(i), "normal");
                     balls.set(i, newball);
@@ -133,7 +133,7 @@ public class PowerUp extends AnimationClass {
             case "blind":
                 blind = true;
                 break;
-            case "ball_immortal":
+            case "ball_infinity":
               media = MainMedia.getInstance();
               media.playPowerUp();
                 for (int i = 0; i < balls.size(); i++) {

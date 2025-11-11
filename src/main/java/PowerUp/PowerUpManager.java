@@ -19,7 +19,7 @@ public class PowerUpManager {
         powerUp.Activate(balls, paddle);
         activePowerUp.add(powerUp);
         switch (powerUp.type) {
-            case "ball_immortal", "ball_boom":
+            case "ball_infinity", "ball_boom":
                 activeBall++;
                 break;
             case "paddle_long", "paddle_shoot":
@@ -32,7 +32,7 @@ public class PowerUpManager {
         } else {
             Sheduler.schedule(() -> {
                 switch (powerUp.type) {
-                    case "ball_immortal", "ball_boom":
+                    case "ball_infinity", "ball_boom":
                         activeBall--;
                         if (activeBall == 0) {
                             powerUp.StopPowerUp(balls, paddle);
@@ -64,7 +64,7 @@ public class PowerUpManager {
                     k = "blind";
                     break;
                 case 0:
-                    k = "ball_immortal";
+                    k = "ball_infinity";
                     break;
                 case 1:
                     k = "paddle_long";

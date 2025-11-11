@@ -8,7 +8,7 @@ import static Interface.GamePlayController.*;
 
 public class Specifications {
 
-    public static final int COL = 9;
+    public static final int COL = 10;
     public static final int ROW = 10;
     public static final int vxOriginal = 10;
     public static final int LevelMax = 4;
@@ -26,7 +26,7 @@ public class Specifications {
     public static final int probability = 8;
     public static final int TailLength = 40;
     public static final int HEIGHTBar = 150;
-    public static final int ballRadiusOriginal = 10;
+    public static final int ballRadiusOriginal = 12;
     public static AtomicInteger heartCount = new AtomicInteger(3);
     public static boolean winLevel = false;
     public static AtomicInteger Level = new AtomicInteger(1);
