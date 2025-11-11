@@ -23,15 +23,43 @@ import static LogicGamePlay.Specifications.*;
 public class Render {
     private long lastTime = 0;
     private final List<Explosion> explosions = new ArrayList<>();
-    private final MainImage image = MainImage.getInstance();
+    private final MainImage image;
     private Font pixelFont;
+    private Image bonusImage;
+    private long bonusImageStartTime = 0;
+    private double bonusX = 0;
+    private double bonusY = 0;
+    private double bonusDuration = 1;
+
+    public Render() {
+        image = MainImage.getInstance();
+        bonusImage = image.getBonusPoints();
+    }
 
     public void addExplosion(int x, int y) {
         explosions.add(new Explosion(x, y));
     }
 
+    /**
+     * Thêm một vật phẩm (PowerUp) mới vào danh sách hiện có.
+     *
+     * @param x         toạ độ X của vật phẩm
+     * @param y         toạ độ Y của vật phẩm
+     * @param powerUps  danh sách chứa các vật phẩm hiện có
+     */
     public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
         powerUps.add(new PowerUp(image.getPowerUp(), x, y));
+    }
+
+    /**
+     * hiện powerup bonuspoints
+     * @param x
+     * @param y
+     */
+    public void showBonusImage(double x, double y) {
+        bonusX = x;
+        bonusY = y;
+        bonusImageStartTime = System.currentTimeMillis();
     }
 
     private void renderPowerUp(GraphicsContext gc, List<PowerUp> powerUps) {
@@ -44,10 +72,19 @@ public class Render {
         powerUps.removeIf(p -> !p.isActive());
     }
 
+    /**
+     * Hàm chính để vẽ toàn bộ khung hình của game.
+     *
+     * @param gc         đối tượng GraphicsContext để vẽ
+     * @param balls      danh sách bóng hiện tại
+     * @param paddle     thanh đỡ người chơi
+     * @param brick      ma trận các viên gạch
+     * @param powerUps   danh sách vật phẩm
+     * @param bullets    danh sách đạn (nếu có)
+     */
     public void renderGame(GraphicsContext gc, List<Ball> balls, AtomicReference<Paddle> paddle,
                            Brick[][] brick, List<PowerUp> powerUps, List<Bullet> bullets) {
         gc.clearRect(0, 0, WIDTH, HEIGHT);
-        //renderBackGround(gc);
         renderBrick(gc, brick);
         renderExplosions(gc);
         renderBalls(gc, balls);
@@ -62,6 +99,11 @@ public class Render {
         }
     }
 
+    /**
+     * hiển thị đạn khi ăn pu type 5.
+     * @param gc
+     * @param bullets
+     */
     private void renderBullet(GraphicsContext gc, List<Bullet> bullets) {
         for (Bullet b : bullets) {
             Image bulletImage = image.getBullet();
@@ -130,6 +172,10 @@ public class Render {
         }
     }
 
+    /**
+     * hiển thị điểm số, mạng, level.
+     * @param gc
+     */
     private void renderHUD(GraphicsContext gc) {
         gc.setFill(Color.rgb(60, 30, 10, 0.9));
         pixelFont = Font.loadFont(
@@ -144,9 +190,18 @@ public class Render {
         int livesValue = heartCount.get();
         int levelValue = Level.get();
 
-        gc.fillText(String.valueOf(scoreValue), 90, HEIGHT + 85);
-        gc.fillText(String.valueOf(livesValue), 210, HEIGHT + 85);
-        gc.fillText(String.valueOf(levelValue), 330, HEIGHT + 85);
+        gc.fillText(String.valueOf(scoreValue), 97, HEIGHT + 85);
+        gc.fillText(String.valueOf(livesValue), 225, HEIGHT + 85);
+        gc.fillText(String.valueOf(levelValue), 352, HEIGHT + 85);
 
+        long elapsed = System.currentTimeMillis() - bonusImageStartTime;
+        if (elapsed < bonusDuration * 1000) {
+            double offsetY = elapsed * 0.03;
+            gc.drawImage(
+                    bonusImage,
+                    bonusX - bonusImage.getWidth() / 2,
+                    bonusY - offsetY - bonusImage.getHeight() / 2
+            );
+        }
     }
 }

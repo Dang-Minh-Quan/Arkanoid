@@ -7,7 +7,12 @@ public class HighScoreList implements Serializable, Comparable<HighScoreList> {
     private String name;
     private int score;
 
-    public HighScoreList(String name, int score) {
+  /**
+   * Constructor.
+   * @param name
+   * @param score
+   */
+  public HighScoreList(String name, int score) {
         this.name = name;
         this.score = score;
     }

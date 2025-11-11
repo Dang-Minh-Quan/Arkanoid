@@ -64,7 +64,7 @@ public class PowerUp extends AnimationClass {
     private void checkTimePowerUp(String type) {
         switch (type) {
             case "blind":
-                TimePowerUp = TimePowerUpOriginal/2;
+                TimePowerUp = TimePowerUpOriginal / 2;
                 break;
             case "infinity ball":
                 TimePowerUp = TimePowerUpOriginal/2;
@@ -87,6 +87,14 @@ public class PowerUp extends AnimationClass {
         }
     }
 
+    /**
+     * Cập nhật trạng thái của pu.
+     * <p>
+     * Nếu đang hoạt động ({@code active == true}), vị trí Y sẽ được cập nhật
+     * theo vận tốc {@code vy}. Nếu đi ra ngoài màn hình (y > 720),
+     * nó sẽ bị vô hiệu hóa ({@code active = false}).
+     * {@code Update()} cập nhật
+     */
     public void update() {
         if (!active) return;
         y += vy;
@@ -158,7 +166,7 @@ public class PowerUp extends AnimationClass {
             case "multi ball":
               media = MainMedia.getInstance();
               media.playPowerUp();
-                Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal ball");
+                Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal");
                 balls.add(newBall);
                 break;
             case "explosive ball":

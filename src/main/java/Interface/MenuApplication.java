@@ -11,6 +11,11 @@ import java.io.IOException;
 
 public class MenuApplication extends Application {
 
+  /**
+   * Chạy chương trình.
+   * @param stage
+   * @throws IOException
+   */
     @Override
     public void start(Stage stage) throws IOException {
         MainMedia media = MainMedia.getInstance();

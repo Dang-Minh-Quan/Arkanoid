@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="GamePlay" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.GamePlayController">
+<AnchorPane fx:id="GamePlay" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="540.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.GamePlayController">
    <children>
-      <Pane fx:id="gameLayer" prefHeight="700.0" prefWidth="500.0">
+      <Pane fx:id="gameLayer" prefHeight="700.0" prefWidth="540.0">
          <children>
-            <Button fx:id="ButtonPause" cancelButton="true" layoutX="411.0" layoutY="584.0" mnemonicParsing="false" onAction="#Pause" prefHeight="42.0" prefWidth="48.0">
+            <Button fx:id="ButtonPause" cancelButton="true" layoutX="445.0" layoutY="582.0" mnemonicParsing="false" onAction="#Pause" prefHeight="42.0" prefWidth="48.0">
                <graphic>
-                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="49.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Image/PauseButton.png" />
                      </image>
@@ -20,9 +20,9 @@
                </graphic></Button>
          </children>
       </Pane>
-      <Pane fx:id="PauseMenu" layoutX="112.0" layoutY="281.0" prefHeight="138.0" prefWidth="276.0" visible="false">
+      <Pane fx:id="PauseMenu" layoutX="132.0" layoutY="281.0" prefHeight="138.0" prefWidth="276.0" visible="false">
          <children>
-            <ImageView fitHeight="700.0" fitWidth="500.0" layoutX="-112.0" layoutY="-281.0" pickOnBounds="true">
+            <ImageView fitHeight="700.0" fitWidth="540.0" layoutX="-132.0" layoutY="-281.0" pickOnBounds="true">
                <image>
                   <Image url="@Image/BlurBackground.png" />
                </image>
@@ -59,7 +59,7 @@
             </Button>
          </children>
       </Pane>
-      <ImageView fx:id="LoadingScene" fitHeight="700.0" fitWidth="500.0" pickOnBounds="true">
+      <ImageView fx:id="LoadingScene" fitHeight="700.0" fitWidth="540.0" pickOnBounds="true">
          <image>
             <Image url="@Image/Loading.png" />
          </image>

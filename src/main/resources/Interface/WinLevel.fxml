@@ -5,14 +5,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainMenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="540.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainMenuController">
    <children>
-      <ImageView fitHeight="700.0" fitWidth="500.0" pickOnBounds="true">
+      <ImageView fitHeight="700.0" fitWidth="540.0" pickOnBounds="true">
          <image>
             <Image url="@Image/WinLevel.png" />
          </image>
       </ImageView>
-      <Button fx:id="ButtonNextLevel" focusTraversable="false" layoutX="121.0" layoutY="305.0" mnemonicParsing="false" onAction="#NextLevel" prefHeight="0.0" prefWidth="258.0">
+      <Button fx:id="ButtonNextLevel" focusTraversable="false" layoutX="141.0" layoutY="305.0" mnemonicParsing="false" onAction="#NextLevel" prefHeight="0.0" prefWidth="258.0">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="240.0" pickOnBounds="true">
                <image>
@@ -20,7 +20,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="ButtonPlayAgain" focusTraversable="false" layoutX="121.0" layoutY="382.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="27.0" prefWidth="258.0">
+      <Button fx:id="ButtonPlayAgain" focusTraversable="false" layoutX="141.0" layoutY="382.0" mnemonicParsing="false" onAction="#PlayAgain" prefHeight="27.0" prefWidth="258.0">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="240.0" pickOnBounds="true">
                <image>
@@ -28,7 +28,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="BackToMenu" focusTraversable="false" layoutX="119.0" layoutY="460.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="57.0" prefWidth="247.0">
+      <Button fx:id="BackToMenu" focusTraversable="false" layoutX="139.0" layoutY="460.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="57.0" prefWidth="247.0">
          <graphic>
             <ImageView fitHeight="70.0" fitWidth="242.0" pickOnBounds="true">
                <image>

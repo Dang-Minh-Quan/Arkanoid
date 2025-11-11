@@ -35,12 +35,22 @@ public abstract class Brick extends BaseClass {
         mainImage = MainImage.getInstance();
     }
 
+    /**
+     * Hàm trừu tượng xử lý va chạm giữa bóng và gạch.
+     * @param ball
+     * @param render
+     * @param media
+     * @param powerUps
+     * @param brick
+     * @param powerUpManager
+     */
     public abstract void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps, Brick[][] brick, PowerUpManager powerUpManager);
 
     /**
-     * pha brick.
-     * @param render ve.
-     * @param media tao am thanh.
+     * xử lý logic khi gạch bị phá hủy.
+     * @param render
+     * @param media
+     * @param powerUps
      */
     public void destroyBrick(Render render, MainMedia media, List<PowerUp> powerUps) {
         if (exploded) return;
@@ -57,6 +67,10 @@ public abstract class Brick extends BaseClass {
         media.playDestroyBrick();
     }
 
+    /**
+     * hiện explosion.
+     * @param render
+     */
     public void explosion(Render render) {
         int explosionX = (x + width / 2 - 32);
         int explosionY = (y + height / 2 - 32);
@@ -64,11 +78,13 @@ public abstract class Brick extends BaseClass {
     }
 
     /**
-     * no brick.
-     * @param render ve.
-     * @param media tao am thanh.
-     * @param brick kiem tra va pha.
-\     */
+     * hiệu ứng nổ lan truyền.
+     * @param render
+     * @param media
+     * @param powerUps
+     * @param brick
+     * @param powerUpManager
+     */
     public void boom(Render render, MainMedia media, List<PowerUp> powerUps,
                      Brick[][] brick, PowerUpManager powerUpManager) {
         int[] a = {0, 0, 0, 1, 1, 1, -1, -1, -1};
@@ -85,7 +101,7 @@ public abstract class Brick extends BaseClass {
     }
 
     /**
-     * cap nhat anh brick.
+     * load ảnh gạch theo type.
      */
     public void Update() {
         if (type == "null") {

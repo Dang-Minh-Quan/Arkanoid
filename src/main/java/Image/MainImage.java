@@ -8,6 +8,12 @@ public class MainImage {
 
     private static MainImage instance;
 
+    /**
+     * Phương thức trả về thể hiện duy nhất của MainImage.
+     * Nếu chưa tồn tại, nó sẽ tự động khởi tạo.
+     *
+     * @return thể hiện duy nhất của MainImage
+     */
     public static synchronized MainImage getInstance() {
         if (instance == null) {
             instance = new MainImage();
@@ -17,15 +23,19 @@ public class MainImage {
 
     private Image normalBrick, unbreakableBrick, strongBrick, explosiveBrick, brokenBrick, blindBrick;
     private Image normalPaddle, longPaddle, gunPaddle, normalBall, infinityBall, explosiveBall, bullet,
-            background, explosion, bar, powerUp, squidInk;
+            background, explosion, bar, powerUp, squidInk, bonusPoints;
 
+    /**
+     * Constructor được đặt ở mức private để ngăn việc tạo đối tượng trực tiếp bên ngoài.
+     * Chỉ có thể truy cập thông qua phương thức {@link #getInstance()}.
+     */
     private MainImage() {
         loadImages();
     }
 
     private void loadImages() {
         background = new Image(getClass().getResourceAsStream("/Interface/Image/background.png"));
-        normalBrick= new Image(getClass().getResourceAsStream("/Interface/Image/Brick/normalBrick.png"),
+        normalBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/normalBrick.png"),
                 60, 30, false, false);
         unbreakableBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/unbreakableBrick.png"),
                 60, 30, false, false);
@@ -59,6 +69,8 @@ public class MainImage {
                 Specifications.WIDTH, Specifications.HEIGHTBar, false, false);
         squidInk = new Image(getClass().getResourceAsStream("/Interface/Image/SquidInk.png"),
                 256, 256, true, false);
+        bonusPoints = new Image(getClass().getResourceAsStream("/Interface/Image/BonusPoints.png"),
+                80, 50, true, false);
     }
 
     public Image getBackground() {
@@ -129,5 +141,12 @@ public class MainImage {
         return explosiveBall;
     }
 
-    public Image getSquidInk(){return squidInk;}
+    public Image getSquidInk() {
+        return squidInk;
+    }
+
+    public Image getBonusPoints() {
+        return bonusPoints;
+    }
+
 }

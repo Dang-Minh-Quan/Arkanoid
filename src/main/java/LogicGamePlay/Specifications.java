@@ -16,10 +16,10 @@ public class Specifications {
     public static final int paddleHeightOriginal = 20;
     public static final int spvxOriginal = 10;
     public static int numBrick = 0;
-    public static final int HEIGHT = 550;
-    public static final int WIDTH = 500;
-    public static final int HEIGHTBrick = 30;
-    public static final int WIDTHBrick = WIDTH / COL;
+    public static int HEIGHT = 550;
+    public static int WIDTH = 540;
+    public static int HEIGHTBrick = 30;
+    public static int WIDTHBrick = WIDTH / COL;
     public static int speedPU = 2;
     public static int RADIUSPU = HEIGHTBrick / 2;
     public static int PU = 6;
