@@ -18,86 +18,74 @@ import java.util.concurrent.atomic.AtomicReference;
 import static LogicGamePlay.Specifications.*;
 
 public class PowerUp extends AnimationClass {
-    private boolean active = true;
-    private MainMedia media;
-    private Image image;
-    private Circle HitBoxPowerUp;
-    private GameObject gameObject = new GameObject();
-    int TimePowerUp = TimePowerUpOriginal;
-    public boolean checkActivate;
+  private boolean active = true;
+  private MainMedia media;
+  private Image image;
+  private Circle HitBoxPowerUp;
+  private GameObject gameObject = new GameObject();
+  int TimePowerUp = TimePowerUpOriginal;
+  public boolean checkActivate;
 
-    public PowerUp(String type) {
-        super(type);
-        checkTimePowerUp(type);
-        gameObject = new GameObject();
-    }
+  public PowerUp(String type) {
+    super(type);
+    checkTimePowerUp(type);
+    gameObject = new GameObject();
+  }
 
-    /**
-     * Khởi tạo power-up ngẫu nhiên tại vị trí (x, y) với sprite sheet.
-     *
-     * @param spriteSheet ảnh sprite chứa các khung animation
-     * @param x           tọa độ X
-     * @param y           tọa độ Y
-     */
-    public PowerUp(Image spriteSheet, int x, int y) {
-        super(spriteSheet, x, y, 0, speedPU, RADIUSPU, RADIUSPU, 4, 4, 5);
-        this.image = spriteSheet;
-        checkActivate = false;
-        int randomType = (int) (Math.random() * PU) % PU;
-        switch (randomType) {
-            case 0:
-                type = "ball_immortal";
-                break;
-            case 1:
-                type = "paddle_long";
-                break;
-            case 2:
-                type = "ball_add";
-                break;
-            case 3:
-                type = "ball_boom";
-                break;
-            case 4:
-                type = "bonus_point";
-                break;
-            case 5:
-                type = "paddle_shoot";
-                break;
-        }
-        checkTimePowerUp(type);
-        HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
+  public PowerUp(Image spriteSheet, int x, int y) {
+    super(spriteSheet, x, y, 0, speedPU, RADIUSPU, RADIUSPU, 4, 4, 5);
+    this.image = spriteSheet;
+    checkActivate = false;
+    int randomType = (int) (Math.random() * PU) % PU;
+    switch (randomType) {
+      case 0:
+        type = "infinity ball";
+        break;
+      case 1:
+        type = "long paddle";
+        break;
+      case 2:
+        type = "multi ball";
+        break;
+      case 3:
+        type = "explosive ball";
+        break;
+      case 4:
+        type = "bonus point";
+        break;
+      case 5:
+        type = "gun paddle";
+        break;
     }
+    checkTimePowerUp(type);
+    HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
+  }
 
-    /**
-     * Kiểm tra và thiết lập thời gian tồn tại của power-up dựa trên loại.
-     *
-     * @param type loại power-up
-     */
-    private void checkTimePowerUp(String type) {
-        switch (type) {
-            case "blind":
-                TimePowerUp = TimePowerUpOriginal / 2;
-                break;
-            case "ball_immortal":
-                TimePowerUp = TimePowerUpOriginal / 2;
-                break;
-            case "paddle_shoot":
-                TimePowerUp = TimePowerUpOriginal;
-                break;
-            case "ball_add":
-                TimePowerUp = 0;
-                break;
-            case "ball_boom":
-                TimePowerUp = TimePowerUpOriginal;
-                break;
-            case "bonus_point":
-                TimePowerUp = 0;
-                break;
-            case "paddle_long":
-                TimePowerUp = TimePowerUpOriginal;
-                break;
-        }
+  private void checkTimePowerUp(String type) {
+    switch (type) {
+      case "blind":
+        TimePowerUp = TimePowerUpOriginal/2;
+        break;
+      case "infinity ball":
+        TimePowerUp = TimePowerUpOriginal/2;
+        break;
+      case "gun paddle":
+        TimePowerUp = TimePowerUpOriginal;
+        break;
+      case "multi ball":
+        TimePowerUp = 0;
+        break;
+      case "explosive ball":
+        TimePowerUp = TimePowerUpOriginal;
+        break;
+      case "bonus point":
+        TimePowerUp = 0;
+        break;
+      case "long paddle":
+        TimePowerUp = TimePowerUpOriginal;
+        break;
     }
+  }
 
     /**
      * Cập nhật trạng thái của pu.
@@ -114,114 +102,93 @@ public class PowerUp extends AnimationClass {
         Update();
     }
 
-    /**
-     * Kết thúc hiệu ứng power-up.
-     * <p>
-     * Dựa trên loại, sẽ trả paddle, ball, hay hiệu ứng mù về trạng thái bình thường.
-     *
-     * @param balls  danh sách bóng hiện tại
-     * @param paddle paddle của người chơi
-     */
-    public void StopPowerUp(List<Ball> balls, AtomicReference<Paddle> paddle) {
-        switch (type) {
-            case "blind":
-                blind = false;
-                break;
-            case "ball_immortal", "ball_boom":
-                for (int i = 0; i < balls.size(); i++) {
-                    Ball newball = gameObject.replaceBall(balls.get(i), "normal");
-                    balls.set(i, newball);
-                }
-                break;
-            case "paddle_shoot", "paddle_long":
-                paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "normal"));
-                break;
+  public void StopPowerUp(List<Ball> balls, AtomicReference<Paddle> paddle) {
+    switch (type) {
+      case "blind":
+        blind = false;
+        break;
+      case "infinity ball", "explosive ball":
+        for (int i = 0; i < balls.size(); i++) {
+          Ball newball = gameObject.replaceBall(balls.get(i), "normal");
+          balls.set(i, newball);
         }
-        TimePowerUp--;
+        break;
+      case "gun paddle", "long paddle":
+        paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "normal"));
+        break;
     }
+    TimePowerUp--;
+  }
 
-    /**
-     * Cập nhật va chạm của power-up với paddle và kiểm tra xem có ra khỏi màn hình.
-     *
-     * @param balls    danh sách bóng hiện tại
-     * @param paddle   paddle của người chơi
-     * @param powerUps danh sách power-up
-     * @return 0: chưa va chạm, 1: va chạm với paddle, 2: ra khỏi màn hình
-     */
-    public int UpdatePU(List<Ball> balls, AtomicReference<Paddle> paddle, List<PowerUp> powerUps) {
-        y = y + vy;
-        HitBoxPowerUp.setCenterY(y);
-        if (checkActivate == false) {
-            if (Shape.intersect(HitBoxPowerUp, paddle.get().getPaddle()).getBoundsInLocal().getWidth() > 0) {
-                return 1;
-            }
-            if (y == HEIGHT + RADIUSPU) {
-                return 2;
-            }
-        }
-        return 0;
+  public int UpdatePU(List<Ball> balls, AtomicReference<Paddle> paddle, List<PowerUp> powerUps) {
+    y = y + vy;
+    HitBoxPowerUp.setCenterY(y);
+    if (checkActivate == false) {
+      if (Shape.intersect(HitBoxPowerUp, paddle.get().getPaddle()).getBoundsInLocal().getWidth() > 0) {
+        return 1;
+      }
+      if (y == HEIGHT + RADIUSPU) {
+        return 2;
+      }
     }
+    return 0;
+  }
 
-    /**
-     * Kích hoạt hiệu ứng power-up dựa trên loại.
-     *
-     * @param balls  danh sách bóng hiện tại
-     * @param paddle paddle của người chơi
-     */
-    public void Activate(List<Ball> balls, AtomicReference<Paddle> paddle) {
-        switch (type) {
-            case "blind":
-                blind = true;
-                break;
-            case "ball_immortal":
-                media = MainMedia.getInstance();
-                media.playPowerUp();
-                for (int i = 0; i < balls.size(); i++) {
-                    Ball newball = gameObject.replaceBall(balls.get(i), "infinity");
-                    balls.set(i, newball);
-                }
-                break;
-            case "paddle_long":
-                media = MainMedia.getInstance();
-                media.playPowerUp();
-                if (paddle.get().type != "long") {
-                    int xx = paddleWidthOriginal / 2;
-                    if (paddle.get().width + paddle.get().x + xx > WIDTH) {
-                        xx = xx + (paddle.get().width + paddle.get().x + paddleWidthOriginal / 2 - WIDTH);
-                    } else {
-                        if (paddle.get().x - xx < 0) {
-                            xx = xx - (paddle.get().x - paddleWidthOriginal / 2);
-                        }
-                    }
-                    paddle.set(gameObject.createPaddle(paddle.get().x - xx, paddle.get().y, "long"));
-                }
-                break;
-            case "ball_add":
-                media = MainMedia.getInstance();
-                media.playPowerUp();
-                Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal ball");
-                balls.add(newBall);
-                break;
-            case "ball_boom":
-                media = MainMedia.getInstance();
-                media.playPowerUp();
-                for (int i = 0; i < balls.size(); i++) {
-                    Ball newball = gameObject.replaceBall(balls.get(i), "explosive");
-                    balls.set(i, newball);
-                }
-                break;
-            case "bonus_point":
-                media = MainMedia.getInstance();
-                media.playPowerUp();
-                score.addAndGet(50);
-                break;
-            case "paddle_shoot":
-                media = MainMedia.getInstance();
-                media.playPowerUp();
-                paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "gun"));
-                break;
+
+  public void Activate(List<Ball> balls, AtomicReference<Paddle> paddle) {
+    switch (type) {
+      case "blind":
+        blind = true;
+        break;
+      case "infinity ball":
+        media = MainMedia.getInstance();
+        media.playPowerUp();
+        for (int i = 0; i < balls.size(); i++) {
+          Ball newball = gameObject.replaceBall(balls.get(i), "infinity");
+          balls.set(i, newball);
         }
+        break;
+      case "long paddle":
+        media = MainMedia.getInstance();
+        media.playPowerUp();
+        if (paddle.get().type != "long") {
+          int xx = paddleWidthOriginal / 2;
+          if (paddle.get().width + paddle.get().x + xx > WIDTH) {
+            xx = xx + (paddle.get().width + paddle.get().x + paddleWidthOriginal / 2 - WIDTH);
+          } else {
+            if (paddle.get().x - xx < 0) {
+              xx = xx - (paddle.get().x - paddleWidthOriginal / 2);
+            }
+          }
+          paddle.set(gameObject.createPaddle(paddle.get().x - xx, paddle.get().y, "long"));
+        }
+        break;
+      case "multi ball":
+        media = MainMedia.getInstance();
+        media.playPowerUp();
+        Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal ball");
+        balls.add(newBall);
+        break;
+      case "explosive ball":
+        media = MainMedia.getInstance();
+        media.playPowerUp();
+        for (int i = 0; i < balls.size(); i++) {
+          Ball newball = gameObject.replaceBall(balls.get(i), "explosive");
+          balls.set(i, newball);
+        }
+        break;
+      case "bonus point":
+        media = MainMedia.getInstance();
+        media.playPowerUp();
+        score.addAndGet(50);
+        break;
+      case "gun paddle":
+        media = MainMedia.getInstance();
+        media.playPowerUp();
+        paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "gun"));
+        break;
     }
+  }
 
     /**
      * Vẽ pu lên màn hình nếu nó đang hoạt động.
@@ -234,8 +201,9 @@ public class PowerUp extends AnimationClass {
         if (!active || image == null) return;
         super.draw(gc);
     }
-    public boolean isActive() {
-        return active;
-    }
+
+  public boolean isActive() {
+    return active;
+  }
 }
 

@@ -11,9 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import static LogicGamePlay.Specifications.*;
 import static javafx.util.Duration.ZERO;
 
-/**
- * Quản lý toàn bộ âm thanh và nhạc nền của game Arkanoid.
- */
+
 public class MainMedia {
 
     private static MainMedia instance;
@@ -44,47 +42,41 @@ public class MainMedia {
         LoadMedia();
     }
 
-    /**
-     * Tắt toàn bộ âm thanh nhạc nền và hiệu ứng.
-     */
     public void muteAllMedia() {
-        if (!Muted) {
-            GameplayMusic.setVolume(0.0);
-            MenuMusic.setVolume(0.0);
-            BackGround.setVolume(0.0);
-            destroyBrick.setVolume(0.0);
-            PressButton.setVolume(0.0);
-            PowerUp.setVolume(0.0);
-            Win.setVolume(0.0);
-            GameOver.setVolume(0.0);
+      if (!Muted) {
+        GameplayMusic.setVolume(0.0);
+        MenuMusic.setVolume(0.0);
+        BackGround.setVolume(0.0);
+        destroyBrick.setVolume(0.0);
+        PressButton.setVolume(0.0);
+        PowerUp.setVolume(0.0);
+        Win.setVolume(0.0);
+        GameOver.setVolume(0.0);
 
-            imPact.setVolume(0.0);
-            Muted = true;
-        }
+        imPact.setVolume(0.0);
+        Muted = true;
+      }
     }
 
-    /**
-     * Bật toàn bộ âm thanh nhạc nền và hiệu ứng.
-     */
-    public void unmuteAllMedia() {
-        if (Muted) {
-            GameplayMusic.setVolume(0.1);
-            MenuMusic.setVolume(0.3);
-            BackGround.setVolume(1.0);
-            destroyBrick.setVolume(1.0);
-            PressButton.setVolume(1.0);
-            PowerUp.setVolume(2.0);
-            Win.setVolume(2.0);
-            GameOver.setVolume(3.0);
-            imPact.setVolume(0.5);
+  public void unmuteAllMedia() {
+    if (Muted) {
+      GameplayMusic.setVolume(0.5);
+      MenuMusic.setVolume(0.8);
+      BackGround.setVolume(1.0);
+      destroyBrick.setVolume(1.0);
+      PressButton.setVolume(1.0);
+      PowerUp.setVolume(2.0);
+      Win.setVolume(2.0);
+      GameOver.setVolume(3.0);
+      imPact.setVolume(0.5);
 
-            Muted = false;
-        }
+      Muted = false;
     }
+  }
 
-    public static boolean isMuted() {
-        return Muted;
-    }
+  public static boolean isMuted() {
+    return Muted;
+  }
 
     public void playGamePlayMusic() {
         if (isLoaded && GameplayMusic != null) {
@@ -134,11 +126,11 @@ public class MainMedia {
         }
     }
 
-    public void playPowerUp() {
-        if (isLoaded && PowerUp != null) {
-            PowerUp.play();
-        }
+  public void playPowerUp() {
+    if (isLoaded && PowerUp != null) {
+      PowerUp.play();
     }
+  }
 
     public void playImPact() {
         if (isLoaded && imPact != null) {
@@ -147,54 +139,54 @@ public class MainMedia {
     }
 
 
-    public void playPressButton() {
+  public void playPressButton() {
         if (isLoaded && PressButton != null) {
             PressButton.play();
         }
     }
 
-    public void playGameOver() {
-        if (isLoaded && GameOver != null) {
-            GameOver.play();
-        }
+  public void playGameOver() {
+    if (isLoaded && GameOver != null) {
+      GameOver.play();
     }
+  }
 
-    public void playWin() {
-        if (isLoaded && Win != null) {
-            Win.play();
-        }
+  public void playWin() {
+    if (isLoaded && Win != null) {
+      Win.play();
     }
+  }
 
-    public void LoadMedia() {
-        if (!isLoaded) {
-            media = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
-            GameplayMusic = new MediaPlayer((media));
-            GameplayMusic.setVolume(0.1);
-            GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            media = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
-            MenuMusic = new MediaPlayer((media));
-            MenuMusic.setVolume(0.3);
-            MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
-            media = new Media(getClass().getResource("/Interface/media/BackGround.mp4").toExternalForm());
-            BackGround = new MediaPlayer(media);
-            BackGround.setCycleCount(MediaPlayer.INDEFINITE);
-            BackGroundView = new MediaView(BackGround);
-            BackGroundView.setFitWidth(WIDTH);
-            BackGroundView.setFitHeight(HEIGHT + HEIGHTBar);
-            BackGroundView.setPreserveRatio(false);
-            destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
-            PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
-            GameOver = new AudioClip(getClass().getResource("/Interface/media/GameOver.mp3").toExternalForm());
-            Win = new AudioClip(getClass().getResource("/Interface/media/Win.mp3").toExternalForm());
-            PowerUp = new AudioClip(getClass().getResource("/Interface/media/PowerUp.mp3").toExternalForm());
-            imPact = new AudioClip(getClass().getResource("/Interface/media/impact.mp3").toExternalForm());
-            destroyBrick.setVolume(1);
-            PressButton.setVolume(1);
-            GameOver.setVolume(3);
-            Win.setVolume(2);
-            PowerUp.setVolume(2);
-            imPact.setVolume(0.5);
-            isLoaded = true;
-        }
+  public void LoadMedia() {
+    if (!isLoaded) {
+      media = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
+      GameplayMusic = new MediaPlayer((media));
+      GameplayMusic.setVolume(0.5);
+      GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
+      media = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
+      MenuMusic = new MediaPlayer((media));
+      MenuMusic.setVolume(0.8);
+      MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
+      media = new Media(getClass().getResource("/Interface/media/BackGround.mp4").toExternalForm());
+      BackGround = new MediaPlayer(media);
+      BackGround.setCycleCount(MediaPlayer.INDEFINITE);
+      BackGroundView = new MediaView(BackGround);
+      BackGroundView.setFitWidth(WIDTH);
+      BackGroundView.setFitHeight(HEIGHT + HEIGHTBar);
+      BackGroundView.setPreserveRatio(false);
+      destroyBrick = new AudioClip(getClass().getResource("/Interface/media/destroyBrick.mp3").toExternalForm());
+      PressButton = new AudioClip(getClass().getResource("/Interface/media/ButtonPressed.mp3").toExternalForm());
+      GameOver = new AudioClip(getClass().getResource("/Interface/media/GameOver.mp3").toExternalForm());
+      Win = new AudioClip(getClass().getResource("/Interface/media/Win.mp3").toExternalForm());
+      PowerUp = new AudioClip(getClass().getResource("/Interface/media/PowerUp.mp3").toExternalForm());
+      imPact = new AudioClip(getClass().getResource("/Interface/media/impact.mp3").toExternalForm());
+      destroyBrick.setVolume(1);
+      PressButton.setVolume(1);
+      GameOver.setVolume(3);
+      Win.setVolume(2);
+      PowerUp.setVolume(2);
+      imPact.setVolume(0.5);
+      isLoaded = true;
     }
+  }
 }

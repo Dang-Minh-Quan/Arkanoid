@@ -45,7 +45,7 @@ public class PowerUpManager {
         powerUp.Activate(balls, paddle);
         activePowerUp.add(powerUp);
 
-        if ("bonus_point".equals(powerUp.type)) {
+        if ("bonus point".equals(powerUp.type)) {
             render.showBonusImage(
                     paddle.get().x + paddle.get().width / 2,
                     paddle.get().y - 10
@@ -53,10 +53,10 @@ public class PowerUpManager {
         }
 
         switch (powerUp.type) {
-            case "ball_immortal", "ball_boom":
+            case "infinity ball", "explosive ball":
                 activeBall++;
                 break;
-            case "paddle_long", "paddle_shoot":
+            case "long paddle", "gun paddle":
                 activePaddle++;
                 break;
         }
@@ -66,14 +66,14 @@ public class PowerUpManager {
         } else {
             Sheduler.schedule(() -> {
                 switch (powerUp.type) {
-                    case "ball_immortal", "ball_boom":
+                    case "infinity ball", "explosive ball":
                         activeBall--;
                         if (activeBall == 0) {
                             powerUp.StopPowerUp(balls, paddle);
                             activePowerUp.remove(powerUp);
                         }
                         break;
-                    case "paddle_long", "paddle_shoot":
+                    case "long paddle", "gun paddle":
                         activePaddle--;
                         if (activePaddle == 0) {
                             powerUp.StopPowerUp(balls, paddle);
@@ -104,22 +104,22 @@ public class PowerUpManager {
                     k = "blind";
                     break;
                 case 0:
-                    k = "ball_immortal";
+                    k = "infinity ball";
                     break;
                 case 1:
-                    k = "paddle_long";
+                    k = "long paddle";
                     break;
                 case 2:
-                    k = "ball_add";
+                    k = "multi ball";
                     break;
                 case 3:
-                    k = "ball_boom";
+                    k = "explosive ball";
                     break;
                 case 4:
-                    k = "bonus_point";
+                    k = "bonus point";
                     break;
                 case 5:
-                    k = "paddle_shoot";
+                    k = "gun paddle";
                     break;
             }
             PowerUp powerUp = new PowerUp(k);

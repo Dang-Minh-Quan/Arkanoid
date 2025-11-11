@@ -12,6 +12,11 @@ import java.util.List;
  * Lớp {@code NormalBrick} đại diện cho loại gạch thường.
  */
 public class NormalBrick extends Brick {
+    /**
+     * khoi tao gach thuong.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public NormalBrick(int x, int y) {
         super(x, y);
         this.type = "normal";

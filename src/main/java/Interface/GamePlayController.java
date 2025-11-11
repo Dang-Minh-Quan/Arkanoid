@@ -88,7 +88,6 @@ public class GamePlayController extends MainMenuController {
     private MainImage image;
     private MainMedia media;
     private int FinalScore;
-    //private ScoreManager scoreManager = new ScoreManager();
     List<PowerUp> powerUps;
 
   /**
@@ -191,8 +190,14 @@ public class GamePlayController extends MainMenuController {
       System.out.println("Game Resumed");
     }
 
-    @FXML
+  /**
+   * Chơi lại.
+   * @param event
+   * @throws IOException
+   */
+  @FXML
     protected void Restart(ActionEvent event) throws IOException  {
+    update.ShutdownPowerUpManager();
       super.PlayAgain(event);
       PauseMenu.setVisible(false);
       ButtonPause.setVisible(true);
@@ -220,7 +225,7 @@ public class GamePlayController extends MainMenuController {
             Stage stage = (Stage) GamePlay.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GameOver.fxml"));
             Parent root = loader.load();
-            SwitchScene.fade(stage, root);
+            SwitchScene.Fade(stage, root);
 
             //GameOverCheck = false;
             System.out.println("You Lose!");
@@ -266,7 +271,7 @@ public class GamePlayController extends MainMenuController {
                     winGameController.setFinalScore(FinalScore, stage);
                 }
 
-                SwitchScene.fade(stage, root);
+                SwitchScene.Fade(stage, root);
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.centerOnScreen();
@@ -278,7 +283,7 @@ public class GamePlayController extends MainMenuController {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/WinLevel.fxml"));
             Parent root = loader.load();
-            SwitchScene.fade(stage, root);
+            SwitchScene.Fade(stage, root);
 
             System.out.println("Win!");
         } catch (IOException e) {

@@ -13,6 +13,11 @@ import java.util.List;
  * Khi bị bóng chạm gạch lần đầu gạch sẽ chuyển sang trạng thái broken, lần 2 sẽ nổ
  */
 public class StrongBrick extends Brick {
+    /**
+     * khoi tao brick cung.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public StrongBrick(int x, int y) {
         super(x, y);
         this.type = "strong";

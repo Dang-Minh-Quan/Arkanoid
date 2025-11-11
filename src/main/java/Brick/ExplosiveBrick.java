@@ -15,6 +15,11 @@ import java.util.List;
 public class ExplosiveBrick extends Brick {
     boolean detonation;
 
+    /**
+     * khoi tao brick no.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     */
     public ExplosiveBrick(int x, int y) {
         super(x, y);
         detonation = false;

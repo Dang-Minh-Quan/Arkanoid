@@ -5,6 +5,12 @@ import Brick.*;
 import Paddle.*;
 
 public class GameObject {
+    /**
+     * tao ball.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     * @param type loai ball can tao.
+     */
     public Ball createBall(int x, int y, String type) {
         if (type == null) {
             return new NormalBall(x, y);
@@ -18,6 +24,12 @@ public class GameObject {
         return new NormalBall(x, y);
     }
 
+    /**
+     * tao paddle.
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
+     * @param type loai paddle can tao.
+     */
     public Paddle createPaddle(int x, int y, String type) {
         if (type == null) {
             return new NormalPaddle(x, y);
@@ -31,6 +43,12 @@ public class GameObject {
         return new NormalPaddle(x, y);
     }
 
+    /**
+     * tao brick.
+     * @param row vi tri theo phuong x.
+     * @param col vi tri theo phuong y.
+     * @param type loai brick can tao.
+     */
     public Brick createBrick(int row, int col, String type) {
         if (type == null) {
             return new NormalBrick(row, col);
@@ -53,6 +71,9 @@ public class GameObject {
         return new NormalBrick(row, col);
     }
 
+    /**
+     * thay the ball.
+     */
     public Ball replaceBall(Ball ball, String type) {
         Ball newball = createBall(ball.x, ball.y, type);
         newball.vx = ball.vx;

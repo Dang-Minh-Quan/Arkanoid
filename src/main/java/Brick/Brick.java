@@ -21,13 +21,13 @@ public abstract class Brick extends BaseClass {
     protected MainImage mainImage;
 
     /**
-     * Khởi tạo một viên gạch tại vị trí hàng i, cột j trên bảng.
+     * khoi tao brick.
      *
-     * @param i chỉ số hàng của gạch
-     * @param j chỉ số cột của gạch
+     * @param x vi tri theo phuong x.
+     * @param y vi tri theo phuong y.
      */
-    public Brick(int i, int j) {
-        super(null, j * WIDTHBrick, i * HEIGHTBrick, WIDTHBrick, HEIGHTBrick);
+    public Brick(int x, int y) {
+        super(null, y * WIDTHBrick, x * HEIGHTBrick, WIDTHBrick, HEIGHTBrick);
         cracked = false;
         destroyed = false;
         exploded = false;
