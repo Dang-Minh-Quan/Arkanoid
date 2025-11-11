@@ -53,7 +53,7 @@ Game Mechanics
 ## UML Diagram
 
 ### Class Diagram
-![UML Diagram](https://github.com/user-attachments/assets/2f62f3e7-9d68-47d8-84cc-332afcc8bdce)
+<img width="3538" height="1056" alt="UML_diagram" src="https://github.com/user-attachments/assets/6b9df27d-8fbb-48ef-b5fc-ad051a83c49b" />
 
 ---
 
