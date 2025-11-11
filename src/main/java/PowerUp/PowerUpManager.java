@@ -26,7 +26,7 @@ public class PowerUpManager {
         powerUp.Activate(balls, paddle);
         activePowerUp.add(powerUp);
 
-        if ("bonus_point".equals(powerUp.type)) {
+        if ("bonus point".equals(powerUp.type)) {
             render.showBonusImage(
                     paddle.get().x + paddle.get().width / 2,
                     paddle.get().y - 10

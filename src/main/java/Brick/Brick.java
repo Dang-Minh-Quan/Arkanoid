@@ -35,12 +35,22 @@ public abstract class Brick extends BaseClass {
         mainImage = MainImage.getInstance();
     }
 
+    /**
+     * Hàm trừu tượng xử lý va chạm giữa bóng và gạch.
+     * @param ball
+     * @param render
+     * @param media
+     * @param powerUps
+     * @param brick
+     * @param powerUpManager
+     */
     public abstract void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps, Brick[][] brick, PowerUpManager powerUpManager);
 
     /**
-     * pha brick.
-     * @param render ve.
-     * @param media tao am thanh.
+     * xử lý logic khi gạch bị phá hủy.
+     * @param render
+     * @param media
+     * @param powerUps
      */
     public void destroyBrick(Render render, MainMedia media, List<PowerUp> powerUps) {
         if (exploded) return;

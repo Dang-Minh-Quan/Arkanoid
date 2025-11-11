@@ -87,12 +87,20 @@ public class PowerUp extends AnimationClass {
     }
   }
 
-  public void update() {
-    if (!active) return;
-    y += vy;
-    if (y > 720) active = false;
-    Update();
-  }
+    /**
+     * Cập nhật trạng thái của pu.
+     * <p>
+     * Nếu đang hoạt động ({@code active == true}), vị trí Y sẽ được cập nhật
+     * theo vận tốc {@code vy}. Nếu đi ra ngoài màn hình (y > 720),
+     * nó sẽ bị vô hiệu hóa ({@code active = false}).
+     * {@code Update()} cập nhật
+     */
+    public void update() {
+        if (!active) return;
+        y += vy;
+        if (y > 720) active = false;
+        Update();
+    }
 
   public void StopPowerUp(List<Ball> balls, AtomicReference<Paddle> paddle) {
     switch (type) {
@@ -182,12 +190,20 @@ public class PowerUp extends AnimationClass {
     }
   }
 
-  public void render(GraphicsContext gc) {
-    if (!active || image == null) return;
-    super.draw(gc);
-  }
+    /**
+     * Vẽ pu lên màn hình nếu nó đang hoạt động.
+     *
+     * @param gc đối tượng {@link GraphicsContext} dùng để vẽ lên canvas.
+     *
+     *           <p>Nếu không hoạt động hoặc chưa có hình ảnh ({@code image == null}) thì không hiện gì
+     */
+    public void render(GraphicsContext gc) {
+        if (!active || image == null) return;
+        super.draw(gc);
+    }
 
   public boolean isActive() {
     return active;
   }
 }
+
