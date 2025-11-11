@@ -1,30 +1,50 @@
 Arkanoid Game - Object-Oriented Programming Project
+
 Group 2:AntiK - Class INT2204 1
 
 Đặng Minh Quân         - 24020280
+
 Trần Thiệu Hưng        - 24020154
+
 Đinh Văn Dương         - 24020100
+
 Nguyễn Thị Phương Ngọc - 24020253
+
 Instructor: Kiều Văn Tuyên / Vũ Đức Hiếu
+
 Semester: HK1 - 2025
 
+
 Description
+
 This is a classic Arkanoid game developed in Java as a final project for Object-Oriented Programming course. The project demonstrates the implementation of OOP principles and design patterns.
+
 
 Key features:
 
 The game is developed using Java 17+ with JavaFX/Swing for GUI.
+
 Implements core OOP principles: Encapsulation, Inheritance, Polymorphism, and Abstraction.
+
 Applies multiple design patterns: Singleton, Factory Method, Strategy, Observer, and State.
+
 Features multithreading for smooth gameplay and responsive UI.
+
 Includes sound effects, animations, and power-up systems.
+
 Supports save/load game functionality and leaderboard system.
+
+
 Game mechanics:
 
 Control a paddle to bounce a ball and destroy bricks
+
 Collect power-ups for special abilities
+
 Progress through multiple levels with increasing difficulty
+
 Score points and compete on the leaderboard
+
 
 UML Diagram
 Class Diagram
@@ -151,6 +171,7 @@ Future Improvements
 Planned Features
 
 
+
 1.Additional game modes
 
 Time attack mode
@@ -162,6 +183,7 @@ Co-op multiplayer mode
 Enhanced gameplay
 
 
+
 2.Boss battles at end of worlds
 
 More power-up varieties (freeze time, shield wall, etc.)
@@ -169,6 +191,7 @@ More power-up varieties (freeze time, shield wall, etc.)
 Achievements system
 
 Technical improvements
+
 
 
 3.Migrate to LibGDX or JavaFX for better graphics
