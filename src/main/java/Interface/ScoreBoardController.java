@@ -73,7 +73,7 @@ public class ScoreBoardController extends MainMenuController {
     media = MainMedia.getInstance();
     media.playPressButton();
     scoreManager.resetScores();
-    displayScores(); // Cập nhật lại giao diện sau khi reset
+    displayScores();
     System.out.println("ScoreBoard Reset.");
   }
 
