@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.SaveScoreController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="540.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.SaveScoreController">
    <children>
-      <ImageView fitHeight="700.0" fitWidth="500.0" pickOnBounds="true">
+      <ImageView fitHeight="700.0" fitWidth="540.0" pickOnBounds="true">
          <image>
             <Image url="@Image/WinGame.png" />
          </image>
       </ImageView>
-      <Button focusTraversable="false" layoutX="141.0" layoutY="377.0" mnemonicParsing="false" onAction="#BackToScoreBoard">
+      <Button focusTraversable="false" layoutX="161.0" layoutY="377.0" mnemonicParsing="false" onAction="#BackToScoreBoard">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="200.0" pickOnBounds="true">
                <image>
@@ -23,7 +23,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button focusTraversable="false" layoutX="141.0" layoutY="450.0" mnemonicParsing="false" onAction="#BackToMenu">
+      <Button focusTraversable="false" layoutX="161.0" layoutY="450.0" mnemonicParsing="false" onAction="#BackToMenu">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="200.0" pickOnBounds="true">
                <image>
@@ -31,9 +31,9 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Pane fx:id="SaveHighScore" layoutX="150.0" layoutY="250.0" prefHeight="200.0" prefWidth="200.0">
+      <Pane fx:id="SaveHighScore" layoutX="170.0" layoutY="250.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <ImageView fitHeight="700.0" fitWidth="500.0" layoutX="-150.0" layoutY="-250.0" pickOnBounds="true">
+            <ImageView fitHeight="700.0" fitWidth="547.0" layoutX="-174.0" layoutY="-250.0" pickOnBounds="true">
                <image>
                   <Image url="@Image/BlurBackground.png" />
                </image>
@@ -51,12 +51,12 @@
             </Label>
          </children>
       </Pane>
-      <ImageView fitHeight="62.0" fitWidth="500.0" layoutY="86.0" pickOnBounds="true">
+      <ImageView fitHeight="62.0" fitWidth="540.0" layoutY="86.0" pickOnBounds="true">
          <image>
             <Image url="@Image/BlurBackground.png" />
          </image>
       </ImageView>
-      <Label fx:id="ScoreLabel" alignment="CENTER" layoutX="150.0" layoutY="100.0" text="Final Score" textFill="#eaff00">
+      <Label fx:id="ScoreLabel" alignment="CENTER" layoutX="170.0" layoutY="100.0" text="Final Score" textFill="#eaff00">
          <font>
             <Font size="24.0" />
          </font>

@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="500.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.ScoreBoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="540.0" stylesheets="@ButtonEffect/ButtonEffect.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.ScoreBoardController">
    <children>
-      <ImageView fitHeight="799.0" fitWidth="500.0" layoutY="-93.0" pickOnBounds="true">
+      <ImageView fitHeight="799.0" fitWidth="540.0" layoutY="-93.0" pickOnBounds="true">
          <image>
             <Image url="@Image/ScoreBoard.png" />
          </image>
       </ImageView>
-      <VBox fx:id="ScoreBoard" layoutX="140.0" layoutY="238.0" prefHeight="299.0" prefWidth="244.0" />
+      <VBox fx:id="ScoreBoard" layoutX="152.0" layoutY="238.0" prefHeight="299.0" prefWidth="262.0" />
       <Button focusTraversable="false" layoutX="1.0" layoutY="615.0" mnemonicParsing="false" onAction="#Reset" prefHeight="70.0" prefWidth="152.0">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="150.0" pickOnBounds="true">
@@ -22,7 +22,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="ButtonBack" focusTraversable="false" layoutX="332.0" layoutY="615.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="70.0" prefWidth="168.0">
+      <Button fx:id="ButtonBack" focusTraversable="false" layoutX="372.0" layoutY="615.0" mnemonicParsing="false" onAction="#BackToMenu" prefHeight="70.0" prefWidth="168.0">
          <graphic>
             <ImageView fitHeight="60.0" fitWidth="150.0" pickOnBounds="true">
                <image>

@@ -68,8 +68,8 @@ public class MainMedia {
       PowerUp.setVolume(2.0);
       Win.setVolume(2.0);
       GameOver.setVolume(3.0);
+      imPact.setVolume(0.5);
 
-      imPact.setVolume(1.0);
       Muted = false;
     }
   }
@@ -185,7 +185,7 @@ public class MainMedia {
       GameOver.setVolume(3);
       Win.setVolume(2);
       PowerUp.setVolume(2);
-      imPact.setVolume(1);
+      imPact.setVolume(0.5);
       isLoaded = true;
     }
   }

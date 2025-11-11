@@ -17,7 +17,7 @@ public class Specifications {
     public static final int spvxOriginal = 10;
     public static int numBrick = 0;
     public static int HEIGHT = 550;
-    public static int WIDTH = 500;
+    public static int WIDTH = 540;
     public static int HEIGHTBrick = 30;
     public static int WIDTHBrick = WIDTH / COL;
     public static int speedPU = 2;

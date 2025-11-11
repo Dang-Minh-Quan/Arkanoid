@@ -169,7 +169,6 @@ public class GamePlayController extends MainMenuController {
           mainGame.stop();
       }
       PauseMenu.setVisible(true);
-      ButtonPause.setVisible(false);
       System.out.println("Game Paused");
     }
 
