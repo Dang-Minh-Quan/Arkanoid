@@ -2,8 +2,6 @@
 
 ### 👥 Group 2: AntiK – Class INT2204 1
 
-| Name | Student ID |
-|------|-------------|
 | Đặng Minh Quân | 24020280 |
 | Trần Thiệu Hưng | 24020154 |
 | Đinh Văn Dương | 24020100 |
