@@ -271,5 +271,9 @@ public class Update {
             }
         }
     }
+
+    public void ShutdownPowerUpManager(){
+      powerUpManager.shutDown();
+    }
 }
 

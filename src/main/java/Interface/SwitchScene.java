@@ -1,10 +1,6 @@
 package Interface;
 
-import java.awt.Canvas;
 import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,7 +13,7 @@ public class SwitchScene {
    * @param stage
    * @param newRoot
    */
-  public static void fade(Stage stage, Parent newRoot) {
+  public static void Fade(Stage stage, Parent newRoot) {
 
         Parent oldRoot = stage.getScene().getRoot();
 

@@ -26,7 +26,7 @@ public class ScoreBoardController extends MainMenuController {
   @FXML
   private VBox ScoreBoard;
 
-    private ScoreManager scoreManager = new ScoreManager();
+  private ScoreManager scoreManager = new ScoreManager();
 
   private static Font customFont = null;
 
@@ -51,7 +51,7 @@ public class ScoreBoardController extends MainMenuController {
    */
   private void displayScores() {
     ScoreBoard.getChildren().clear();
-    List<HighScoreList> scores = scoreManager.getHighScores();
+    List<HighScoreList> scores = scoreManager.getHighScoreList();
 
     int rank = 1;
     for (HighScoreList Player : scores) {

@@ -30,7 +30,7 @@ public class SaveScoreController extends MainMenuController {
   /**
    * Áp dụng phông chữ.
    */
-  private void loadAndApplyFont() {
+  private void LoadAndApplyFont() {
     Font scoreFont = Font.loadFont(
         getClass().getResourceAsStream("/Interface/Font/Minecraftia-Regular.ttf"),
         20
@@ -53,10 +53,10 @@ public class SaveScoreController extends MainMenuController {
     this.stage = stage;
     this.scoreSaved = false;
 
-    loadAndApplyFont();
+    LoadAndApplyFont();
     ScoreLabel.setText("YOUR SCORE: " + String.valueOf(score));
 
-    if (scoreManager.isTopScore(finalScore)) {
+    if (scoreManager.CheckHighScore(finalScore)) {
       SaveHighScore.setVisible(true);
 
       Platform.runLater(() -> {
@@ -94,7 +94,7 @@ public class SaveScoreController extends MainMenuController {
       playerName = playerName.substring(0,9) + "...";
     }
 
-    scoreManager.addScore(playerName, finalScore);
+    scoreManager.AddScore(playerName, finalScore);
     scoreSaved = true;
 
     BackToScoreBoard(event);

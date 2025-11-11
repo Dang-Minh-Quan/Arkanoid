@@ -6,26 +6,27 @@ import java.util.Collections;
 import java.util.List;
 
 public class ScoreManager {
-  private static final String FILE_NAME = "highscores.txt";
-  private List<HighScoreList> highScores;
+  private static final String fileHighScores = "highscores.txt";
+  private List<HighScoreList> HighScoreList;
   private final int NumOfHighScore = 9;
 
     public ScoreManager() {
-        highScores = loadScores();
+        HighScoreList = LoadScores();
     }
 
   /**
    * Đọc từ file dữ liệu bảng điểm trả về danh sách bảng điểm.
-   * @return
+   * @return danh sách HighScoreList.
+   * Nếu file không tồn tại hoặc lỗi, trả về danh sách rỗng.
    */
-  private List<HighScoreList> loadScores() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            Object obj = ois.readObject();
+  private List<HighScoreList> LoadScores() {
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(fileHighScores))) {
+            Object obj = input.readObject();
             if (obj instanceof List) {
                 return (List<HighScoreList>) obj;
             }
         } catch (FileNotFoundException e) {
-            System.out.println("No high scores file found, creating new list.");
+            System.out.println("file not found.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -33,55 +34,54 @@ public class ScoreManager {
     }
 
   /**
-   * Ghi bảng điểm được lưu vào file.
+   * Ghi danh sách điểm cao hiện tại vào file.
    */
-  private void saveScores() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
-            oos.writeObject(highScores);
+  private void SaveScores() {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileHighScores))) {
+            output.writeObject(HighScoreList);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
   /**
-   * Thêm điểm cao vào bảng điểm.
+   * Thêm một điểm mới vào bảng xếp hạng.
+   *
    * @param name
    * @param score
    */
-  public void addScore(String name, int score) {
-        highScores.add(new HighScoreList(name, score));
-        Collections.sort(highScores);
-        while (highScores.size() > NumOfHighScore) {
-            highScores.remove(highScores.size() - 1);
+  public void AddScore(String name, int score) {
+        HighScoreList.add(new HighScoreList(name, score));
+        Collections.sort(HighScoreList);
+        while (HighScoreList.size() > NumOfHighScore) {
+            HighScoreList.remove(HighScoreList.size() - 1);
         }
-        saveScores();
+        SaveScores();
     }
 
   /**
-   * Sắp xếp danh sách bảng điểm theo thứ tự.
+   * Kiểm tra xem điểm hiện tại có đủ cao để lọt vào bảng xếp hạng hay không.
+   *
    * @param currentScore
-   * @return
+   * @return true nếu điểm đủ cao để lọt vào bảng xếp hạng,
+   * ngược lại trả về false
    */
-  public boolean isTopScore(int currentScore) {
-        if (highScores.size() < NumOfHighScore) {
+  public boolean CheckHighScore(int currentScore) {
+        if (HighScoreList.size() < NumOfHighScore) {
             return true;
         }
-        return currentScore > highScores.get(highScores.size() - 1).getScore();
+        return currentScore > HighScoreList.get(HighScoreList.size() - 1).getScore();
+    }
+
+  public List<HighScoreList> getHighScoreList() {
+        return HighScoreList;
     }
 
   /**
-   * Lấy điểm cao.
-   * @return
-   */
-  public List<HighScoreList> getHighScores() {
-        return highScores;
-    }
-
-  /**
-   * Xóa bảng xếp hạng điểm.
+   * Xóa toàn bộ bảng xếp hạng.
    */
   public void resetScores() {
-        highScores.clear();
-        saveScores();
+        HighScoreList.clear();
+        SaveScores();
     }
 }

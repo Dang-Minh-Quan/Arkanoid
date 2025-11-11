@@ -60,8 +60,8 @@ public class MainMedia {
 
   public void unmuteAllMedia() {
     if (Muted) {
-      GameplayMusic.setVolume(0.1);
-      MenuMusic.setVolume(0.3);
+      GameplayMusic.setVolume(0.5);
+      MenuMusic.setVolume(0.8);
       BackGround.setVolume(1.0);
       destroyBrick.setVolume(1.0);
       PressButton.setVolume(1.0);
@@ -161,11 +161,11 @@ public class MainMedia {
     if (!isLoaded) {
       media = new Media(getClass().getResource("/Interface/media/beach.mp3").toExternalForm());
       GameplayMusic = new MediaPlayer((media));
-      GameplayMusic.setVolume(0.1);
+      GameplayMusic.setVolume(0.5);
       GameplayMusic.setCycleCount(MediaPlayer.INDEFINITE);
       media = new Media(getClass().getResource("/Interface/media/MenuMusic.mp3").toExternalForm());
       MenuMusic = new MediaPlayer((media));
-      MenuMusic.setVolume(0.3);
+      MenuMusic.setVolume(0.8);
       MenuMusic.setCycleCount(MediaPlayer.INDEFINITE);
       media = new Media(getClass().getResource("/Interface/media/BackGround.mp4").toExternalForm());
       BackGround = new MediaPlayer(media);

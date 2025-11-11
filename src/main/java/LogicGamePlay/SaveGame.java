@@ -13,6 +13,9 @@ public class SaveGame {
 
     private static final String SAVE_FILE = "savegame.txt";
 
+  /**
+   * Lưu tiến trình hiện tại.
+   */
     public static void saveProgress() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVE_FILE))) {
             writer.write("Level:" + Specifications.Level.get());
@@ -26,7 +29,11 @@ public class SaveGame {
         }
     }
 
-    public static boolean loadProgress() {
+  /**
+   * Tải tiến trình đã lưu.
+   * @return
+   */
+  public static boolean loadProgress() {
         File saveFile = new File(SAVE_FILE);
         if (!saveFile.exists()) {
             System.out.println("No saved game found.");
@@ -59,7 +66,11 @@ public class SaveGame {
         }
     }
 
-    public static boolean hasSavedGame() {
+  /**
+   * Kiểm tra việc lưu tiến trình game.
+   * @return
+   */
+  public static boolean hasSavedGame() {
         File saveFile = new File(SAVE_FILE);
 
         int savedLevel = 1;

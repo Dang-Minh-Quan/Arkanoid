@@ -84,6 +84,7 @@ public class MainMenuController {
   protected void NewGame(ActionEvent event) throws IOException {
     media = MainMedia.getInstance();
     media.playPressButton();
+    blind=false;
     reset();
     saveProgress();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -170,6 +171,7 @@ public class MainMenuController {
    */
   public void loadNextLevel(Stage stage) throws IOException {
     Level.incrementAndGet();
+    blind=false;
     saveProgress();
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
     Parent root = loader.load();
@@ -207,6 +209,7 @@ public class MainMenuController {
     winLevel = false;
     numBrick = 0;
     heartCount.set(3);
+    blind = false;
     GamePlayController.GameOverCheck = false;
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/Interface/GamePlay.fxml"));
     Parent root = loader.load();
@@ -229,7 +232,8 @@ public class MainMenuController {
    */
   @FXML
   protected void PlayAgain(ActionEvent event) throws IOException {
-      media = MainMedia.getInstance();
+
+    media = MainMedia.getInstance();
     media.playPressButton();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     loadCurrentLevel(stage);
