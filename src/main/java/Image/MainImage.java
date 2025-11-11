@@ -8,6 +8,12 @@ public class MainImage {
 
     private static MainImage instance;
 
+    /**
+     * Phương thức trả về thể hiện duy nhất của MainImage.
+     * Nếu chưa tồn tại, nó sẽ tự động khởi tạo.
+     *
+     * @return thể hiện duy nhất của MainImage
+     */
     public static synchronized MainImage getInstance() {
         if (instance == null) {
             instance = new MainImage();
@@ -19,13 +25,17 @@ public class MainImage {
     private Image normalPaddle, longPaddle, gunPaddle, normalBall, infinityBall, explosiveBall, bullet,
             background, explosion, bar, powerUp, squidInk, bonusPoints;
 
+    /**
+     * Constructor được đặt ở mức private để ngăn việc tạo đối tượng trực tiếp bên ngoài.
+     * Chỉ có thể truy cập thông qua phương thức {@link #getInstance()}.
+     */
     private MainImage() {
         loadImages();
     }
 
     private void loadImages() {
         background = new Image(getClass().getResourceAsStream("/Interface/Image/background.png"));
-        normalBrick= new Image(getClass().getResourceAsStream("/Interface/Image/Brick/normalBrick.png"),
+        normalBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/normalBrick.png"),
                 60, 30, false, false);
         unbreakableBrick = new Image(getClass().getResourceAsStream("/Interface/Image/Brick/unbreakableBrick.png"),
                 60, 30, false, false);
@@ -134,6 +144,7 @@ public class MainImage {
     public Image getSquidInk() {
         return squidInk;
     }
+
     public Image getBonusPoints() {
         return bonusPoints;
     }

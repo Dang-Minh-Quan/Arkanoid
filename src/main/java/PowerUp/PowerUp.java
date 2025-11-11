@@ -37,7 +37,6 @@ public class PowerUp extends AnimationClass {
         this.image = spriteSheet;
         checkActivate = false;
         int randomType = (int) (Math.random() * PU) % PU;
-        //randomType = 5;
         switch (randomType) {
             case 0:
                 type = "ball_immortal";
@@ -65,10 +64,10 @@ public class PowerUp extends AnimationClass {
     private void checkTimePowerUp(String type) {
         switch (type) {
             case "blind":
-                TimePowerUp = TimePowerUpOriginal/2;
+                TimePowerUp = TimePowerUpOriginal / 2;
                 break;
             case "ball_immortal":
-                TimePowerUp = TimePowerUpOriginal/2;
+                TimePowerUp = TimePowerUpOriginal / 2;
                 break;
             case "paddle_shoot":
                 TimePowerUp = TimePowerUpOriginal;
@@ -88,6 +87,14 @@ public class PowerUp extends AnimationClass {
         }
     }
 
+    /**
+     * Cập nhật trạng thái của pu.
+     * <p>
+     * Nếu đang hoạt động ({@code active == true}), vị trí Y sẽ được cập nhật
+     * theo vận tốc {@code vy}. Nếu đi ra ngoài màn hình (y > 720),
+     * nó sẽ bị vô hiệu hóa ({@code active = false}).
+     * {@code Update()} cập nhật
+     */
     public void update() {
         if (!active) return;
         y += vy;
@@ -134,16 +141,16 @@ public class PowerUp extends AnimationClass {
                 blind = true;
                 break;
             case "ball_immortal":
-              media = MainMedia.getInstance();
-              media.playPowerUp();
+                media = MainMedia.getInstance();
+                media.playPowerUp();
                 for (int i = 0; i < balls.size(); i++) {
                     Ball newball = gameObject.replaceBall(balls.get(i), "infinity");
                     balls.set(i, newball);
                 }
                 break;
             case "paddle_long":
-              media = MainMedia.getInstance();
-              media.playPowerUp();
+                media = MainMedia.getInstance();
+                media.playPowerUp();
                 if (paddle.get().type != "long") {
                     int xx = paddleWidthOriginal / 2;
                     if (paddle.get().width + paddle.get().x + xx > WIDTH) {
@@ -157,14 +164,14 @@ public class PowerUp extends AnimationClass {
                 }
                 break;
             case "ball_add":
-              media = MainMedia.getInstance();
-              media.playPowerUp();
+                media = MainMedia.getInstance();
+                media.playPowerUp();
                 Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal ball");
                 balls.add(newBall);
                 break;
             case "ball_boom":
-              media = MainMedia.getInstance();
-              media.playPowerUp();
+                media = MainMedia.getInstance();
+                media.playPowerUp();
                 for (int i = 0; i < balls.size(); i++) {
                     Ball newball = gameObject.replaceBall(balls.get(i), "explosive");
                     balls.set(i, newball);
@@ -176,25 +183,20 @@ public class PowerUp extends AnimationClass {
                 score.addAndGet(50);
                 break;
             case "paddle_shoot":
-              media = MainMedia.getInstance();
-              media.playPowerUp();
+                media = MainMedia.getInstance();
+                media.playPowerUp();
                 paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "gun"));
                 break;
         }
     }
 
-//    private void removePowerUp(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps, int Type) {
-//        for (int i = 0; i < powerUps.size(); i++) {
-//            PowerUp p = powerUps.get(i);
-//            if (p.type == Type && p.checkActivate == true) {
-//                powerUps.get(i).checkTimePowerUp = 0;
-//                powerUps.get(i).checkStopPowerUp(balls, paddle);
-//                powerUps.remove(i);
-//                break;
-//            }
-//        }
-//    }
-
+    /**
+     * Vẽ pu lên màn hình nếu nó đang hoạt động.
+     *
+     * @param gc đối tượng {@link GraphicsContext} dùng để vẽ lên canvas.
+     *
+     *           <p>Nếu không hoạt động hoặc chưa có hình ảnh ({@code image == null}) thì không hiện gì
+     */
     public void render(GraphicsContext gc) {
         if (!active || image == null) return;
         super.draw(gc);
