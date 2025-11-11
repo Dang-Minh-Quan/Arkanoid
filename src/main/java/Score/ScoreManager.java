@@ -1,4 +1,4 @@
-package LogicGamePlay;
+package Score;
 
 import java.io.*;
 import java.util.ArrayList;

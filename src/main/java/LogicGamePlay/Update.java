@@ -267,7 +267,7 @@ public class Update {
                 powerUpManager.stop(paddle, balls);
                 bullets.clear();
                 blind = false;
-                powerUps.clear();
+//                powerUps.clear();
             }
         }
     }

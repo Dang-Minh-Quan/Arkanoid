@@ -9,4 +9,5 @@ module Arkanoid {
     exports LogicGamePlay;
 
     opens Interface to javafx.fxml;
+    exports Score;
 }
