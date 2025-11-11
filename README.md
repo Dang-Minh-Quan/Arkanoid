@@ -1,7 +1,9 @@
-# 🎮 Arkanoid Game – Object-Oriented Programming Project
+#  Arkanoid Game – Object-Oriented Programming Project
 
-### 👥 Group 2: AntiK – Class INT2204 1
+###  Group 2: AntiK – Class INT2204 1
 
+| Name | Student ID |
+|------|-------------|
 | Đặng Minh Quân | 24020280 |
 | Trần Thiệu Hưng | 24020154 |
 | Đinh Văn Dương | 24020100 |
@@ -12,14 +14,14 @@
 
 ---
 
-## 📝 Description
+##  Description
 
 **Arkanoid Game** is a classic brick-breaker game developed in **Java** as the **final project** for the *Object-Oriented Programming (OOP)* course.  
 The project demonstrates the practical application of **OOP principles** and **design patterns** in a real-world interactive game.
 
 ---
 
-## 🚀 Key Features
+Key Features
 
 - Developed using **Java 17+** with **JavaFX/Swing** for GUI  
 - Implements all major **OOP principles**:
@@ -39,7 +41,7 @@ The project demonstrates the practical application of **OOP principles** and **d
 
 ---
 
-## ⚙️ Game Mechanics
+Game Mechanics
 
 - Control the **paddle** to bounce the **ball** and destroy bricks  
 - **Collect power-ups** for temporary abilities  
@@ -48,9 +50,9 @@ The project demonstrates the practical application of **OOP principles** and **d
 
 ---
 
-## 🧩 UML Diagram
+## UML Diagram
 
-### 📘 Class Diagram
+### Class Diagram
 ![UML Diagram](https://github.com/user-attachments/assets/2f62f3e7-9d68-47d8-84cc-332afcc8bdce)
 
 ---
@@ -67,7 +69,7 @@ The project demonstrates the practical application of **OOP principles** and **d
 
 ---
 
-## 🧵 Multithreading Implementation
+## Multithreading Implementation
 
 The game utilizes multiple threads to ensure smooth and stable performance:
 
@@ -79,7 +81,7 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 
 ---
 
-## 🕹️ Controls
+## Controls
 
 | Key | Action |
 |-----|---------|
@@ -90,7 +92,7 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 
 ---
 
-## 🎯 How to Play
+## How to Play
 
 1. **Start the game**: Click **"New Game"** from the main menu  
 2. **Control the paddle**: Move using arrow keys or **A/D**  
@@ -102,7 +104,7 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 
 ---
 
-## ⚡ Power-ups
+## Power-ups
 
 | Name | Effect |
 |------|--------|
@@ -115,7 +117,7 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 
 ---
 
-## 🧮 Scoring System
+## Scoring System
 
 | Action | Points |
 |---------|--------|
@@ -125,15 +127,15 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 
 ---
 
-## 📸 Demo
+## Demo
 
-### 🏠 Main Menu  
+### Main Menu  
 <img width="677" height="876" alt="Main Menu" src="https://github.com/user-attachments/assets/07075e74-6d44-41a2-9fd5-1d87a2958484" />
 
-### 🎮 Gameplay  
+### Gameplay  
 <img width="679" height="879" alt="Gameplay" src="https://github.com/user-attachments/assets/fc234dcd-53fd-4d1f-b5a5-0b7b22fbe593" />
 
-### ⚡ Power-ups in Action  
+### Power-ups in Action  
 <img width="220" height="313" alt="Power-up 1" src="https://github.com/user-attachments/assets/6942aab7-722b-4017-b064-501a3bd7c604" />
 <img width="524" height="451" alt="Power-up 2" src="https://github.com/user-attachments/assets/8d9814de-09c5-4230-8ab3-cf692014a892" />
 <img width="449" height="446" alt="Power-up 3" src="https://github.com/user-attachments/assets/6f5aa804-379b-4a9b-9078-0ae536b9296f" />
@@ -141,24 +143,24 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 <img width="369" height="546" alt="Power-up 5" src="https://github.com/user-attachments/assets/a251b325-d81b-4a16-a0f4-6f95c36fa970" />
 <img width="197" height="140" alt="Power-up 6" src="https://github.com/user-attachments/assets/a58f99a2-0edc-4bac-9abe-995898f76a1f" />
 
-### 🏆 Leaderboard  
+### Leaderboard  
 <img width="676" height="870" alt="Leaderboard" src="https://github.com/user-attachments/assets/070e3458-0fb3-4ef2-a968-39a6105cb75f" />
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
-### 🕹️ Additional Game Modes
+### Additional Game Modes
 - Time Attack mode  
 - Endless Survival mode  
 - Co-op Multiplayer mode  
 
-### 🧱 Enhanced Gameplay
+### Enhanced Gameplay
 - Boss battles  
 - New power-ups (Freeze Time, Shield Wall, etc.)  
 - Achievements system  
 
-### 💻 Technical Upgrades
+### Technical Upgrades
 - Migrate to **LibGDX** or **JavaFX** for improved graphics  
 - Add particle effects & animations  
 - Implement **AI Opponent Mode**  
@@ -166,7 +168,7 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 
 ---
 
-## 🧰 Technologies Used
+## Technologies Used
 
 | Technology | Version | Purpose |
 |-------------|----------|----------|
@@ -176,17 +178,14 @@ The game utilizes multiple threads to ensure smooth and stable performance:
 
 ---
 
-## 🪪 License & Academic Note
+## License & Academic Note
 
 This project was developed **for educational purposes only** as part of the **Object-Oriented Programming with Java** course.  
 All code is written by group members under instructor guidance.  
 
 Some assets (images, sounds) are used under **fair use** for educational demonstration.
 
-> ⚠️ **Academic Integrity:**  
+> **Academic Integrity:**  
 > Please use this project responsibly and adhere to your institution’s policies.
 
 ---
-
-### 💡 Summary
-This project demonstrates a **complete application** of OOP principles, design patterns, and multithreading in Java — packaged into a fun and interactive **Arkanoid-style game** 🎮.
