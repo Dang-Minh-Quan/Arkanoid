@@ -57,13 +57,13 @@ Game Mechanics
 
 ---
 
-## 🧠 Design Patterns Implementation
+## Design Patterns Implementation
 
-### 🟢 Singleton Pattern
+### Singleton Pattern
 **Used in:** `MainMedia`, `MainImage`  
 **Purpose:** Ensure only one instance exists throughout the application.
 
-### 🟡 Factory Pattern
+### Factory Pattern
 **Used in:** `Factory (GameObject)`, `Product (Ball, Paddle, Brick)`  
 **Purpose:** Dynamically create different game objects.
 
