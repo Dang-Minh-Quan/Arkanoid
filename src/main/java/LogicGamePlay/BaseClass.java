@@ -21,11 +21,11 @@ public abstract class BaseClass {
         this(image, "basic", 0, 0, 0, 0, 0, 0);
     }
 
-    public BaseClass(Image image , final int x, final int y, final int width, final int height) {
-        this(image, "basic", x, y,0, 0, width, height);
+    public BaseClass(Image image, final int x, final int y, final int width, final int height) {
+        this(image, "basic", x, y, 0, 0, width, height);
     }
 
-    public BaseClass(Image image,final int x, final int y, int vx, int vy, final int width, final int height) {
+    public BaseClass(Image image, final int x, final int y, int vx, int vy, final int width, final int height) {
         this(image, "basic", x, y, vx, vy, width, height);
     }
 
@@ -40,7 +40,8 @@ public abstract class BaseClass {
         this.height = height;
     }
 
-    public void Update(){}
+    public void Update() {
+    }
 }
 
 

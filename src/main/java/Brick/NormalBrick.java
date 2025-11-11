@@ -8,6 +8,9 @@ import LogicGamePlay.Render;
 
 import java.util.List;
 
+/**
+ * Lớp {@code NormalBrick} đại diện cho loại gạch thường.
+ */
 public class NormalBrick extends Brick {
     public NormalBrick(int x, int y) {
         super(x, y);
@@ -18,7 +21,7 @@ public class NormalBrick extends Brick {
     @Override
     public void BallHit(Ball ball, Render render, MainMedia media, List<PowerUp> powerUps,
                         Brick[][] brick, PowerUpManager powerUpManager) {
-        if(type != "null") {
+        if (type != "null") {
             switch (ball.type) {
                 case "normal", "infinity", "bullet":
                     destroyBrick(render, media, powerUps);

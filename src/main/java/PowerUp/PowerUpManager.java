@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Quản lý tất cả PowerUp trong game.
+ * <p>
+ * Chịu trách nhiệm áp dụng, theo dõi thời gian, và kết thúc hiệu ứng của các power-up.
+ * Sử dụng {@link ScheduledExecutorService} để tự động tắt hiệu ứng khi hết thời gian.
+ * </p>
+ */
 public class PowerUpManager {
     private final ConcurrentLinkedQueue<PowerUp> activePowerUp =
             new ConcurrentLinkedQueue<>();
@@ -22,6 +29,18 @@ public class PowerUpManager {
         this.render = render;
     }
 
+    /**
+     * Áp dụng một power-up lên paddle và các bóng, đồng thời quản lý thời gian tồn tại.
+     * <p>
+     * - Nếu power-up có thời gian tồn tại bằng 0, hiệu ứng ngay lập tức bị dừng.
+     * - Nếu có thời gian tồn tại, Scheduler sẽ tự động dừng hiệu ứng sau khi hết thời gian.
+     * - Hiển thị bonus image nếu power-up là loại "bonus_point".
+     * </p>
+     *
+     * @param powerUp power-up cần áp dụng
+     * @param paddle paddle của người chơi
+     * @param balls danh sách các bóng trên màn chơi
+     */
     public void applyPowerUp(PowerUp powerUp, AtomicReference<Paddle> paddle, List<Ball> balls) {
         powerUp.Activate(balls, paddle);
         activePowerUp.add(powerUp);
@@ -69,6 +88,12 @@ public class PowerUpManager {
         }
     }
 
+    /**
+     * Ngừng tất cả hiệu ứng power-up đang hoạt động và trả paddle, bóng về trạng thái bình thường.
+     *
+     * @param paddle paddle của người chơi
+     * @param balls danh sách bóng hiện tại
+     */
     public void stop(AtomicReference<Paddle> paddle, List<Ball> balls) {
         activePaddle = 0;
         activeBall = 0;

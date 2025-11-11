@@ -7,21 +7,22 @@ import Image.*;
 
 import static LogicGamePlay.Specifications.*;
 
-public class Explosion extends AnimationClass{
+public class Explosion extends AnimationClass {
     public boolean toBeRemoved = false;
 
     private static final Image explosionImage = MainImage.getInstance().getExplosion();
 
     /**
      * hiện thị nổ tại vị trí (x,y).
+     *
      * @param x
      * @param y
      */
     public Explosion(int x, int y) {
-        super(explosionImage, x, y-WIDTHBrick/2,0,speedPU,
-                (WIDTHBrick+HEIGHTBrick)/2,
-                (WIDTHBrick+HEIGHTBrick)/2,
-                4,4,5);
+        super(explosionImage, x, y - WIDTHBrick / 2, 0, speedPU,
+                (WIDTHBrick + HEIGHTBrick) / 2,
+                (WIDTHBrick + HEIGHTBrick) / 2,
+                4, 4, 5);
     }
 
     /**

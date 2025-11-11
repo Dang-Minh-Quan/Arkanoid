@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Lớp {@code BlindBrick} đại diện cho loại gạch đặc biệt có hiệu ứng "mù" trong game.
+ * Khi bị bóng chạm, viên gạch này sẽ kích hoạt hiệu ứng phun mực che mờ màn hình trong thời gian ngắn
+ */
 public class BlindBrick extends  Brick {
     public BlindBrick(int x, int y) {
         super(x, y);

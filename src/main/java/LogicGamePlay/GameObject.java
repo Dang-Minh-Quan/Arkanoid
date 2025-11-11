@@ -53,7 +53,7 @@ public class GameObject {
         return new NormalBrick(row, col);
     }
 
-    public Ball replaceBall(Ball ball,String type){
+    public Ball replaceBall(Ball ball, String type) {
         Ball newball = createBall(ball.x, ball.y, type);
         newball.vx = ball.vx;
         newball.vy = ball.vy;

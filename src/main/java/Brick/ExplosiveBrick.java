@@ -8,6 +8,10 @@ import LogicGamePlay.Render;
 
 import java.util.List;
 
+/**
+ * Lớp {@code ExplosiveBrick} đại diện cho loại gạch nổ trong game.
+ * Khi bị bóng chạm gạch nổ sẽ phát nổ và gây ảnh hưởng đến các viên gạch xung quanh
+ */
 public class ExplosiveBrick extends Brick {
     boolean detonation;
 

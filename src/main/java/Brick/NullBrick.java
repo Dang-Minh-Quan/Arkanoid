@@ -8,6 +8,9 @@ import LogicGamePlay.Render;
 
 import java.util.List;
 
+/**
+ * Lớp {@code NullBrick} đại diện cho không có gạch.
+ */
 public class NullBrick extends Brick {
     public NullBrick(int x, int y) {
         super(x, y);

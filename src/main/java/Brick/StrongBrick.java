@@ -8,6 +8,10 @@ import LogicGamePlay.Render;
 
 import java.util.List;
 
+/**
+ * Lớp {@code StrongBrick} đại diện cho loại gạch khó phá.
+ * Khi bị bóng chạm gạch lần đầu gạch sẽ chuyển sang trạng thái broken, lần 2 sẽ nổ
+ */
 public class StrongBrick extends Brick {
     public StrongBrick(int x, int y) {
         super(x, y);

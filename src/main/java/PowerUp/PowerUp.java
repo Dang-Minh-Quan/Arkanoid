@@ -32,6 +32,13 @@ public class PowerUp extends AnimationClass {
         gameObject = new GameObject();
     }
 
+    /**
+     * Khởi tạo power-up ngẫu nhiên tại vị trí (x, y) với sprite sheet.
+     *
+     * @param spriteSheet ảnh sprite chứa các khung animation
+     * @param x           tọa độ X
+     * @param y           tọa độ Y
+     */
     public PowerUp(Image spriteSheet, int x, int y) {
         super(spriteSheet, x, y, 0, speedPU, RADIUSPU, RADIUSPU, 4, 4, 5);
         this.image = spriteSheet;
@@ -61,6 +68,11 @@ public class PowerUp extends AnimationClass {
         HitBoxPowerUp = new Circle(x, y, width, Color.BLACK);
     }
 
+    /**
+     * Kiểm tra và thiết lập thời gian tồn tại của power-up dựa trên loại.
+     *
+     * @param type loại power-up
+     */
     private void checkTimePowerUp(String type) {
         switch (type) {
             case "blind":
@@ -102,6 +114,14 @@ public class PowerUp extends AnimationClass {
         Update();
     }
 
+    /**
+     * Kết thúc hiệu ứng power-up.
+     * <p>
+     * Dựa trên loại, sẽ trả paddle, ball, hay hiệu ứng mù về trạng thái bình thường.
+     *
+     * @param balls  danh sách bóng hiện tại
+     * @param paddle paddle của người chơi
+     */
     public void StopPowerUp(List<Ball> balls, AtomicReference<Paddle> paddle) {
         switch (type) {
             case "blind":
@@ -120,6 +140,14 @@ public class PowerUp extends AnimationClass {
         TimePowerUp--;
     }
 
+    /**
+     * Cập nhật va chạm của power-up với paddle và kiểm tra xem có ra khỏi màn hình.
+     *
+     * @param balls    danh sách bóng hiện tại
+     * @param paddle   paddle của người chơi
+     * @param powerUps danh sách power-up
+     * @return 0: chưa va chạm, 1: va chạm với paddle, 2: ra khỏi màn hình
+     */
     public int UpdatePU(List<Ball> balls, AtomicReference<Paddle> paddle, List<PowerUp> powerUps) {
         y = y + vy;
         HitBoxPowerUp.setCenterY(y);
@@ -134,7 +162,12 @@ public class PowerUp extends AnimationClass {
         return 0;
     }
 
-
+    /**
+     * Kích hoạt hiệu ứng power-up dựa trên loại.
+     *
+     * @param balls  danh sách bóng hiện tại
+     * @param paddle paddle của người chơi
+     */
     public void Activate(List<Ball> balls, AtomicReference<Paddle> paddle) {
         switch (type) {
             case "blind":
@@ -202,6 +235,11 @@ public class PowerUp extends AnimationClass {
         super.draw(gc);
     }
 
+    /**
+     * Kiểm tra xem power-up còn hoạt động hay không.
+     *
+     * @return true nếu power-up đang hoạt động, false nếu đã bị vô hiệu hóa
+     */
     public boolean isActive() {
         return active;
     }

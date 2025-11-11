@@ -4,6 +4,7 @@ import LogicGamePlay.*;
 import Ball.*;
 import Paddle.*;
 import Brick.*;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -80,7 +81,7 @@ public class SaveGame {
             return false;
         }
 
-        return savedLevel > 1 && savedLevel<=Specifications.LevelMax;
+        return savedLevel > 1 && savedLevel <= Specifications.LevelMax;
 
     }
 

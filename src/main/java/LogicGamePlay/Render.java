@@ -43,9 +43,9 @@ public class Render {
     /**
      * Thêm một vật phẩm (PowerUp) mới vào danh sách hiện có.
      *
-     * @param x         toạ độ X của vật phẩm
-     * @param y         toạ độ Y của vật phẩm
-     * @param powerUps  danh sách chứa các vật phẩm hiện có
+     * @param x        toạ độ X của vật phẩm
+     * @param y        toạ độ Y của vật phẩm
+     * @param powerUps danh sách chứa các vật phẩm hiện có
      */
     public void addPowerUp(int x, int y, List<PowerUp> powerUps) {
         powerUps.add(new PowerUp(image.getPowerUp(), x, y));
@@ -53,6 +53,7 @@ public class Render {
 
     /**
      * hiện powerup bonuspoints
+     *
      * @param x
      * @param y
      */
@@ -75,12 +76,12 @@ public class Render {
     /**
      * Hàm chính để vẽ toàn bộ khung hình của game.
      *
-     * @param gc         đối tượng GraphicsContext để vẽ
-     * @param balls      danh sách bóng hiện tại
-     * @param paddle     thanh đỡ người chơi
-     * @param brick      ma trận các viên gạch
-     * @param powerUps   danh sách vật phẩm
-     * @param bullets    danh sách đạn (nếu có)
+     * @param gc       đối tượng GraphicsContext để vẽ
+     * @param balls    danh sách bóng hiện tại
+     * @param paddle   thanh đỡ người chơi
+     * @param brick    ma trận các viên gạch
+     * @param powerUps danh sách vật phẩm
+     * @param bullets  danh sách đạn (nếu có)
      */
     public void renderGame(GraphicsContext gc, List<Ball> balls, AtomicReference<Paddle> paddle,
                            Brick[][] brick, List<PowerUp> powerUps, List<Bullet> bullets) {
@@ -101,6 +102,7 @@ public class Render {
 
     /**
      * hiển thị đạn khi ăn pu type 5.
+     *
      * @param gc
      * @param bullets
      */
@@ -174,6 +176,7 @@ public class Render {
 
     /**
      * hiển thị điểm số, mạng, level.
+     *
      * @param gc
      */
     private void renderHUD(GraphicsContext gc) {

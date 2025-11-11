@@ -84,7 +84,7 @@ public class Update {
     }
 
     public void initializeLevel(AtomicReference<Paddle> paddle, List<Ball> balls, Brick[][] brick) {
-//        System.out.println(Level);
+
         heartCount.set(3);
         numBrick = 0;
         builderLevel(balls, brick, paddle.get(), Level);
@@ -93,9 +93,8 @@ public class Update {
     private void builderLevel(List<Ball> balls, Brick[][] brick, Paddle paddle, AtomicInteger Level) {
         Map map = new Map();
         if (Level.get() > LevelMax) {
-//            checkPlay = false;
         } else {
-            //ball.resert();
+
             String[][] a = map.builderMap(Level.get());
             for (int i = 0; i < ROW; i++) {
                 for (int j = 0; j < COL; j++) {
@@ -219,8 +218,6 @@ public class Update {
             } else if (collisionResult == 2) {
                 ball.vy = -ball.vy;
             }
-            //Brick b = ball.getLastHitBrick();
-            // if (b != null) b.BallHit(ball, render);
         }
         return true;
     }
