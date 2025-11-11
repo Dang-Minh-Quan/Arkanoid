@@ -8,7 +8,7 @@ import static Interface.GamePlayController.*;
 
 public class Specifications {
 
-    public static final int COL = 10;
+    public static final int COL = 9;
     public static final int ROW = 10;
     public static final int vxOriginal = 10;
     public static final int LevelMax = 4;
@@ -17,7 +17,7 @@ public class Specifications {
     public static final int spvxOriginal = 10;
     public static int numBrick = 0;
     public static final int HEIGHT = 550;
-    public static final int WIDTH = 540;
+    public static final int WIDTH = 500;
     public static final int HEIGHTBrick = 30;
     public static final int WIDTHBrick = WIDTH / COL;
     public static int speedPU = 2;

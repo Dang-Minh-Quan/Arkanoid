@@ -1,9 +1,9 @@
 package Interface;
 
-import LogicGamePlay.HighScoreList;
+import Score.HighScoreList;
 import Media.*;
 //import LogicGamePlay.MainMedia;
-import LogicGamePlay.ScoreManager;
+import Score.ScoreManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

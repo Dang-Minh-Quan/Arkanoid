@@ -39,22 +39,22 @@ public class PowerUp extends AnimationClass {
         int randomType = (int) (Math.random() * PU) % PU;
         switch (randomType) {
             case 0:
-                type = "ball_immortal";
+                type = "infinity ball";
                 break;
             case 1:
-                type = "paddle_long";
+                type = "long paddle";
                 break;
             case 2:
-                type = "ball_add";
+                type = "multi ball";
                 break;
             case 3:
-                type = "ball_boom";
+                type = "explosive ball";
                 break;
             case 4:
-                type = "bonus_point";
+                type = "bonus point";
                 break;
             case 5:
-                type = "paddle_shoot";
+                type = "gun paddle";
                 break;
         }
         checkTimePowerUp(type);
@@ -66,22 +66,22 @@ public class PowerUp extends AnimationClass {
             case "blind":
                 TimePowerUp = TimePowerUpOriginal/2;
                 break;
-            case "ball_immortal":
+            case "infinity ball":
                 TimePowerUp = TimePowerUpOriginal/2;
                 break;
-            case "paddle_shoot":
+            case "gun paddle":
                 TimePowerUp = TimePowerUpOriginal;
                 break;
-            case "ball_add":
+            case "multi ball":
                 TimePowerUp = 0;
                 break;
-            case "ball_boom":
+            case "explosive ball":
                 TimePowerUp = TimePowerUpOriginal;
                 break;
-            case "bonus_point":
+            case "bonus point":
                 TimePowerUp = 0;
                 break;
-            case "paddle_long":
+            case "long paddle":
                 TimePowerUp = TimePowerUpOriginal;
                 break;
         }
@@ -99,13 +99,13 @@ public class PowerUp extends AnimationClass {
             case "blind":
                 blind = false;
                 break;
-            case "ball_immortal", "ball_boom":
+            case "infinity ball", "explosive ball":
                 for (int i = 0; i < balls.size(); i++) {
                     Ball newball = gameObject.replaceBall(balls.get(i), "normal");
                     balls.set(i, newball);
                 }
                 break;
-            case "paddle_shoot", "paddle_long":
+            case "gun paddle", "long paddle":
                 paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "normal"));
                 break;
         }
@@ -132,7 +132,7 @@ public class PowerUp extends AnimationClass {
             case "blind":
                 blind = true;
                 break;
-            case "ball_immortal":
+            case "infinity ball":
               media = MainMedia.getInstance();
               media.playPowerUp();
                 for (int i = 0; i < balls.size(); i++) {
@@ -140,7 +140,7 @@ public class PowerUp extends AnimationClass {
                     balls.set(i, newball);
                 }
                 break;
-            case "paddle_long":
+            case "long paddle":
               media = MainMedia.getInstance();
               media.playPowerUp();
                 if (paddle.get().type != "long") {
@@ -155,13 +155,13 @@ public class PowerUp extends AnimationClass {
                     paddle.set(gameObject.createPaddle(paddle.get().x - xx, paddle.get().y, "long"));
                 }
                 break;
-            case "ball_add":
+            case "multi ball":
               media = MainMedia.getInstance();
               media.playPowerUp();
                 Ball newBall = gameObject.createBall(paddle.get().x + paddleWidthOriginal / 2, HEIGHT - paddleHeightOriginal, "normal ball");
                 balls.add(newBall);
                 break;
-            case "ball_boom":
+            case "explosive ball":
               media = MainMedia.getInstance();
               media.playPowerUp();
                 for (int i = 0; i < balls.size(); i++) {
@@ -169,30 +169,18 @@ public class PowerUp extends AnimationClass {
                     balls.set(i, newball);
                 }
                 break;
-            case "bonus_point":
+            case "bonus point":
                 media = MainMedia.getInstance();
                 media.playPowerUp();
                 score.addAndGet(50);
                 break;
-            case "paddle_shoot":
+            case "gun paddle":
               media = MainMedia.getInstance();
               media.playPowerUp();
                 paddle.set(gameObject.createPaddle(paddle.get().x, paddle.get().y, "gun"));
                 break;
         }
     }
-
-//    private void removePowerUp(List<Ball> balls, Paddle paddle, List<PowerUp> powerUps, int Type) {
-//        for (int i = 0; i < powerUps.size(); i++) {
-//            PowerUp p = powerUps.get(i);
-//            if (p.type == Type && p.checkActivate == true) {
-//                powerUps.get(i).checkTimePowerUp = 0;
-//                powerUps.get(i).checkStopPowerUp(balls, paddle);
-//                powerUps.remove(i);
-//                break;
-//            }
-//        }
-//    }
 
     public void render(GraphicsContext gc) {
         if (!active || image == null) return;
